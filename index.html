@@ -1,3 +1,4 @@
+<!-- ملف index.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -8,63 +9,145 @@
 </head>
 <body>
   <div class="container">
-    <div id="step1" class="step">
-      <h1>عقد إنهاء إجراءات تمويل عقاري من البنوك</h1>
-      <button onclick="nextStep(2)">التالي</button>
-    </div>
+    <h1>عقد إنهاء إجراءات تمويل عقاري من البنوك</h1>
+    <button onclick="location.href='page2.html'">التالي</button>
+  </div>
+</body>
+</html>
 
-    <div id="step2" class="step hidden">
-      <h2>المملكة العربية السعودية</h2>
-      <p>الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، الرياض</p>
-      <p>ويمثلها الأستاذ: نايف المطيري بصفته: مدير إدارة</p>
-      <button onclick="nextStep(3)">ابدأ قراءة العقد</button>
-    </div>
+<!-- ملف page2.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>معلومات الوسيط</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>المملكة العربية السعودية</h2>
+    <p>الوساطة العقارية والتسويق، ترخيص رقم: 1100042624</p>
+    <p>العنوان: الرياض</p>
+    <p>ويمثلها الأستاذ: نايف المطيري بصفته: مدير إدارة</p>
+    <button onclick="location.href='page3.html'">ابدأ قراءة العقد</button>
+  </div>
+</body>
+</html>
 
-    <div id="step3" class="step hidden">
-      <label>الاسم الكامل:</label>
-      <input type="text" id="name" placeholder="اكتب اسمك الكامل" required>
-      <label>رقم السجل المدني:</label>
-      <input type="text" id="id" maxlength="10" placeholder="أدخل 10 أرقام" required>
-      <button onclick="submitInfo()">باسم الله</button>
-    </div>
-
-    <div id="contract" class="step hidden">
-      <pre id="contractText"></pre>
-      <button onclick="saveDecision(true)">موافق</button>
-      <button onclick="saveDecision(false)">غير موافق</button>
-    </div>
-
-    <div id="final" class="step hidden">
-      <h3>تم حفظ الإجابة بنجاح!</h3>
-    </div>
+<!-- ملف page3.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>إدخال البيانات</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <label>الاسم الكامل:</label>
+    <input type="text" id="name" placeholder="اكتب اسمك الكامل" required>
+    <label>رقم السجل المدني:</label>
+    <input type="text" id="id" maxlength="10" placeholder="أدخل 10 أرقام" required>
+    <button onclick="saveUserInfo()">باسم الله</button>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
 
+<!-- ملف page4.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>قراءة العقد</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>نص العقد</h2>
+    <pre>
+بسم الله الرحمن الرحيم
+عقد اتفاق إنهاء إجراءات تمويل عقاري
 
+تم بحمد الله وتوفيقه في يوم: __________، بتاريخ: __________، الاتفاق بين كلاً من:
+
+الطرف الأول:
+الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، وعنوانها: الرياض، جوال رقم: 0506214458
+ويمثلها في التوقيع على العقد الأستاذ: نايف المطيري بصفته: مدير إدارة
+
+(طرف أول)
+
+الطرف الثاني:
+الاسم: __________
+رقم السجل المدني: __________
+
+(طرف ثانٍ)
+
+تمهيد:
+يقر الطرف الأول بأنه يعمل بمهنة الوساطة العقارية، وله خبرة ومقدرة على إتمام إجراءات التمويل العقاري، وعليه فقد أبدى الطرف الثاني رغبته في إتمام هذه الخدمة، وعليه فقد أبدى الطرف الأول استعداده للخدمة بموجب هذا العقد وفقاً لما يلي:
+
+١. يلتزم الطرف الأول بإنهاء كافة إجراءات التمويل العقاري لدى الجهات التمويلية واستلام شيك باسم مالك العقار وتسليمه للطرف الثاني أو من يخصه.
+٢. يلتزم الطرف الثاني بسداد مبلغ 2.5٪ من قيمة العقار للطرف الأول + 500 ريال رسوم عقد.
+٣. يتم سداد الأتعاب فور استلام شيك التمويل.
+٤. في حال عدم إنهاء الإجراءات فلا يستحق الطرف الأول أي مقابل.
+٥. إذا انسحب الطرف الثاني بعد توقيع العقد فلا يحق له استرداد أي مبالغ مدفوعة.
+٦. لا يتحمل الطرف الأول التأخير الناتج عن عدم تجاوب الطرف الثاني.
+٧. يتحمل الطرف الثاني مسؤولية أي مستندات غير صحيحة.
+٨. تعتبر الخدمة منتهية بصدور الشيك باسم المالك.
+٩. إذا ألغيت الصفقة بعد صدور الشيك لا يحق للطرف الثاني المطالبة بأي مبالغ.
+١٠. يخضع هذا العقد للأنظمة والتعليمات المعمول بها بالمملكة العربية السعودية.
+١١. حرر هذا العقد من نسختين بيد كل طرف نسخة.
+    </pre>
+    <button onclick="location.href='page5.html'">التالي</button>
+  </div>
+</body>
+</html>
+
+<!-- ملف page5.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تأكيد القرار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>هل توافق على بنود العقد؟</h2>
+    <button onclick="saveDecision(true)">موافق</button>
+    <button onclick="saveDecision(false)">غير موافق</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+<!-- ملف style.css (تصميم مشترك لكل الصفحات) -->
+<style>
 body {
   font-family: 'Tajawal', sans-serif;
   background: #f9f9f9;
   margin: 0;
   padding: 0;
+  direction: rtl;
 }
-
 .container {
   max-width: 700px;
   margin: 50px auto;
   background: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
   text-align: center;
 }
-
-h1, h2, p {
+h1, h2, p, label {
   margin-bottom: 20px;
 }
-
 input {
   width: 90%;
   padding: 10px;
@@ -73,7 +156,6 @@ input {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
 button {
   padding: 12px 25px;
   font-size: 18px;
@@ -84,96 +166,51 @@ button {
   background-color: #007b5e;
   color: white;
 }
-
 button:hover {
   background-color: #005c48;
 }
-
-.hidden {
-  display: none;
-}
-
 pre {
   text-align: right;
   background: #eee;
   padding: 15px;
   border-radius: 8px;
   white-space: pre-wrap;
-  word-break: break-word;
 }
+</style>
 
-
-function nextStep(step) {
-  document.querySelectorAll(".step").forEach(s => s.classList.add("hidden"));
-  document.getElementById("step" + step).classList.remove("hidden");
-}
-
-function submitInfo() {
-  const name = document.getElementById("name").value.trim();
-  const id = document.getElementById("id").value.trim();
+<!-- ملف script.js (برمجة تخزين البيانات) -->
+<script>
+function saveUserInfo() {
+  const name = document.getElementById('name').value.trim();
+  const id = document.getElementById('id').value.trim();
 
   if (name === "" || id.length !== 10 || isNaN(id)) {
-    alert("يرجى إدخال الاسم ورقم السجل المدني بشكل صحيح");
+    alert("يرجى إدخال الاسم ورقم السجل المدني بشكل صحيح.");
     return;
   }
 
-  const contractText = `
-بسم الله الرحمن الرحيم
-عقد اتفاق إنهاء إجراءات تمويل عقاري
-
-تم بحمد الله وتوفيقه في يوم: __________، بتاريخ: __________، الاتفاق بين كلاً من:
-
-الطرف الأول:
-الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، الرياض، جوال: 0506214458
-ويمثلها في التوقيع الأستاذ: نايف المطيري بصفته: مدير إدارة
-
-(طرف أول)
-
-الطرف الثاني:
-الاسم: ${name}
-رقم السجل المدني: ${id}
-
-(طرف ثانٍ)
-
-تمهيد:
-يقر الطرف الأول بأنه يعمل بمهنة الوساطة العقارية، وله خبرة ومقدرة على إتمام إجراءات التمويل العقاري، وعليه فقد أبدى الطرف الثاني رغبته في إتمام هذه الخدمة من قبل الطرف الأول، وعليه فقد أبدى الطرف الأول استعداده للقيام بالخدمة بموجب هذا العقد وفقاً لما يلي:
-
-١. يلتزم الطرف الأول بإنهاء كافة إجراءات التمويل العقاري لدى الجهات التمويلية واستلام شيك باسم مالك العقار وتسليمه للطرف الثاني أو من يخصه حسب الاتفاق.
-٢. يلتزم الطرف الثاني بسداد مبلغ وقدره 2.5٪ من قيمة العقار للطرف الأول، بالإضافة إلى 500 ريال رسوم عقد.
-٣. يتم سداد الأتعاب فور استلام شيك التمويل.
-٤. في حال عدم إنهاء الإجراءات فلا يستحق الطرف الأول أي مقابل.
-٥. إذا انسحب الطرف الثاني بعد توقيع العقد فلا يحق له استرداد أي مبالغ مدفوعة.
-٦. لا يتحمل الطرف الأول التأخير الناتج عن عدم تجاوب الطرف الثاني.
-٧. يتحمل الطرف الثاني مسؤولية أي مستندات غير صحيحة.
-٨. تعتبر الخدمة منتهية بصدور الشيك باسم المالك.
-٩. إذا ألغيت الصفقة بعد صدور الشيك لا يحق للطرف الثاني استرداد شيء.
-١٠. يخضع هذا العقد لأنظمة المملكة العربية السعودية.
-١١. حرر هذا العقد من نسختين بيد كل طرف نسخة.
-
-`;
-
-  document.getElementById("contractText").textContent = contractText;
-  nextStep("contract");
+  localStorage.setItem('contractName', name);
+  localStorage.setItem('contractID', id);
+  location.href = 'page4.html';
 }
 
 function saveDecision(approved) {
-  const name = document.getElementById("name").value.trim();
-  const id = document.getElementById("id").value.trim();
+  const name = localStorage.getItem('contractName') || "غير معروف";
+  const id = localStorage.getItem('contractID') || "غير معروف";
   const decision = approved ? "موافق" : "غير موافق";
 
-  const data = {
+  const savedData = {
     name,
     id,
     decision,
     timestamp: new Date().toISOString()
   };
 
-  // حفظ البيانات محليًا
-  let records = JSON.parse(localStorage.getItem('contracts') || '[]');
-  records.push(data);
-  localStorage.setItem('contracts', JSON.stringify(records));
+  let contracts = JSON.parse(localStorage.getItem('contracts') || '[]');
+  contracts.push(savedData);
+  localStorage.setItem('contracts', JSON.stringify(contracts));
 
-  console.log('تم حفظ البيانات:', data);
-
-  nextStep("final");
+  alert("تم حفظ قرارك بنجاح!");
+  location.href = 'index.html';
 }
+</script>

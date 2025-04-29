@@ -2,215 +2,150 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عقد إنهاء التمويل</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عقد إنهاء إجراءات تمويل عقاري</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 30px;
+    }
+    .section {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    button {
+      padding: 15px 25px;
+      margin: 20px 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 300px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .contract {
+      text-align: right;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>عقد إنهاء إجراءات تمويل عقاري من البنوك</h1>
-    <button onclick="location.href='page2.html'">التالي</button>
+
+<div id="section1" class="section active">
+  <h1>عقد إنهاء إجراءات تمويل عقاري من البنوك</h1>
+  <button onclick="goToSection(2)">التالي</button>
+</div>
+
+<div id="section2" class="section">
+  <h2>المملكة العربية السعودية</h2>
+  <p>الوساطة العقارية والتسويق، ترخيص رقم: 1100042624</p>
+  <p>جوال: 0506214458</p>
+  <p>يمثلها الأستاذ: نايف المطيري - مدير إدارة</p>
+  <button onclick="goToSection(3)">ابدأ قراءة العقد</button>
+</div>
+
+<div id="section3" class="section">
+  <h2>الرجاء إدخال بياناتك</h2>
+  <input type="text" id="clientName" placeholder="الاسم الكامل" required><br>
+  <input type="text" id="clientID" placeholder="رقم السجل المدني (10 أرقام)" required maxlength="10"><br>
+  <button onclick="submitClientData()">باسم الله</button>
+</div>
+
+<div id="section4" class="section">
+  <div class="contract" id="contractContent">
+    <!-- سيتم إدخال نص العقد مع بيانات العميل هنا -->
   </div>
-</body>
-</html>
+  <button onclick="saveResponse('موافق')">أوافق</button>
+  <button onclick="saveResponse('غير موافق')">لا أوافق</button>
+</div>
 
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>بيانات الوسيط</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h2>المملكة العربية السعودية</h2>
-    <p>الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، الرياض</p>
-    <p>ويمثلها الأستاذ: نايف المطيري بصفته: مدير إدارة</p>
-    <button onclick="location.href='page3.html'">ابدأ قراءة العقد</button>
-  </div>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>بيانات العميل</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h2>أدخل بياناتك</h2>
-    <label>الاسم الكامل:</label>
-    <input type="text" id="name" placeholder="اكتب اسمك الكامل" required>
-    <label>رقم السجل المدني:</label>
-    <input type="text" id="id" maxlength="10" placeholder="أدخل 10 أرقام" required>
-    <button onclick="saveUserInfo()">باسم الله</button>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>نص العقد</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h2>نص العقد</h2>
-    <pre id="contractText">جاري تحميل نص العقد...</pre>
-    <button onclick="location.href='page5.html'">التالي</button>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>الموافقة</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h2>هل توافق على بنود العقد؟</h2>
-    <button onclick="saveDecision(true)">موافق</button>
-    <button onclick="saveDecision(false)">غير موافق</button>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
-
-
-body {
-  font-family: 'Tajawal', sans-serif;
-  background: #f4f4f4;
-  margin: 0;
-  padding: 0;
-  direction: rtl;
-}
-.container {
-  max-width: 700px;
-  margin: 50px auto;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  text-align: center;
-}
-h1, h2, p, label {
-  margin-bottom: 20px;
-}
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-button {
-  padding: 12px 25px;
-  font-size: 18px;
-  margin-top: 15px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #007b5e;
-  color: white;
-}
-button:hover {
-  background-color: #005c48;
-}
-pre {
-  text-align: right;
-  background: #f1f1f1;
-  padding: 15px;
-  border-radius: 8px;
-  white-space: pre-wrap;
+<script>
+function goToSection(number) {
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+  document.getElementById('section' + number).classList.add('active');
 }
 
-
-function saveUserInfo() {
-  const name = document.getElementById('name').value.trim();
-  const id = document.getElementById('id').value.trim();
+function submitClientData() {
+  const name = document.getElementById('clientName').value.trim();
+  const id = document.getElementById('clientID').value.trim();
 
   if (name === "" || id.length !== 10 || isNaN(id)) {
-    alert("يرجى إدخال الاسم ورقم السجل المدني بشكل صحيح.");
+    alert("يرجى إدخال الاسم الكامل ورقم سجل مدني صحيح مكون من 10 أرقام.");
     return;
   }
 
-  localStorage.setItem('contractName', name);
-  localStorage.setItem('contractID', id);
-  location.href = 'page4.html';
+  const contractHTML = `
+    <h2>عقد اتفاق إنهاء إجراءات تمويل عقاري</h2>
+    <p>تم بحمد الله وتوفيقه في يوم: الاثنين بتاريخ: 1447/08/11هـ، الموافق: 2025/02/10م، الاتفاق بين كلاً من:</p>
+    <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، وعنوانها: الرياض، جوال رقم: 0506214458، ويمثلها الأستاذ نايف المطيري بصفته مدير إدارة.</p>
+    <p><strong>الطرف الثاني:</strong> ${name}، سجل مدني رقم: ${id}</p>
+
+    <h3>تمهيد:</h3>
+    <p>يقر الطرف الأول بأنه يعمل بمهنة الوساطة العقارية، وله خبرة ومقدرة على إتمام إجراءات التمويل العقاري، وعليه فقد أبدى الطرف الثاني رغبته في إتمام هذه الخدمة من قبل الطرف الأول، وعليه فقد أبدى الطرف الأول استعداده للقيام بالخدمة بموجب هذا العقد وفقاً لما يلي:</p>
+
+    <ol>
+      <li>يلتزم الطرف الأول بإنهاء كافة إجراءات التمويل العقاري لدى الجهات التمويلية، واستلام شيك بأسم مالك العقار وتسليمه للطرف الثاني أو من يخصه حسب الاتفاق.</li>
+      <li>يلتزم الطرف الثاني بسداد مبلغ وقدره 2.5٪ من قيمة العقار للطرف الأول مقابل إتمام الإجراءات، بالإضافة إلى مبلغ 500 ريال رسوم عقد.</li>
+      <li>يتم سداد الأتعاب للطرف الأول فور استلام شيك التمويل من الجهة التمويلية.</li>
+      <li>في حال لم يتم إنهاء الإجراءات من قبل الطرف الأول، فلا يستحق أي مقابل مالي من الطرف الثاني.</li>
+      <li>في حال انسحاب الطرف الثاني بعد توقيع العقد، فلا يحق له استرداد أي مبالغ تم دفعها للطرف الأول.</li>
+      <li>في حال وجود تأخير ناتج عن الطرف الثاني أو عدم تجاوبه مع طلبات التمويل، فإن الطرف الأول غير مسؤول عن تأخير الإجراءات.</li>
+      <li>يتحمل الطرف الثاني كافة المسؤوليات القانونية عند تقديم أي مستندات غير صحيحة أو غير مطابقة للواقع.</li>
+      <li>بعد إنهاء الصفقة وصدور شيك التمويل باسم المالك، تعتبر الخدمة منتهية ولا علاقة للطرف الأول بأي إجراءات لاحقة.</li>
+      <li>في حال تم إلغاء الصفقة بعد صدور الشيك، لا يحق للطرف الثاني المطالبة بأي مبالغ تم دفعها.</li>
+      <li>يخضع هذا العقد للأنظمة والتعليمات المعمول بها في المملكة العربية السعودية.</li>
+      <li>حرر هذا العقد من نسختين بيد كل طرف نسخة، للعمل بموجبها عند الحاجة، وقد تم التوقيع عليه بعد قراءة جميع البنود والموافقة عليها.</li>
+    </ol>
+
+    <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق</p>
+    <p>(توقيع)</p>
+    <p><strong>الطرف الثاني:</strong> ${name}</p>
+    <p>(توقيع)</p>
+  `;
+
+  document.getElementById('contractContent').innerHTML = contractHTML;
+  goToSection(4);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  if (document.getElementById('contractText')) {
-    const name = localStorage.getItem('contractName') || "__________";
-    const id = localStorage.getItem('contractID') || "__________";
+function saveResponse(status) {
+  const name = document.getElementById('clientName').value.trim();
+  const id = document.getElementById('clientID').value.trim();
 
-    document.getElementById('contractText').textContent = `
-بسم الله الرحمن الرحيم
-عقد اتفاق إنهاء إجراءات تمويل عقاري
-
-تم بحمد الله وتوفيقه في يوم: __________، بتاريخ: __________، الاتفاق بين كلاً من:
-
-الطرف الأول:
-الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، الرياض، جوال: 0506214458
-ويمثلها الأستاذ: نايف المطيري بصفته: مدير إدارة
-
-(طرف أول)
-
-الطرف الثاني:
-الاسم: ${name}
-رقم السجل المدني: ${id}
-
-(طرف ثانٍ)
-
-تمهيد:
-يقر الطرف الأول بأنه يعمل بمهنة الوساطة العقارية، وله خبرة ومقدرة على إتمام إجراءات التمويل العقاري، وعليه فقد أبدى الطرف الثاني رغبته في إتمام هذه الخدمة، وعليه فقد أبدى الطرف الأول استعداده للخدمة بموجب هذا العقد وفقاً لما يلي:
-
-١. يلتزم الطرف الأول بإنهاء كافة إجراءات التمويل العقاري لدى الجهات التمويلية واستلام شيك باسم مالك العقار وتسليمه للطرف الثاني أو من يخصه.
-٢. يلتزم الطرف الثاني بسداد مبلغ 2.5٪ من قيمة العقار للطرف الأول بالإضافة إلى مبلغ 500 ريال رسوم عقد.
-٣. يتم سداد الأتعاب فور استلام شيك التمويل.
-٤. في حال عدم إنهاء الإجراءات فلا يستحق الطرف الأول أي مقابل.
-٥. إذا انسحب الطرف الثاني بعد توقيع العقد فلا يحق له استرداد أي مبالغ مدفوعة.
-٦. لا يتحمل الطرف الأول التأخير الناتج عن عدم تجاوب الطرف الثاني.
-٧. يتحمل الطرف الثاني مسؤولية أي مستندات غير صحيحة.
-٨. تعتبر الخدمة منتهية بصدور الشيك باسم المالك.
-٩. إذا ألغيت الصفقة بعد صدور الشيك لا يحق للطرف الثاني المطالبة بأي مبالغ.
-١٠. يخضع هذا العقد للأنظمة والتعليمات بالمملكة العربية السعودية.
-١١. حرر هذا العقد من نسختين بيد كل طرف نسخة.
-    `;
-  }
-});
-
-function saveDecision(approved) {
-  const name = localStorage.getItem('contractName') || "غير معروف";
-  const id = localStorage.getItem('contractID') || "غير معروف";
-  const decision = approved ? "موافق" : "غير موافق";
-
-  const savedData = {
-    name,
-    id,
-    decision,
-    timestamp: new Date().toISOString()
+  const response = {
+    name: name,
+    id: id,
+    status: status,
+    date: new Date().toLocaleString('ar-EG')
   };
 
-  let contracts = JSON.parse(localStorage.getItem('contracts') || '[]');
-  contracts.push(savedData);
-  localStorage.setItem('contracts', JSON.stringify(contracts));
+  localStorage.setItem('contract_response', JSON.stringify(response));
 
-  alert("تم حفظ قرارك بنجاح!");
-  location.href = 'index.html';
+  if (status === 'موافق') {
+    alert('تم تسجيل الموافقة بنجاح. شكرًا لك.');
+  } else {
+    alert('تم تسجيل الرفض. شكراً لك.');
+  }
 }
+</script>
 
-
+</body>
+</html>

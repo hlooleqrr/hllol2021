@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f0f2f5;
       text-align: center;
       padding: 30px;
     }
@@ -22,29 +22,42 @@
       margin: 20px 10px;
       font-size: 18px;
       border: none;
-      border-radius: 5px;
-      background-color: #007bff;
+      border-radius: 8px;
+      background-color: #0056b3;
       color: white;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #003d80;
     }
     input {
-      padding: 10px;
+      padding: 12px;
       margin: 10px;
       width: 300px;
       font-size: 18px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
     }
     .contract {
       text-align: right;
-      background-color: #fff;
+      background-color: white;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       margin-top: 20px;
     }
-    h1, h2 {
-      color: #333;
+    h1, h2, h3 {
+      color: #222;
+    }
+    .signature {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #555;
+    }
+    .small-text {
+      font-size: 14px;
+      color: gray;
     }
   </style>
 </head>
@@ -93,9 +106,15 @@ function submitClientData() {
     return;
   }
 
+  const now = new Date();
+  const nowString = now.toLocaleString('ar-EG');
+
+  const signedTime = new Date(now.getTime() - (11 * 60000)); // 11 دقيقة سابقة
+  const signedTimeString = signedTime.toLocaleString('ar-EG');
+
   const contractHTML = `
     <h2>عقد اتفاق إنهاء إجراءات تمويل عقاري</h2>
-    <p>تم بحمد الله وتوفيقه في يوم: الاثنين بتاريخ: 1447/08/11هـ، الموافق: 2025/02/10م، الاتفاق بين كلاً من:</p>
+    <p>تم بحمد الله وتوفيقه في يوم: ${now.toLocaleDateString('ar-EG')}، الساعة: ${now.toLocaleTimeString('ar-EG')}, الاتفاق بين كلاً من:</p>
     <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، وعنوانها: الرياض، جوال رقم: 0506214458، ويمثلها الأستاذ نايف المطيري بصفته مدير إدارة.</p>
     <p><strong>الطرف الثاني:</strong> ${name}، سجل مدني رقم: ${id}</p>
 
@@ -116,10 +135,16 @@ function submitClientData() {
       <li>حرر هذا العقد من نسختين بيد كل طرف نسخة، للعمل بموجبها عند الحاجة، وقد تم التوقيع عليه بعد قراءة جميع البنود والموافقة عليها.</li>
     </ol>
 
-    <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق</p>
-    <p>(توقيع)</p>
-    <p><strong>الطرف الثاني:</strong> ${name}</p>
-    <p>(توقيع)</p>
+    <div class="signature">
+      <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق</p>
+      <p>تم التوقيع في: ${signedTimeString} <span class="small-text">(الرياض)</span></p>
+      <p>(توقيع)</p>
+
+      <hr>
+
+      <p><strong>الطرف الثاني:</strong> ${name}</p>
+      <p>(توقيع)</p>
+    </div>
   `;
 
   document.getElementById('contractContent').innerHTML = contractHTML;

@@ -11,12 +11,8 @@
       text-align: center;
       padding: 30px;
     }
-    .section {
-      display: none;
-    }
-    .active {
-      display: block;
-    }
+    .section { display: none; }
+    .active { display: block; }
     button {
       padding: 15px 25px;
       margin: 20px 10px;
@@ -28,9 +24,7 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-    button:hover {
-      background-color: #003d80;
-    }
+    button:hover { background-color: #003d80; }
     input {
       padding: 12px;
       margin: 10px;
@@ -47,18 +41,10 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       margin-top: 20px;
     }
-    h1, h2, h3 {
-      color: #222;
-    }
-    .signature {
-      margin-top: 30px;
-      font-size: 16px;
-      color: #555;
-    }
-    .small-text {
-      font-size: 14px;
-      color: gray;
-    }
+    h1, h2, h3 { color: #222; }
+    .signature { margin-top: 30px; font-size: 16px; color: #555; }
+    .small-text { font-size: 14px; color: gray; margin-top: 10px; }
+    footer { margin-top: 40px; color: gray; font-size: 13px; }
   </style>
 </head>
 <body>
@@ -81,46 +67,80 @@
   <input type="text" id="clientName" placeholder="الاسم الكامل" required><br>
   <input type="text" id="clientID" placeholder="رقم السجل المدني (10 أرقام)" required maxlength="10"><br>
   <button onclick="submitClientData()">باسم الله</button>
+  <div id="locationInfo" class="small-text"></div>
 </div>
 
 <div id="section4" class="section">
-  <div class="contract" id="contractContent">
-    <!-- سيتم إدخال نص العقد مع بيانات العميل هنا -->
-  </div>
+  <div class="contract" id="contractContent"></div>
   <button onclick="saveResponse('موافق')">أوافق</button>
   <button onclick="saveResponse('غير موافق')">لا أوافق</button>
 </div>
 
+<footer>الحقوق محفوظة والعقد تحت إشراف المحامات القانونية</footer>
+
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const response = localStorage.getItem('contract_response');
+  if (response) {
+    const res = JSON.parse(response);
+    document.body.innerHTML = `<div style="text-align:center; padding:50px;">
+      <h2>لا يمكن عرض العقد</h2>
+      <p>تم تسجيل <strong>${res.status}</strong> على العقد بتاريخ ${res.date}.</p>
+    </div>`;
+  }
+});
+
+window.onbeforeunload = function () {
+  return "هل أنت متأكد أنك تريد مغادرة هذه الصفحة؟";
+};
+
 function goToSection(number) {
   document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
   document.getElementById('section' + number).classList.add('active');
+  if (number === 3) displayLocationInfo();
+}
+
+function displayLocationInfo() {
+  const locationDiv = document.getElementById('locationInfo');
+  const now = new Date();
+  const nowString = now.toLocaleString('ar-EG');
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude.toFixed(4);
+        const lon = position.coords.longitude.toFixed(4);
+        locationDiv.innerHTML = `الوقت: ${nowString} | الموقع التقريبي: خط العرض ${lat}، خط الطول ${lon}`;
+      },
+      () => {
+        locationDiv.innerHTML = `الوقت: ${nowString} | الموقع: لم يتم السماح بالوصول إلى الموقع`;
+      }
+    );
+  } else {
+    locationDiv.innerHTML = `الوقت: ${nowString} | الموقع: غير مدعوم في هذا المتصفح`;
+  }
 }
 
 function submitClientData() {
   const name = document.getElementById('clientName').value.trim();
   const id = document.getElementById('clientID').value.trim();
-
   if (name === "" || id.length !== 10 || isNaN(id)) {
-    alert("يرجى إدخال الاسم الكامل ورقم سجل مدني صحيح مكون من 10 أرقام.");
+    alert("يرجى إدخال الاسم الكامل ورقم سجل مدني صحيح.");
     return;
   }
 
   const now = new Date();
   const nowString = now.toLocaleString('ar-EG');
-
-  const signedTime = new Date(now.getTime() - (11 * 60000)); // 11 دقيقة سابقة
+  const signedTime = new Date(now.getTime() - (11 * 60000));
   const signedTimeString = signedTime.toLocaleString('ar-EG');
 
   const contractHTML = `
     <h2>عقد اتفاق إنهاء إجراءات تمويل عقاري</h2>
-    <p>تم بحمد الله وتوفيقه في يوم: ${now.toLocaleDateString('ar-EG')}، الساعة: ${now.toLocaleTimeString('ar-EG')}, الاتفاق بين كلاً من:</p>
+    <p>تم بحمد الله وتوفيقه في يوم: ${now.toLocaleDateString('ar-EG')}، الساعة: ${now.toLocaleTimeString('ar-EG')}، الاتفاق بين كلاً من:</p>
     <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق، ترخيص رقم: 1100042624، وعنوانها: الرياض، جوال رقم: 0506214458، ويمثلها الأستاذ نايف المطيري بصفته مدير إدارة.</p>
     <p><strong>الطرف الثاني:</strong> ${name}، سجل مدني رقم: ${id}</p>
 
     <h3>تمهيد:</h3>
-    <p>يقر الطرف الأول بأنه يعمل بمهنة الوساطة العقارية، وله خبرة ومقدرة على إتمام إجراءات التمويل العقاري، وعليه فقد أبدى الطرف الثاني رغبته في إتمام هذه الخدمة من قبل الطرف الأول، وعليه فقد أبدى الطرف الأول استعداده للقيام بالخدمة بموجب هذا العقد وفقاً لما يلي:</p>
-
     <ol>
       <li>يلتزم الطرف الأول بإنهاء كافة إجراءات التمويل العقاري لدى الجهات التمويلية، واستلام شيك بأسم مالك العقار وتسليمه للطرف الثاني أو من يخصه حسب الاتفاق.</li>
       <li>يلتزم الطرف الثاني بسداد مبلغ وقدره 2.5٪ من قيمة العقار للطرف الأول مقابل إتمام الإجراءات، بالإضافة إلى مبلغ 500 ريال رسوم عقد.</li>
@@ -139,9 +159,7 @@ function submitClientData() {
       <p><strong>الطرف الأول:</strong> الوساطة العقارية والتسويق</p>
       <p>تم التوقيع في: ${signedTimeString} <span class="small-text">(الرياض)</span></p>
       <p>(توقيع)</p>
-
       <hr>
-
       <p><strong>الطرف الثاني:</strong> ${name}</p>
       <p>(توقيع)</p>
     </div>
@@ -154,21 +172,14 @@ function submitClientData() {
 function saveResponse(status) {
   const name = document.getElementById('clientName').value.trim();
   const id = document.getElementById('clientID').value.trim();
-
   const response = {
     name: name,
     id: id,
     status: status,
     date: new Date().toLocaleString('ar-EG')
   };
-
   localStorage.setItem('contract_response', JSON.stringify(response));
-
-  if (status === 'موافق') {
-    alert('تم تسجيل الموافقة بنجاح. شكرًا لك.');
-  } else {
-    alert('تم تسجيل الرفض. شكراً لك.');
-  }
+  alert(`تم تسجيل ${status} بنجاح. شكراً لك.`);
 }
 </script>
 

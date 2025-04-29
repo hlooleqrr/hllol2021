@@ -1,9 +1,8 @@
-<!-- ملف index.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عقد إنهاء التمويل - البداية</title>
+  <title>عقد إنهاء التمويل</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,12 +13,12 @@
 </body>
 </html>
 
-<!-- ملف page2.html -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>معلومات الشركة</title>
+  <title>بيانات الوسيط</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,12 +31,12 @@
 </body>
 </html>
 
-<!-- ملف page3.html -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>إدخال بيانات العميل</title>
+  <title>بيانات العميل</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -53,32 +52,30 @@
 </body>
 </html>
 
-<!-- ملف page4.html -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>قراءة العقد</title>
+  <title>نص العقد</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h2>نص العقد</h2>
-    <pre id="contractText">
-جاري تحميل نص العقد...
-    </pre>
+    <pre id="contractText">جاري تحميل نص العقد...</pre>
     <button onclick="location.href='page5.html'">التالي</button>
   </div>
   <script src="script.js"></script>
 </body>
 </html>
 
-<!-- ملف page5.html -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تأكيد القرار</title>
+  <title>الموافقة</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -91,11 +88,10 @@
 </body>
 </html>
 
-<!-- ملف style.css (تصميم لجميع الصفحات) -->
-<style>
+
 body {
   font-family: 'Tajawal', sans-serif;
-  background: #f9f9f9;
+  background: #f4f4f4;
   margin: 0;
   padding: 0;
   direction: rtl;
@@ -135,15 +131,13 @@ button:hover {
 }
 pre {
   text-align: right;
-  background: #eee;
+  background: #f1f1f1;
   padding: 15px;
   border-radius: 8px;
   white-space: pre-wrap;
 }
-</style>
 
-<!-- ملف script.js (برمجة تخزين البيانات) -->
-<script>
+
 function saveUserInfo() {
   const name = document.getElementById('name').value.trim();
   const id = document.getElementById('id').value.trim();
@@ -195,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ٩. إذا ألغيت الصفقة بعد صدور الشيك لا يحق للطرف الثاني المطالبة بأي مبالغ.
 ١٠. يخضع هذا العقد للأنظمة والتعليمات بالمملكة العربية السعودية.
 ١١. حرر هذا العقد من نسختين بيد كل طرف نسخة.
-`;
+    `;
   }
 });
 
@@ -218,4 +212,5 @@ function saveDecision(approved) {
   alert("تم حفظ قرارك بنجاح!");
   location.href = 'index.html';
 }
-</script>
+
+

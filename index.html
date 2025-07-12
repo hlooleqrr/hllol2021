@@ -19,26 +19,27 @@
   }
   .container {
     flex: 1;
-    max-width: 600px;
+    max-width: 650px;
     margin: auto;
-    padding: 20px;
+    padding: 20px 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   header {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
   header h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: #004d40;
-    margin: 10px 0 5px;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #00332f;
+    margin: 15px 0 10px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
   }
   header p {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: #00796b;
   }
   .page {
@@ -48,32 +49,41 @@
   .page.active {
     display: flex;
   }
-  textarea, input[type=text], input[type=number] {
+  label {
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+  input[type=text], input[type=number] {
     width: 100%;
     font-size: 1rem;
-    padding: 10px 12px;
-    margin: 12px 0 20px;
-    border-radius: 5px;
-    border: 1.5px solid #009688;
-    resize: vertical;
+    padding: 12px 15px;
+    margin: 10px 0 20px;
+    border-radius: 6px;
+    border: 2px solid #009688;
     font-family: 'Tajawal', sans-serif;
+    transition: border-color 0.3s ease;
   }
-  label {
-    font-weight: 600;
-    font-size: 1.1rem;
+  input[type=text]:focus, input[type=number]:focus {
+    outline: none;
+    border-color: #004d40;
+    box-shadow: 0 0 5px #004d40aa;
   }
   button {
     background-color: #00796b;
     color: #fff;
     border: none;
-    padding: 14px 25px;
-    font-size: 1.2rem;
-    border-radius: 7px;
+    padding: 16px 30px;
+    font-size: 1.3rem;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     align-self: center;
-    min-width: 140px;
-    font-weight: 700;
+    min-width: 160px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
   button:hover:not(:disabled) {
     background-color: #004d40;
@@ -84,49 +94,98 @@
   }
   footer {
     text-align: center;
-    font-size: 0.9rem;
-    color: #555;
-    padding: 10px 0;
+    font-size: 1rem;
+    color: #d32f2f;
+    padding: 12px 0;
     border-top: 1px solid #ddd;
-    background-color: #e0f2f1;
-    font-weight: 600;
+    background-color: #fff0f0;
+    font-weight: 700;
   }
   .contract-text {
-    white-space: pre-line;
     font-size: 1rem;
-    line-height: 1.5;
-    max-height: 400px;
+    line-height: 1.6;
+    max-height: 470px;
     overflow-y: auto;
-    border: 1px solid #009688;
-    padding: 15px;
-    border-radius: 8px;
-    background: #fafafa;
-    margin-bottom: 15px;
+    border: 2px solid #009688;
+    padding: 20px 25px;
+    border-radius: 10px;
+    background: #f6fdfd;
+    margin-bottom: 25px;
+    white-space: pre-wrap;
   }
   .notice {
     background-color: #b2dfdb;
-    border-radius: 6px;
-    padding: 12px 15px;
-    font-weight: 600;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-weight: 700;
     color: #004d40;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     text-align: center;
     white-space: pre-line;
   }
   .error-msg {
     color: #d32f2f;
-    font-weight: 700;
-    margin-top: 10px;
+    font-weight: 800;
+    margin-top: 12px;
     text-align: center;
+  }
+  .btn-approve {
+    background-color: #2e7d32;
+  }
+  .btn-approve:hover:not(:disabled) {
+    background-color: #145214;
+  }
+  .btn-reject {
+    background-color: #c62828;
+  }
+  .btn-reject:hover:not(:disabled) {
+    background-color: #7b1a1a;
+  }
+  .icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  #rejectMsg {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #c62828;
+    font-weight: 800;
+    text-align: center;
+  }
+  input.inline-fill {
+    border: none;
+    border-bottom: 2px solid #004d40;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0 5px;
+    min-width: 100px;
+    max-width: 200px;
+    background: transparent;
+    text-align: center;
+    margin: 0 3px;
+  }
+  input.inline-fill:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 4px #2e7d3288;
+  }
+  /* لضبط النص الذي يحوي الحقول ليتوافق */
+  .contract-text span.inline-field {
+    vertical-align: bottom;
   }
   @media (max-width: 480px) {
     header h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
     button {
-      font-size: 1rem;
-      padding: 12px 20px;
-      min-width: 100px;
+      font-size: 1.1rem;
+      padding: 14px 22px;
+      min-width: 140px;
+    }
+    input.inline-fill {
+      min-width: 80px;
+      max-width: 140px;
+      font-size: 0.9rem;
     }
   }
 </style>
@@ -138,14 +197,14 @@
   <!-- الصفحة 1 -->
   <section id="page1" class="page active" aria-label="الصفحة الأولى - مقدمة العقد">
     <header>
-      <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+      <h1>سرعة تملك العقار<br> والحلول التمويلية المتكاملة</h1>
       <p>نرحب بك عميلنا العزيز</p>
     </header>
-    <p style="font-size:1.1rem; line-height:1.5; text-align:center; margin-bottom:30px;">
+    <p style="font-size:1.2rem; line-height:1.6; text-align:center; margin-bottom:40px; font-weight:600;">
       نبرم معك هذا العقد<br><br>
       <strong>بسم الله الرحمن الرحيم</strong>
     </p>
-    <button id="startBtn">التالي</button>
+    <button id="startBtn">التالي ➔</button>
   </section>
 
   <!-- الصفحة 2 -->
@@ -154,39 +213,58 @@
     <input type="text" id="fullName" name="fullName" autocomplete="name" placeholder="اكتب اسمك الكريم" required />
     <label for="idNumber">السجل المدني:</label>
     <input type="text" id="idNumber" name="idNumber" placeholder="أدخل رقم السجل المدني (10 أرقام)" maxlength="10" pattern="\d{10}" title="رقم السجل المدني مكون من 10 أرقام" required />
-    <button id="toContractBtn" disabled>التالي</button>
+    <button id="toContractBtn" disabled>التالي ➔</button>
   </section>
 
   <!-- الصفحة 3 -->
   <section id="page3" class="page" aria-label="الصفحة الثالثة - عرض العقد">
-    <div class="notice" id="noticeText"></div>
     <div class="contract-text" id="contractText" tabindex="0" aria-live="polite" aria-label="نص العقد">
+      <!-- سيتم تحديث النص مع الحقول -->
     </div>
-    <button id="toApproveBtn">موافق على العقد</button>
+    <button id="toApproveBtn" class="btn-approve">✓ موافق على العقد</button>
   </section>
 
   <!-- الصفحة 4 -->
   <section id="page4" class="page" aria-label="الصفحة الرابعة - الموافقة النهائية">
-    <p style="font-weight:600; font-size:1.2rem; margin-bottom: 20px; text-align:center;" id="approvalPrompt">
+    <p style="font-weight:700; font-size:1.3rem; margin-bottom: 15px; text-align:center;">
       الرجاء تأكيد بياناتك لإتمام العقد
     </p>
+
     <label for="confirmId">رقم الهوية:</label>
-    <input type="text" id="confirmId" name="confirmId" placeholder="أدخل رقم الهوية" maxlength="10" pattern="\d{10}" title="رقم الهوية مكون من 10 أرقام" required />
+    <input type="text" id="confirmId" name="confirmId" placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" pattern="\d{10}" title="رقم الهوية مكون من 10 أرقام" required />
+
     <label for="approvalText">اكتب كلمة (موافق):</label>
     <input type="text" id="approvalText" name="approvalText" placeholder="موافق" required />
+
     <div class="error-msg" id="errorMsg" role="alert" aria-live="assertive"></div>
-    <button id="finalizeBtn">إتمام العقد</button>
+
+    <div id="approvalNotice" class="notice" style="display:none;"></div>
+
+    <div style="display:flex; justify-content:center; gap: 15px; margin-top: 20px;">
+      <button id="finalizeBtn" class="btn-approve">
+        <span class="icon">✓</span> إتمام العقد
+      </button>
+      <button id="rejectBtn" class="btn-reject">
+        <span class="icon">×</span> رفض العقد
+      </button>
+    </div>
+
+    <div id="rejectMsg" role="alert" style="display:none;">
+      تم رفض العقد بشكل رسمي. يرجى التواصل مع الممثل القانوني. شكرًا.
+    </div>
   </section>
 
   <!-- الصفحة 5 (النهائية) -->
   <section id="page5" class="page" aria-label="تم إبرام العقد">
-    <h2 style="color:#00796b; text-align:center; margin-top: 40px;">تم إبرام العقد بنجاح ✅</h2>
+    <h2 style="color:#2e7d32; text-align:center; margin-top: 50px; font-weight: 900; font-size: 2rem;">
+      تم إبرام العقد بنجاح ✅
+    </h2>
   </section>
 
 </div>
 
 <footer aria-live="polite" aria-atomic="true" aria-relevant="text" id="footer">
-  <!-- التاريخ والوقت يظهر هنا -->
+  ⚠️ تنبيه: هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
 </footer>
 
 <script>
@@ -196,15 +274,35 @@
   function showPage(id) {
     pages.forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+
+    document.getElementById('rejectMsg').style.display = 'none';
+    document.getElementById('approvalNotice').style.display = 'none';
+    document.getElementById('errorMsg').textContent = '';
   }
 
+  // تحديث التاريخ والوقت بالثواني كل ثانية (للفوتر)
   function updateDateTime() {
     const now = new Date();
     const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
     const dayName = days[now.getDay()];
     const date = now.toLocaleDateString('ar-SA', {year: 'numeric', month: '2-digit', day: '2-digit'});
     const time = now.toLocaleTimeString('ar-SA', {hour12: false});
-    footer.textContent = `اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
+    footer.textContent = `⚠️ تنبيه: هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
+اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
+
+    // أيضاً تحديث الوقت داخل الحقول الخاصة بالعقد (في الصفحة 3)
+    const contractTimeFields = document.querySelectorAll('.contract-time');
+    contractTimeFields.forEach(el => {
+      el.textContent = time;
+    });
+    const contractDateFields = document.querySelectorAll('.contract-date');
+    contractDateFields.forEach(el => {
+      el.textContent = date;
+    });
+    const contractDayFields = document.querySelectorAll('.contract-day');
+    contractDayFields.forEach(el => {
+      el.textContent = dayName;
+    });
   }
   setInterval(updateDateTime, 1000);
   updateDateTime();
@@ -228,7 +326,7 @@
   fullNameInput.addEventListener('input', validatePage2);
   idNumberInput.addEventListener('input', validatePage2);
 
-  // الصفحة 2 -> 3
+  // الصفحة 2 -> 3: توليد نص العقد مع الحقول الفراغية والتاريخ أونلاين
   toContractBtn.addEventListener('click', () => {
     if (toContractBtn.disabled) return;
 
@@ -243,11 +341,17 @@
       const dayName = days[d.getDay()];
       const date = d.toLocaleDateString('ar-SA', {year: 'numeric', month: '2-digit', day: '2-digit'});
       const time = d.toLocaleTimeString('ar-SA', {hour12: false});
-      return `اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
+      return {dayName, date, time};
     }
 
-    const contractText = 
-`بسم الله الرحمن الرحيم
+    // التاريخ في لحظة الانتقال
+    const fDate = formatDate(now);
+    const fAppDate = formatDate(approvalDate);
+
+    // نص العقد مع حقول فراغية إدخال (inputs inline)
+    // تعبير HTML مركب للنص مع حقول <input>
+    const contractHtml = `
+بسم الله الرحمن الرحيم
 
 المملكة العربية السعودية
  الوساطة العقارية والتسويق
@@ -259,26 +363,26 @@
 
 عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
 
-تم بعون الله وتوفيقه في يوم ………… الموافق ………… هـ، الموافق ………… م، الاتفاق بين كلٍ من:
+تم بعون الله وتوفيقه في يوم <span class="contract-day contract-fill">${fDate.dayName}</span> الموافق <span class="contract-date contract-fill">${fDate.date}</span> هـ، الموافق <span class="contract-date contract-fill">${fDate.date}</span> م، الاتفاق بين كلٍ من:
 
 ⸻
 
 الطرف الأول:
 
-شركة  الوساطة العقارية والتسويق
+شركة الوساطة العقارية والتسويق
 ويمثلها في التوقيع على هذا العقد الأستاذ: نايف المطيري………………………………
-بصفته:  مدير الادراة
+بصفته: مدير الادارة
 ويُشار إليه في هذا العقد بـ (الطرف الأول)
 
 ⸻
 
 الطرف الثاني:
 
-الاسم: ${window.clientName}
-رقم الهوية: ${window.clientId}
-العنوان: 
-تاريخ الميلاد: 
-رقم الجوال: ………………………..
+الاسم: <span class="contract-fill">${window.clientName}</span>
+رقم الهوية: <span class="contract-fill">${window.clientId}</span>
+العنوان: <input type="text" class="inline-fill" placeholder="اكتب العنوان هنا" aria-label="العنوان" />
+تاريخ الميلاد: <input type="text" class="inline-fill" placeholder="مثلاً 1400/01/01" aria-label="تاريخ الميلاد" />
+رقم الجوال: <input type="text" class="inline-fill" placeholder="05xxxxxxxx" aria-label="رقم الجوال" />
 
 ويُشار إليه في هذا العقد بـ (الطرف الثاني)
 
@@ -303,80 +407,4 @@
 
 4. في حال عدم إتمام الصفقة لسبب لا يعود للطرف الثاني، مثل رجوع مالك العقار عن البيع، أو ظهور عيوب في العقار، أو عدم موافقة البنك، فإن الطرف الأول يلتزم بإعادة المبلغ المدفوع للطرف الثاني اذا كان مدفوع مقدما بسند قبض او بيصال من البنك.
 
-5. في حال رجوع الطرف الثاني عن إبرام الصفقة لأي سبب يعود له، فإن المبلغ المدفوع للطرف الأول يُعد مستحقًا ويُطالب الطرف الثاني بالوفاء به كاملًا.
-
-6. في حال مماطلة الطرف الثاني أو تأخره عن الحضور أو التوقيع، مما يُضِر بالمالك ويجعله يبيع العقار لطرف آخر او يتغير عرض الجهة الممولة، فإن المبلغ المدفوع للطرف الأول يُعد من حقه، لأن عدم إتمام الصفقة جاء بسبب الطرف الثاني.
-
-7. يلتزم الطرف الثاني بعدم إخفاء أي معلومات يعلم أنها تُعيق المعاملة، مثل وجود التزامات أو مشاكل على العقار، أو وجود متعثرات او  إيقافات او اللتزمات لم يذكرها وموجودة في (سمة)، أو تقديم طلب تمويل سابق مرفوض.
-
-8. يلتزم الطرف الثاني بتحويل راتبه إلى البنك المحدد لاحقًا إن دعت الحاجة لذلك.
-
-9. بعد موافقة المالك والبنك وإتمام البيع، تنتهي علاقة الطرف الثاني بالطرف الأول، وتصبح العلاقة مباشرة مع الجهة التمويلية.
-
-10. العناوين المدونة في صدر هذا العقد تُعد معتمدة للمراسلات والإشعارات بين الطرفين.
-
-11. في حال حدوث نزاع – لا سمح الله – ولم يتم حله وديًا خلال 10 أيام، يُحال إلى المحكمة المختصة بمدينة الرياض.
-
-12. حُرر هذا العقد من نسختين أصليتين، بيد كل طرف نسخة للعمل بموجبها، وقد تفاهم الطرفان على حسن التعامل، وإعطاء كل ذي حق حقه.
-
-⸻
-
-توقيع الطرفين:
-
-الطرف الأول:
-  الوساطة العقارية والتسويق
-الاسم: مدير الادارة /نايف المطيري……………………………………………………..
-التوقيع: تم الموافقة على هذا العقد و التوقيع من قبله بتاريخ
-${formatDate(approvalDate)}
-
-الطرف الثاني:
-الاسم: ${window.clientName}
-التوقيع: ………………………………………………….
-⸻
-
-الفوتر:
-
-تنبيه
-هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية`;
-
-    document.getElementById('contractText').textContent = contractText;
-    document.getElementById('noticeText').textContent = `تمت الموافقة من الطرف الأول بتاريخ:\n${formatDate(approvalDate)}`;
-    showPage('page3');
-  });
-
-  // الصفحة 3 -> 4
-  document.getElementById('toApproveBtn').addEventListener('click', () => {
-    showPage('page4');
-    document.getElementById('confirmId').focus();
-  });
-
-  // الصفحة 4 تحقق صحة البيانات قبل الانتقال للصفحة النهائية
-  document.getElementById('finalizeBtn').addEventListener('click', () => {
-    const confirmId = document.getElementById('confirmId').value.trim();
-    const approvalText = document.getElementById('approvalText').value.trim();
-    const errorMsg = document.getElementById('errorMsg');
-    errorMsg.textContent = '';
-
-    if (!/^\d{10}$/.test(confirmId)) {
-      errorMsg.textContent = 'رقم الهوية يجب أن يكون مكونًا من 10 أرقام.';
-      return;
-    }
-    if (approvalText !== 'موافق') {
-      errorMsg.textContent = 'الرجاء كتابة كلمة "موافق" بشكل صحيح.';
-      return;
-    }
-
-    showPage('page5');
-  });
-
-  function formatDate(d) {
-    const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-    const dayName = days[d.getDay()];
-    const date = d.toLocaleDateString('ar-SA', {year: 'numeric', month: '2-digit', day: '2-digit'});
-    const time = d.toLocaleTimeString('ar-SA', {hour12: false});
-    return `اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
-  }
-</script>
-
-</body>
-</html>
+5. في حال رجوع الطرف الثاني عن إبرام الصفقة لأي سبب يعود له، فإن

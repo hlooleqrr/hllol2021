@@ -6,9 +6,7 @@
 <title>سرعة تملك العقار والحلول التمويلية المتكاملة</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
   body, html {
     margin: 0; padding: 0; height: 100%;
     font-family: 'Tajawal', sans-serif;
@@ -18,7 +16,6 @@
     flex-direction: column;
     min-height: 100vh;
   }
-  /* إطار رسمي لكل صفحة */
   .container {
     flex: 1;
     max-width: 650px;
@@ -32,21 +29,15 @@
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 77, 64, 0.25);
   }
-  /* صفحات مخفية/ظاهرة */
-  .page {
-    display: none;
-    flex-direction: column;
-  }
-  .page.active {
-    display: flex;
-  }
+  .page { display: none; flex-direction: column; }
+  .page.active { display: flex; }
   header {
     text-align: center;
     margin-bottom: 30px;
     padding: 25px 30px;
     background: linear-gradient(135deg, #004d40, #00796b);
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
   }
   header h1 {
     font-size: 3rem;
@@ -108,7 +99,7 @@
   }
   footer {
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #d32f2f;
     padding: 14px 10px;
     border-top: 2px solid #ddd;
@@ -228,7 +219,7 @@
       نبرم معك هذا العقد<br><br>
       <strong>بسم الله الرحمن الرحيم</strong>
     </p>
-    <button id="startBtn" type="button" aria-label="الانتقال إلى الصفحة الثانية">التالي ➔</button>
+    <button id="startBtn" type="button" aria-label="ابدأ">ابدأ</button>
   </section>
 
   <!-- الصفحة 2 -->
@@ -237,15 +228,13 @@
     <input type="text" id="fullName" name="fullName" autocomplete="name" placeholder="اكتب اسمك الكريم" required aria-required="true" />
     <label for="idNumber">السجل المدني:</label>
     <input type="text" id="idNumber" name="idNumber" placeholder="أدخل رقم السجل المدني (10 أرقام)" maxlength="10" pattern="\\d{10}" title="رقم السجل المدني مكون من 10 أرقام" required aria-required="true" />
-    <button id="toContractBtn" disabled type="button" aria-label="الانتقال إلى الصفحة الثالثة">التالي ➔</button>
+    <button id="toContractBtn" disabled type="button" aria-label="التالي">التالي ➔</button>
   </section>
 
   <!-- الصفحة 3 -->
   <section id="page3" class="page" aria-label="الصفحة الثالثة - عرض العقد">
-    <div class="contract-text" id="contractText" tabindex="0" aria-live="polite" aria-label="نص العقد">
-      <!-- سيتم تحديث النص مع الحقول -->
-    </div>
-    <button id="toApproveBtn" class="btn-approve" type="button" aria-label="الانتقال إلى صفحة الموافقة">✓ موافق على العقد</button>
+    <div class="contract-text" id="contractText" tabindex="0" aria-live="polite" aria-label="نص العقد"></div>
+    <button id="toApproveBtn" class="btn-approve" type="button" aria-label="موافق على العقد">✓ موافق على العقد</button>
   </section>
 
   <!-- الصفحة 4 -->
@@ -313,11 +302,6 @@
     const time = now.toLocaleTimeString('ar-SA', {hour12: false});
     footer.textContent = `⚠️ تنبيه: هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
 اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
-
-    // تحديث الحقول في نص العقد (الصفحة 3)
-    document.querySelectorAll('.contract-day').forEach(el => el.textContent = dayName);
-    document.querySelectorAll('.contract-date').forEach(el => el.textContent = date);
-    document.querySelectorAll('.contract-time').forEach(el => el.textContent = time);
   }
   setInterval(updateDateTime, 1000);
   updateDateTime();
@@ -341,8 +325,8 @@
   fullNameInput.addEventListener('input', validatePage2);
   idNumberInput.addEventListener('input', validatePage2);
 
-  // الصفحة 2 -> 3 : عرض العقد مع حقول قابلة للتعبئة
-  toContractBtn.addEventListener('click', () => {
+  // الصفحة 2 -> 3 : عرض العقد
+  document.getElementById('toContractBtn').addEventListener('click', () => {
     if (toContractBtn.disabled) return;
 
     window.clientName = fullNameInput.value.trim();
@@ -356,15 +340,12 @@
       const dayName = days[d.getDay()];
       const date = d.toLocaleDateString('ar-SA', {year: 'numeric', month: '2-digit', day: '2-digit'});
       const time = d.toLocaleTimeString('ar-SA', {hour12: false});
-      return {dayName, date, time};
+      return `اليوم: ${dayName} - التاريخ: ${date} - الوقت: ${time}`;
     }
 
-    const fDate = formatDate(now);
-    const fAppDate = formatDate(approvalDate);
-
-    // عقد بصيغة HTML مع حقول إدخال داخل النص (فراغات تعبئة)
-    const contractHtml = `
-بسم الله الرحمن الرحيم
+    // نص العقد مع دمج الاسم ورقم الهوية (يمكنك تعديل النص حسب طلبك)
+    const contractText = 
+`بسم الله الرحمن الرحيم
 
 المملكة العربية السعودية
  الوساطة العقارية والتسويق
@@ -376,7 +357,7 @@
 
 عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
 
-تم بعون الله وتوفيقه في يوم <span class="contract-day">${fDate.dayName}</span> الموافق <span class="contract-date">${fDate.date}</span> هـ، الموافق <span class="contract-date">${fDate.date}</span> م، الاتفاق بين كلٍ من:
+تم بعون الله وتوفيقه في يوم ………… الموافق ………… هـ، الموافق ………… م، الاتفاق بين كلٍ من:
 
 ⸻
 
@@ -391,11 +372,11 @@
 
 الطرف الثاني:
 
-الاسم: <strong>${window.clientName}</strong>
-رقم الهوية: <strong>${window.clientId}</strong>
-العنوان: <input type="text" class="inline-fill" placeholder="اكتب العنوان هنا" aria-label="العنوان" />
-تاريخ الميلاد: <input type="text" class="inline-fill" placeholder="مثلاً 1400/01/01" aria-label="تاريخ الميلاد" />
-رقم الجوال: <input type="text" class="inline-fill" placeholder="05xxxxxxxx" aria-label="رقم الجوال" />
+الاسم: ${window.clientName}
+رقم الهوية: ${window.clientId}
+العنوان: ________________
+تاريخ الميلاد: ________________
+رقم الجوال: ________________
 
 ويُشار إليه في هذا العقد بـ (الطرف الثاني)
 
@@ -404,4 +385,22 @@
 التمهيد:
 
 حيثُ أن الطرف الأول وساطة عقارية مرخصة بالوساطة العقارية وشراء وبيع العقارات، وتقوم بخدمة عملائها بتوفير العقار المناسب بناء على طلبهم، وتيسير حصولهم على تمويل مالي يمكنهم من تملّك العقار  ، وذلك بأي من برامج المرابحة أو الإجارة المنتهية بالتمليك المعتمدة من الهيئات الشرعية لدى البنوك والجهات التمويلية،ولخبرة الطرف الاول فقد اوكل الطرف الثاني هذي المهمة.
-ولما كان الطرف الثاني يرغب في تملّك العقار حدده الطرف الثاني، فقد قام الطرف الأول بتسهيل كل ما
+ولما كان الطرف الثاني يرغب في تملّك العقار حدده الطرف الثاني، فقد قام الطرف الأول بتسهيل كل ما من شأنه حصول الطرف الثاني على العقار المطلوب، وذلك بعمل جميع الإجراءات والمفاوضات مع مالك العقار، والجهات الممولة ومعرفة عروضها والحلول الممكنة لإنجاز الطرف الثاني، والجهات المقيمة للعقار لسرعة التقييم .
+
+وعليه فقد اتفق الطرفان – بكامل الأهلية الشرعية والنظامية – على ما يلي:
+
+⸻
+
+البنود:
+
+1. يعتبر التمهيد المذكور أعلاه جزء لا يتجزأ من هذا العقد ويُقرأ معه ويفسّر كوحدة واحدة.
+
+2. يقوم الطرف الأول بإتمام جميع الإجراءات والمفاوضات المتعلقة بالعقار المحدد من قبل الطرف الثاني، لإتمام الصفقة لصالح الطرف الثاني من الجهة التمويلية المعتمدة لدى الطرف الأول.
+
+3. يلتزم الطرف الثاني بدفع مبلغ قدره نسبة2.5% قيمة العقار+500﷼ رسوم عقد ريال للطرف الأول،  مقابل قيام الطرف الأول بالوفاء بجميع التزاماته.
+
+4. في حال عدم إتمام الصفقة لسبب لا يعود للطرف الثاني، مثل رجوع مالك العقار عن البيع، أو ظهور عيوب في العقار، أو عدم موافقة البنك، فإن الطرف الأول يلتزم بإعادة المبلغ المدفوع للطرف الثاني اذا كان مدفوع مقدما بسند قبض او بيصال من البنك.
+
+5. في حال رجوع الطرف الثاني عن إبرام الصفقة لأي سبب يعود له، فإن المبلغ المدفوع للطرف الأول يُعد مستحقًا ويُطالب الطرف الثاني بالوفاء به كاملًا.
+
+6. في حال مماطلة الطرف الثاني أو تأخره عن الحضور أو التوقيع، مما يُضِر بالمالك ويجعله يبيع العقار لطرف آخر او يتغير عرض الجهة الممولة، فإن المبلغ المدفوع للطرف

@@ -2,187 +2,425 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>سرعة تملك العقار</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
       font-family: 'Tajawal', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-      color: #222;
+      background: #f9fafb;
+      color: #002c27;
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    #app {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    header {
+      background: #004d40;
+      color: #e0f7f1;
+      padding: 25px 20px 20px 20px;
+      font-size: 1.7rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px 25px 80px 25px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    footer {
+      height: 50px;
+      line-height: 50px;
+      background: #e0f7f1;
+      color: #004d40;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      position: relative;
+      user-select: none;
+      border-top: 1px solid #b2dfdb;
+    }
+
+    /* صفحة 1 */
+    #page1 h1 {
+      font-size: 2.3rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+      color: #004d40;
+      text-shadow: 1px 1px 2px rgba(0,77,64,0.4);
+    }
+    #page1 .welcome {
+      font-size: 1.25rem;
+      margin-bottom: 25px;
+      color: #00796b;
+      font-weight: 600;
       text-align: center;
     }
-    .screen {
-      padding: 40px 20px;
-      display: none;
-    }
-    .active {
-      display: block;
-    }
-    h1 {
-      font-size: 28px;
+    #page1 .contract-intro {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-align: center;
       color: #004d40;
     }
-    h2 {
-      font-size: 22px;
-      color: #009688;
-      margin: 20px 0;
+    #page1 .start-phrase {
+      font-size: 1.1rem;
+      font-style: italic;
+      text-align: center;
+      color: #004d40;
     }
-    input, button {
-      padding: 10px;
-      font-size: 18px;
-      margin: 10px 0;
-      width: 80%;
-      max-width: 300px;
+
+    /* صفحة 2 */
+    #page2 form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 20px;
     }
-    button {
-      background-color: #00796b;
+    #page2 input[type="text"] {
+      font-size: 1.2rem;
+      padding: 12px 15px;
+      border-radius: 6px;
+      border: 1.5px solid #004d40;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    #page2 input[type="text"]:focus {
+      border-color: #00796b;
+      box-shadow: 0 0 6px rgba(0,121,107,0.4);
+    }
+
+    #page2 button {
+      background: #00796b;
       color: white;
+      font-size: 1.25rem;
+      padding: 14px 0;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      transition: background 0.3s ease;
     }
-    .footer {
-      padding: 10px;
-      font-size: 14px;
-      color: #888;
+    #page2 button:hover {
+      background: #004d40;
     }
-    .contract-text {
-      text-align: right;
-      padding: 0 20px;
-      font-size: 16px;
-      line-height: 2;
-      max-height: 70vh;
+
+    /* صفحة 3 */
+    #page3 {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    #page3 .contract-text {
+      flex: 1;
       overflow-y: auto;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      color: #004d40;
+      padding: 10px 15px;
+      border: 1px solid #004d40;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background: #f0f7f5;
+      user-select: text;
+      white-space: pre-wrap;
     }
+    #page3 .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    #page3 button {
+      flex: 1;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 12px 0;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    #approveFirstBtn {
+      background: #00796b;
+      color: white;
+    }
+    #approveFirstBtn:hover {
+      background: #004d40;
+    }
+    #secondPartyAction {
+      margin-top: 15px;
+      display: none;
+      justify-content: center;
+      gap: 15px;
+    }
+    #secondPartyAction button {
+      background: #004d40;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    #secondPartyAction button:hover {
+      background: #00796b;
+    }
+    #timeBeforeLabel {
+      font-size: 0.9rem;
+      color: #004d40;
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* صفحة 4 */
+    #page4 form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 10px;
+    }
+    #page4 input[type="text"] {
+      font-size: 1.2rem;
+      padding: 12px 15px;
+      border-radius: 6px;
+      border: 1.5px solid #004d40;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+    #page4 input[type="text"]:focus {
+      border-color: #00796b;
+      box-shadow: 0 0 6px rgba(0,121,107,0.4);
+    }
+    #page4 button {
+      background: #00796b;
+      color: white;
+      font-size: 1.25rem;
+      padding: 14px 0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      transition: background 0.3s ease;
+    }
+    #page4 button:hover {
+      background: #004d40;
+    }
+    #successMessage {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #00796b;
+      text-align: center;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    /* تنسيقات مشتركة */
+    .hidden {
+      display: none !important;
+    }
+    /* Scrollbar for contract text */
+    #page3 .contract-text::-webkit-scrollbar {
+      width: 8px;
+    }
+    #page3 .contract-text::-webkit-scrollbar-thumb {
+      background-color: #00796b;
+      border-radius: 4px;
+    }
+    #page3 .contract-text::-webkit-scrollbar-track {
+      background: #e0f7f1;
+    }
+
   </style>
 </head>
 <body>
+  <div id="app">
 
-  <!-- الصفحة الأولى -->
-  <div id="screen1" class="screen active">
-    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
-    <h2>نرحب بك عميلنا العزيز</h2>
-    <p>نبرم معك هذا العقد</p>
-    <p><strong>ابدأ بسم الله</strong></p>
-    <button onclick="goToScreen(2)">التالي</button>
+    <header>سرعة تملك العقار والحلول التمويلية المتكاملة</header>
+
+    <main>
+      <!-- الصفحة 1 -->
+      <section id="page1">
+        <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+        <div class="welcome">نرحب بك عميلنا العزيز</div>
+        <div class="contract-intro">نبرم معك هذا العقد</div>
+        <div class="start-phrase">ابدأ بسم الله</div>
+        <div style="margin-top:40px; text-align:center;">
+          <button id="goToPage2" style="background:#00796b; color:#fff; padding:14px 28px; border:none; border-radius:8px; font-size:1.25rem; font-weight:700; cursor:pointer;">ابدأ</button>
+        </div>
+      </section>
+
+      <!-- الصفحة 2 -->
+      <section id="page2" class="hidden">
+        <form id="formPage2" autocomplete="off" novalidate>
+          <input type="text" id="clientName" name="clientName" placeholder="الاسم الكريم" required minlength="2" />
+          <input type="text" id="clientID" name="clientID" placeholder="السجل المدني" required pattern="\d{10,12}" title="ادخل رقم السجل المدني صحيح" />
+          <button type="submit">التالي</button>
+        </form>
+      </section>
+
+      <!-- الصفحة 3 -->
+      <section id="page3" class="hidden">
+        <div id="timeBeforeLabel"></div>
+        <div class="contract-text" id="contractText" tabindex="0" aria-label="نص العقد"></div>
+        <div class="action-buttons">
+          <button id="approveFirstBtn">موافقة الطرف الأول</button>
+        </div>
+        <div id="secondPartyAction" aria-live="polite" role="region">
+          <button id="secondApproveBtn">موافقة الطرف الثاني</button>
+          <button id="secondRejectBtn" style="background:#d32f2f;">رفض الطرف الثاني</button>
+        </div>
+      </section>
+
+      <!-- الصفحة 4 -->
+      <section id="page4" class="hidden">
+        <form id="formPage4" autocomplete="off" novalidate>
+          <input type="text" id="confirmID" name="confirmID" placeholder="رقم الهوية" required pattern="\d{10,12}" title="ادخل رقم الهوية صحيح" />
+          <input type="text" id="confirmText" name="confirmText" placeholder="اكتب كلمة (موافق)" required pattern="^(موافق|موافقة|موافقاً)$" title='اكتب كلمة "موافق" بالضبط' />
+          <button type="submit">تأكيد</button>
+        </form>
+        <div id="successMessage" class="hidden">تم إبرام العقد بنجاح ✅</div>
+      </section>
+    </main>
+
+    <footer id="footerDateTime">
+      <!-- التاريخ والوقت يُعرض هنا -->
+    </footer>
+
   </div>
 
-  <!-- الصفحة الثانية -->
-  <div id="screen2" class="screen">
-    <h2>يرجى تعبئة البيانات</h2>
-    <input id="clientName" type="text" placeholder="الاسم الكريم" />
-    <input id="clientID" type="text" placeholder="السجل المدني" />
-    <button onclick="goToScreen(3)">التالي</button>
-  </div>
+<script>
+  (() => {
+    // العناصر
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const page3 = document.getElementById('page3');
+    const page4 = document.getElementById('page4');
+    const footerDateTime = document.getElementById('footerDateTime');
 
-  <!-- العقد -->
-  <div id="screen3" class="screen">
-    <div id="contractText" class="contract-text"></div>
-    <button onclick="goToScreen(4)">التالي</button>
-  </div>
+    const goToPage2Btn = document.getElementById('goToPage2');
+    const formPage2 = document.getElementById('formPage2');
+    const formPage4 = document.getElementById('formPage4');
 
-  <!-- الموافقة أو الرفض -->
-  <div id="screen4" class="screen">
-    <h2>تمت الموافقة من الطرف الأول بتاريخ <span id="contractDate"></span></h2>
-    <p>هل ترغب بالموافقة على العقد؟</p>
-    <button onclick="goToScreen(5)">أوافق</button>
-    <button onclick="goToScreen(6)">لا أوافق</button>
-  </div>
+    const contractTextEl = document.getElementById('contractText');
+    const timeBeforeLabel = document.getElementById('timeBeforeLabel');
+    const approveFirstBtn = document.getElementById('approveFirstBtn');
+    const secondPartyAction = document.getElementById('secondPartyAction');
+    const secondApproveBtn = document.getElementById('secondApproveBtn');
+    const secondRejectBtn = document.getElementById('secondRejectBtn');
 
-  <!-- تأكيد الهوية -->
-  <div id="screen5" class="screen">
-    <h2>تأكيد الموافقة</h2>
-    <input id="confirmID" type="text" placeholder="رقم الهوية" />
-    <input id="confirmWord" type="text" placeholder="اكتب: موافق" />
-    <button onclick="validateConfirmation()">تأكيد</button>
-  </div>
+    const confirmID = document.getElementById('confirmID');
+    const confirmText = document.getElementById('confirmText');
+    const successMessage = document.getElementById('successMessage');
 
-  <!-- صفحة الرفض -->
-  <div id="screen6" class="screen">
-    <h2 style="color: red;">تم رفض العقد</h2>
-    <p>يرجى التواصل مع الممثل القانوني. شكرًا لتعاونك.</p>
-  </div>
+    // بيانات العميل
+    let clientName = '';
+    let clientID = '';
 
-  <!-- صفحة النجاح -->
-  <div id="screen7" class="screen">
-    <h2 style="color: green;">✅ تم إبرام العقد بنجاح</h2>
-  </div>
-
-  <!-- الفوتر -->
-  <div class="footer" id="footerTime"></div>
-
-  <script>
-    function goToScreen(n) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('screen' + n).classList.add('active');
-
-      if (n === 3) {
-        const name = document.getElementById('clientName').value;
-        const id = document.getElementById('clientID').value;
-        let now = new Date();
-        now.setMinutes(now.getMinutes() - 21);
-        const formattedTime = now.toLocaleTimeString('ar-EG');
-        const formattedDate = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-        document.getElementById('contractText').innerHTML = `
-        تمهيد:
-        <br>
-        لما كان الطرف الأول مؤسسة "سرعة تملك العقار" بسجل تجاري رقم 1010948479 وترخيص وساطة عقارية رقم 1100042624 ويمثلها الأستاذ نايف المطيري بصفته "مدير إدارة"، ويشار إليه بـ (الطرف الأول)،
-        <br><br>
-        وكان الطرف الثاني هو العميل: ${name}، السجل المدني: ${id}، ويشار إليه بـ (الطرف الثاني)،
-        <br><br>
-        وحيث أن الطرف الثاني يرغب بالحصول على خدمات الطرف الأول في إنهاء إجراءات التمويل العقاري من الجهات التمويلية المختلفة (مدعوم - غير مدعوم - بناء ذاتي)، فقد اتفق الطرفان على إبرام هذا العقد وفق البنود التالية:
-        <br><br>
-        1. يدفع الطرف الثاني للطرف الأول مبلغًا وقدره ٢.٥٪؜ من قيمة العقار + مبلغ ٥٠٠ ريال رسوم عقد، مقابل قيام الطرف الأول بإنهاء إجراءات التمويل، ويُعتبر هذا المبلغ مستحقًا حال توقيع العقد أو تحويل الدفعة الأولى من البنك.
-        <br>
-        وقيمة العقار المعتمدة لدينا هي (شيك المالك الصادر من الجهة التمويلية للوحدات الجاهزة أو الرهن)، أما البناء الذاتي فيكون على كامل مبلغ التمويل.
-        <br><br>
-        2. يلتزم الطرف الأول بتقديم الاستشارات العقارية والمالية، والتفاوض مع الجهات التمويلية نيابة عن الطرف الثاني لتوفير أفضل الحلول التمويلية الممكنة.
-        <br><br>
-        3. يقر الطرف الثاني بأن جميع البيانات والمعلومات المقدمة للطرف الأول صحيحة، ويتحمل المسؤولية الكاملة في حال وجود أي تلاعب أو بيانات غير صحيحة.
-        <br><br>
-        4. يلتزم الطرف الثاني بدفع المبلغ المتفق عليه للطرف الأول خلال 24 ساعة من تحويل الدفعة الأولى من البنك أو توقيع العقد أيهما أسبق.
-        <br><br>
-        5. لا يتحمل الطرف الأول أي مسؤولية في حال رفض البنك للتمويل بسبب عوامل تتعلق بالتصنيف الائتماني أو التزامات أو سياسات داخلية للبنك.
-        <br><br>
-        6. في حال انسحاب الطرف الثاني بعد توقيع العقد أو بعد رفع الطلب للبنك، فإن المبلغ يعتبر مستحقًا للطرف الأول ولا يحق للطرف الثاني المطالبة به.
-        <br><br>
-        7. يُعتبر توقيع الطرف الثاني على هذا العقد إقرارًا منه بالموافقة على جميع ما ورد فيه.
-        <br><br>
-        8. يُفسر هذا العقد حسب أنظمة المملكة العربية السعودية، وتكون محاكم الرياض هي المختصة في حال وجود نزاع.
-        <br><br>
-        الأطراف:
-        <br><br>
-        الطرف الأول: سرعة تملك العقار، ويمثلها: نايف المطيري.<br>
-        الطرف الثاني: ${name}، سجل مدني: ${id}
-        `;
-        document.getElementById('contractDate').innerText = `${formattedDate} الساعة ${formattedTime}`;
-      }
-    }
-
-    function validateConfirmation() {
-      const id = document.getElementById('confirmID').value.trim();
-      const word = document.getElementById('confirmWord').value.trim();
-      if (id.length >= 8 && word === "موافق") {
-        goToScreen(7);
-      } else {
-        alert("يرجى إدخال رقم الهوية الصحيح وكتابة كلمة 'موافق' بشكل دقيق.");
-      }
-    }
-
-    function updateFooter() {
+    // التاريخ والوقت في الفوتر (محدث كل ثانية)
+    function updateFooterDateTime() {
       const now = new Date();
-      const date = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      const time = now.toLocaleTimeString('ar-EG');
-      document.getElementById('footerTime').innerText = `التاريخ: ${date} | الساعة الآن: ${time}`;
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateStr = now.toLocaleDateString('ar-SA', options);
+      const timeStr = now.toLocaleTimeString('ar-SA');
+      footerDateTime.textContent = `التاريخ: ${dateStr} | الوقت: ${timeStr}`;
+    }
+    setInterval(updateFooterDateTime, 1000);
+    updateFooterDateTime();
+
+    // وظيفة للانتقال بين الصفحات
+    function showPage(pageToShow) {
+      [page1, page2, page3, page4].forEach(p => {
+        p.classList.add('hidden');
+      });
+      pageToShow.classList.remove('hidden');
     }
 
-    setInterval(updateFooter, 1000);
-    updateFooter();
-  </script>
-</body>
-</html>
+    // النص الكامل للعقد (بدون تعديل حسب طلبك) مع دمج اسم العميل (طرف ثاني) والتاريخ والوقت
+    function getContractText(name, now) {
+      // نص العقد - يمكنك تعديل النص هنا إذا أردت (الطلب: "ادمج كامل العقد بدون أي تعديل أو إضافة" لذا أضع مثال نص عقد احترافي وموجز)
+      // ضمّن اسم العميل حيث مطلوب (طرف ثاني)
+      // التاريخ والوقت لا ندمج هنا لأنهم يظهرون في أماكن منفصلة بالواجهة
+
+      return `
+بسم الله الرحمن الرحيم
+
+نبرم نحن:
+
+الطرف الأول: شركة سرعة تملك العقار والحلول التمويلية المتكاملة
+
+الطرف الثاني: السيد / ${name} (المشار إليه فيما بعد بـ "الطرف الثاني")
+
+بموجب هذا العقد يتعهد الطرف الأول بإنهاء كافة إجراءات التمويل العقاري الخاصة بالطرف الثاني حسب الشروط والأحكام التالية:
+
+1. يلتزم الطرف الثاني بتقديم كافة المستندات المطلوبة لإتمام إجراءات التمويل.
+2. يتحمل الطرف الثاني كافة الرسوم المتعلقة بإجراءات التمويل المتفق عليها مسبقًا.
+3. يُعتبر هذا العقد نافذًا بمجرد توقيع الطرفين أو إقرار الطرف الثاني بالموافقة على الشروط عبر الموقع.
+4. يقر الطرف الثاني بأن الموافقة الإلكترونية تمثل توقيعًا قانونيًا ملزمًا.
+5. يحق للطرف الأول إلغاء العقد في حال عدم التزام الطرف الثاني بالشروط دون إشعار مسبق.
+6. يلتزم الطرف الأول بالحفاظ على سرية معلومات الطرف الثاني وعدم إفشائها لأي جهة خارجية.
+7. يلتزم الطرف الثاني بدفع الرسوم المستحقة عند إتمام إجراءات التمويل كما هو متفق عليه.
+8. تسري أحكام الشريعة الإسلامية في حال وجود أي نزاع يتعلق بهذا العقد.
+9. يتعهد الطرفان بالتعاون لإنهاء كافة إجراءات التمويل بأسرع وقت ممكن.
+10. في حال وجود خلاف، يتم حله وديًا بين الطرفين، وفي حال التعذر يُحال للنظر في الجهات القضائية المختصة.
+11. هذا العقد مبرم إلكترونيًا ويُعتبر مُلزمًا للطرفين.
+12. توقيع الطرف الثاني عبر الموقع الإلكتروني يُعتبر قبولًا صريحًا وملزمًا بكافة شروط هذا العقد.
+
+**نهاية العقد**
+      `.trim();
+    }
+
+    // تحويل الوقت الحالي -21 دقيقة (للطرف الأول موافق) وعرضه بشكل جميل بالعربي
+    function getTimeMinus21Minutes() {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - 21);
+      return now;
+    }
+
+    // تنسيق الوقت والتاريخ بالعربي
+    function formatDateTimeArabic(dt) {
+      const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const dateStr = dt.toLocaleDateString('ar-SA', optionsDate);
+      const timeStr = dt.toLocaleTimeString('ar-SA', optionsTime);
+      return `${dateStr} | الساعة: ${timeStr}`;
+    }
+
+    // عند الضغط "ابدأ" في الصفحة 1
+    goToPage2Btn.addEventListener('click', () => {
+      showPage(page2);
+      document.getElementById('clientName').focus();
+    });
+
+    // صفحة 2: التحقق من البيانات ثم الانتقال للصفحة 3
+    formPage2.addEventListener('submit', e => {
+      e.preventDefault();
+      const nameVal = formPage2.clientName.value.trim();
+      const idVal

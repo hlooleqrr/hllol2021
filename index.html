@@ -1,204 +1,188 @@
-<!-- ✅ page1.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      margin: 0; padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
-      color: #004d40;
-      display: flex; flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-    }
-    .main { text-align: center; padding: 50px 20px; }
-    h1 { font-size: 30px; color: #002c27; margin-bottom: 20px; }
-    h2 { font-size: 24px; color: #009688; margin-bottom: 40px; }
-    p { font-size: 20px; margin-bottom: 40px; }
-    button {
-      font-size: 20px; background-color: #00796b; color: white;
-      padding: 15px 40px; border: none; border-radius: 8px; cursor: pointer;
-    }
-    .footer {
-      background-color: #eeeeee;
-      padding: 15px; text-align: center;
-      font-size: 16px;
-      border-top: 2px solid #ccc;
-      color: #d32f2f;
-    }
-  </style>
-  <script>
-    function goToNext() {
-      window.location.href = "page2.html";
-    }
-  </script>
-</head>
-<body>
-  <div class="main">
-    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
-    <h2>نرحب بك عميلنا العزيز</h2>
-    <p>نبرم معك هذا العقد</p>
-    <button onclick="goToNext()">ابدأ بسم الله</button>
-  </div>
-  <div class="footer">
-    ⚠️ هذا العقد يُعد سندًا تنفيذيًا حسب المادة (9) من نظام التعاملات الإلكترونية<br>
-    التاريخ والوقت الآن: <span id="now"></span>
-  </div>
-  <script>
-    document.getElementById("now").innerText = new Date().toLocaleString('ar-EG');
-  </script>
-</body>
-</html>
-
-<!-- ✅ page2.html -->
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <title>معلومات العميل</title>
-  <style>
-    body {
       margin: 0;
       padding: 0;
-      font-family: 'Tajawal', sans-serif;
-      background: #fdfdfd;
+      background-color: #f5f5f5;
+      color: #222;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100vh;
-      color: #004d40;
+      text-align: center;
     }
-    .container {
+    .screen {
       padding: 40px 20px;
-      text-align: center;
+      display: none;
     }
-    label {
-      font-size: 20px;
+    .active {
       display: block;
-      margin: 20px 0 10px;
-    }
-    input {
-      font-size: 18px;
-      padding: 10px;
-      width: 80%;
-      max-width: 400px;
-      text-align: center;
-    }
-    button {
-      margin-top: 40px;
-      font-size: 20px;
-      background-color: #00796b;
-      color: white;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .footer {
-      background-color: #eeeeee;
-      padding: 15px;
-      text-align: center;
-      font-size: 16px;
-      border-top: 2px solid #ccc;
-      color: #d32f2f;
-    }
-  </style>
-  <script>
-    function goToContract() {
-      const name = document.getElementById("name").value.trim();
-      const id = document.getElementById("id").value.trim();
-      if (name === "" || id.length !== 10 || isNaN(id)) {
-        alert("الرجاء إدخال الاسم ورقم السجل المدني بشكل صحيح.");
-        return;
-      }
-      localStorage.setItem("clientName", name);
-      localStorage.setItem("clientID", id);
-      window.location.href = "page3.html";
-    }
-  </script>
-</head>
-<body>
-  <div class="container">
-    <label for="name">الاسم الكريم:</label>
-    <input type="text" id="name" placeholder="مثال: محمد بن عبدالله" />
-    <label for="id">رقم السجل المدني:</label>
-    <input type="text" id="id" placeholder="10 أرقام فقط" maxlength="10" />
-    <button onclick="goToContract()">التالي</button>
-  </div>
-  <div class="footer">
-    ⚠️ هذا العقد يُعد سندًا تنفيذيًا حسب المادة (9) من نظام التعاملات الإلكترونية<br>
-    التاريخ والوقت الآن: <span id="now"></span>
-  </div>
-  <script>
-    document.getElementById("now").innerText = new Date().toLocaleString('ar-EG');
-  </script>
-</body>
-</html>
-
-<!-- ✅ page3.html -->
-<!-- انسخه من الرد السابق هنا: https://chat.openai.com/share/2c0d3384-2dbf-40c1-9ed3-2187e5acb264 -->
-
-<!-- ✅ page4.html -->
-<!-- انسخه من الرد السابق هنا: https://chat.openai.com/share/8c835c0b-2551-4124-9648-88e676ae2e8f -->
-
-<!-- ✅ success.html -->
-<!-- انسخه من الرد السابق هنا: https://chat.openai.com/share/385aa74f-0b7a-4ec2-b6e7-b540e05ffef5 -->
-
-<!-- ✅ reject.html -->
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <title>رفض الموافقة</title>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background-color: #fff3f3;
-      color: #c62828;
-      text-align: center;
-      padding: 60px 20px;
     }
     h1 {
       font-size: 28px;
-      margin-bottom: 30px;
+      color: #004d40;
     }
-    p {
-      font-size: 20px;
-      margin-bottom: 40px;
+    h2 {
+      font-size: 22px;
+      color: #009688;
+      margin: 20px 0;
     }
-    .footer {
-      margin-top: 60px;
-      padding: 20px;
-      border-top: 2px solid #ccc;
-      font-size: 16px;
-      color: #b71c1c;
+    input, button {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px 0;
+      width: 80%;
+      max-width: 300px;
     }
     button {
-      font-size: 18px;
-      background-color: #888;
+      background-color: #00796b;
       color: white;
       border: none;
-      padding: 10px 30px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .footer {
+      padding: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+    .contract-text {
+      text-align: right;
+      padding: 0 20px;
+      font-size: 16px;
+      line-height: 2;
+      max-height: 70vh;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <h1>نعتذر، لم يتم إبرام العقد</h1>
-  <p>لقد قمت برفض الموافقة على بنود العقد.</p>
-  <p>إذا كنت ترغب بإعادة المحاولة، يمكنك العودة للصفحة الرئيسية.</p>
-  <button onclick="window.location.href='page1.html'">العودة للرئيسية</button>
-  <div class="footer">
-    ⚠️ العقد غير ملزم لعدم إتمام الموافقة<br>
-    التاريخ: <span id="now"></span>
+
+  <!-- الصفحة الأولى -->
+  <div id="screen1" class="screen active">
+    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <h2>نرحب بك عميلنا العزيز</h2>
+    <p>نبرم معك هذا العقد</p>
+    <p><strong>ابدأ بسم الله</strong></p>
+    <button onclick="goToScreen(2)">التالي</button>
   </div>
+
+  <!-- الصفحة الثانية -->
+  <div id="screen2" class="screen">
+    <h2>يرجى تعبئة البيانات</h2>
+    <input id="clientName" type="text" placeholder="الاسم الكريم" />
+    <input id="clientID" type="text" placeholder="السجل المدني" />
+    <button onclick="goToScreen(3)">التالي</button>
+  </div>
+
+  <!-- العقد -->
+  <div id="screen3" class="screen">
+    <div id="contractText" class="contract-text"></div>
+    <button onclick="goToScreen(4)">التالي</button>
+  </div>
+
+  <!-- الموافقة أو الرفض -->
+  <div id="screen4" class="screen">
+    <h2>تمت الموافقة من الطرف الأول بتاريخ <span id="contractDate"></span></h2>
+    <p>هل ترغب بالموافقة على العقد؟</p>
+    <button onclick="goToScreen(5)">أوافق</button>
+    <button onclick="goToScreen(6)">لا أوافق</button>
+  </div>
+
+  <!-- تأكيد الهوية -->
+  <div id="screen5" class="screen">
+    <h2>تأكيد الموافقة</h2>
+    <input id="confirmID" type="text" placeholder="رقم الهوية" />
+    <input id="confirmWord" type="text" placeholder="اكتب: موافق" />
+    <button onclick="validateConfirmation()">تأكيد</button>
+  </div>
+
+  <!-- صفحة الرفض -->
+  <div id="screen6" class="screen">
+    <h2 style="color: red;">تم رفض العقد</h2>
+    <p>يرجى التواصل مع الممثل القانوني. شكرًا لتعاونك.</p>
+  </div>
+
+  <!-- صفحة النجاح -->
+  <div id="screen7" class="screen">
+    <h2 style="color: green;">✅ تم إبرام العقد بنجاح</h2>
+  </div>
+
+  <!-- الفوتر -->
+  <div class="footer" id="footerTime"></div>
+
   <script>
-    document.getElementById("now").innerText = new Date().toLocaleString('ar-EG');
+    function goToScreen(n) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen' + n).classList.add('active');
+
+      if (n === 3) {
+        const name = document.getElementById('clientName').value;
+        const id = document.getElementById('clientID').value;
+        let now = new Date();
+        now.setMinutes(now.getMinutes() - 21);
+        const formattedTime = now.toLocaleTimeString('ar-EG');
+        const formattedDate = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('contractText').innerHTML = `
+        تمهيد:
+        <br>
+        لما كان الطرف الأول مؤسسة "سرعة تملك العقار" بسجل تجاري رقم 1010948479 وترخيص وساطة عقارية رقم 1100042624 ويمثلها الأستاذ نايف المطيري بصفته "مدير إدارة"، ويشار إليه بـ (الطرف الأول)،
+        <br><br>
+        وكان الطرف الثاني هو العميل: ${name}، السجل المدني: ${id}، ويشار إليه بـ (الطرف الثاني)،
+        <br><br>
+        وحيث أن الطرف الثاني يرغب بالحصول على خدمات الطرف الأول في إنهاء إجراءات التمويل العقاري من الجهات التمويلية المختلفة (مدعوم - غير مدعوم - بناء ذاتي)، فقد اتفق الطرفان على إبرام هذا العقد وفق البنود التالية:
+        <br><br>
+        1. يدفع الطرف الثاني للطرف الأول مبلغًا وقدره ٢.٥٪؜ من قيمة العقار + مبلغ ٥٠٠ ريال رسوم عقد، مقابل قيام الطرف الأول بإنهاء إجراءات التمويل، ويُعتبر هذا المبلغ مستحقًا حال توقيع العقد أو تحويل الدفعة الأولى من البنك.
+        <br>
+        وقيمة العقار المعتمدة لدينا هي (شيك المالك الصادر من الجهة التمويلية للوحدات الجاهزة أو الرهن)، أما البناء الذاتي فيكون على كامل مبلغ التمويل.
+        <br><br>
+        2. يلتزم الطرف الأول بتقديم الاستشارات العقارية والمالية، والتفاوض مع الجهات التمويلية نيابة عن الطرف الثاني لتوفير أفضل الحلول التمويلية الممكنة.
+        <br><br>
+        3. يقر الطرف الثاني بأن جميع البيانات والمعلومات المقدمة للطرف الأول صحيحة، ويتحمل المسؤولية الكاملة في حال وجود أي تلاعب أو بيانات غير صحيحة.
+        <br><br>
+        4. يلتزم الطرف الثاني بدفع المبلغ المتفق عليه للطرف الأول خلال 24 ساعة من تحويل الدفعة الأولى من البنك أو توقيع العقد أيهما أسبق.
+        <br><br>
+        5. لا يتحمل الطرف الأول أي مسؤولية في حال رفض البنك للتمويل بسبب عوامل تتعلق بالتصنيف الائتماني أو التزامات أو سياسات داخلية للبنك.
+        <br><br>
+        6. في حال انسحاب الطرف الثاني بعد توقيع العقد أو بعد رفع الطلب للبنك، فإن المبلغ يعتبر مستحقًا للطرف الأول ولا يحق للطرف الثاني المطالبة به.
+        <br><br>
+        7. يُعتبر توقيع الطرف الثاني على هذا العقد إقرارًا منه بالموافقة على جميع ما ورد فيه.
+        <br><br>
+        8. يُفسر هذا العقد حسب أنظمة المملكة العربية السعودية، وتكون محاكم الرياض هي المختصة في حال وجود نزاع.
+        <br><br>
+        الأطراف:
+        <br><br>
+        الطرف الأول: سرعة تملك العقار، ويمثلها: نايف المطيري.<br>
+        الطرف الثاني: ${name}، سجل مدني: ${id}
+        `;
+        document.getElementById('contractDate').innerText = `${formattedDate} الساعة ${formattedTime}`;
+      }
+    }
+
+    function validateConfirmation() {
+      const id = document.getElementById('confirmID').value.trim();
+      const word = document.getElementById('confirmWord').value.trim();
+      if (id.length >= 8 && word === "موافق") {
+        goToScreen(7);
+      } else {
+        alert("يرجى إدخال رقم الهوية الصحيح وكتابة كلمة 'موافق' بشكل دقيق.");
+      }
+    }
+
+    function updateFooter() {
+      const now = new Date();
+      const date = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const time = now.toLocaleTimeString('ar-EG');
+      document.getElementById('footerTime').innerText = `التاريخ: ${date} | الساعة الآن: ${time}`;
+    }
+
+    setInterval(updateFooter, 1000);
+    updateFooter();
   </script>
 </body>
 </html>

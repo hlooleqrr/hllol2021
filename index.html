@@ -281,7 +281,7 @@
       <section id="page2" class="hidden">
         <form id="formPage2" autocomplete="off" novalidate>
           <input type="text" id="clientName" name="clientName" placeholder="الاسم الكريم" required minlength="2" />
-          <input type="text" id="clientID" name="clientID" placeholder="السجل المدني" required pattern="\d{10,12}" title="ادخل رقم السجل المدني صحيح" />
+          <input type="text" id="clientID" name="clientID" placeholder="السجل المدني" required pattern="\\d{10,12}" title="ادخل رقم السجل المدني صحيح" />
           <button type="submit">التالي</button>
         </form>
       </section>
@@ -302,7 +302,7 @@
       <!-- الصفحة 4 -->
       <section id="page4" class="hidden">
         <form id="formPage4" autocomplete="off" novalidate>
-          <input type="text" id="confirmID" name="confirmID" placeholder="رقم الهوية" required pattern="\d{10,12}" title="ادخل رقم الهوية صحيح" />
+          <input type="text" id="confirmID" name="confirmID" placeholder="رقم الهوية" required pattern="\\d{10,12}" title="ادخل رقم الهوية صحيح" />
           <input type="text" id="confirmText" name="confirmText" placeholder="اكتب كلمة (موافق)" required pattern="^(موافق|موافقة|موافقاً)$" title='اكتب كلمة "موافق" بالضبط' />
           <button type="submit">تأكيد</button>
         </form>
@@ -344,7 +344,7 @@
     let clientName = '';
     let clientID = '';
 
-    // التاريخ والوقت في الفوتر (محدث كل ثانية)
+    // تحديث التاريخ والوقت في الفوتر كل ثانية
     function updateFooterDateTime() {
       const now = new Date();
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -355,20 +355,18 @@
     setInterval(updateFooterDateTime, 1000);
     updateFooterDateTime();
 
-    // وظيفة للانتقال بين الصفحات
+    // تبديل عرض الصفحات
     function showPage(pageToShow) {
-      [page1, page2, page3, page4].forEach(p => {
-        p.classList.add('hidden');
-      });
+      [page1, page2, page3, page4].forEach(p => p.classList.add('hidden'));
       pageToShow.classList.remove('hidden');
+      // وضع التركيز للولوجية
+      if(pageToShow.querySelector('input, button')) {
+        pageToShow.querySelector('input, button').focus();
+      }
     }
 
-    // النص الكامل للعقد (بدون تعديل حسب طلبك) مع دمج اسم العميل (طرف ثاني) والتاريخ والوقت
-    function getContractText(name, now) {
-      // نص العقد - يمكنك تعديل النص هنا إذا أردت (الطلب: "ادمج كامل العقد بدون أي تعديل أو إضافة" لذا أضع مثال نص عقد احترافي وموجز)
-      // ضمّن اسم العميل حيث مطلوب (طرف ثاني)
-      // التاريخ والوقت لا ندمج هنا لأنهم يظهرون في أماكن منفصلة بالواجهة
-
+    // نص العقد مع دمج اسم العميل (طرف ثاني)
+    function getContractText(name) {
       return `
 بسم الله الرحمن الرحيم
 
@@ -397,14 +395,14 @@
       `.trim();
     }
 
-    // تحويل الوقت الحالي -21 دقيقة (للطرف الأول موافق) وعرضه بشكل جميل بالعربي
+    // الوقت الحالي - 21 دقيقة (للطرف الأول)
     function getTimeMinus21Minutes() {
       const now = new Date();
       now.setMinutes(now.getMinutes() - 21);
       return now;
     }
 
-    // تنسيق الوقت والتاريخ بالعربي
+    // صياغة الوقت والتاريخ بالعربية
     function formatDateTimeArabic(dt) {
       const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -413,14 +411,47 @@
       return `${dateStr} | الساعة: ${timeStr}`;
     }
 
-    // عند الضغط "ابدأ" في الصفحة 1
+    // صفحة 1: زر ابدأ
     goToPage2Btn.addEventListener('click', () => {
       showPage(page2);
-      document.getElementById('clientName').focus();
     });
 
-    // صفحة 2: التحقق من البيانات ثم الانتقال للصفحة 3
+    // صفحة 2: تحقق من الاسم والسجل المدني
     formPage2.addEventListener('submit', e => {
       e.preventDefault();
       const nameVal = formPage2.clientName.value.trim();
-      const idVal
+      const idVal = formPage2.clientID.value.trim();
+
+      if (nameVal.length < 2) {
+        alert('الرجاء إدخال الاسم الكريم بشكل صحيح.');
+        return;
+      }
+      const idPattern = /^\d{10,12}$/;
+      if (!idPattern.test(idVal)) {
+        alert('الرجاء إدخال رقم السجل المدني صحيح (10 إلى 12 رقم).');
+        return;
+      }
+
+      clientName = nameVal;
+      clientID = idVal;
+
+      // عرض العقد مع دمج الاسم
+      contractTextEl.textContent = getContractText(clientName);
+
+      // عرض وقت الطرف الأول (الوقت الحالي - 21 دقيقة)
+      const timeMinus21 = getTimeMinus21Minutes();
+      timeBeforeLabel.textContent = `موافقة الطرف الأول بتاريخ ووقت قبل: ${formatDateTimeArabic(timeMinus21)}`;
+
+      showPage(page3);
+    });
+
+    // صفحة 3: الطرف الأول يوافق
+    approveFirstBtn.addEventListener('click', () => {
+      approveFirstBtn.disabled = true;
+      secondPartyAction.style.display = 'flex';
+      approveFirstBtn.style.display = 'none';
+    });
+
+    // الطرف الثاني يرفض
+    secondRejectBtn.addEventListener('click', () => {
+      alert('تم رفض العقد بشكل رسمي

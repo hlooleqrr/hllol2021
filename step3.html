@@ -1,65 +1,159 @@
-<!-- step3.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>مراجعة البيانات</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>عقد التمويل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-      text-align: center;
+      margin: 0;
+      background-color: #f7f7f7;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    .box {
-      background: white;
-      border: 2px solid #004d40;
-      border-radius: 10px;
-      padding: 20px;
-      display: inline-block;
-      margin-top: 40px;
-      width: 90%;
-      max-width: 450px;
-    }
-    h2 {
-      color: #004d40;
-    }
-    p {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-    button {
-      padding: 10px 30px;
-      font-size: 18px;
+    header {
       background: #004d40;
       color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .contract-title {
+      background: #00796b;
+      color: white;
+      padding: 10px;
+      font-size: 20px;
+    }
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 15px;
+      background: white;
+      line-height: 2;
+      border-top: 3px solid #004d40;
+      border-bottom: 3px solid #004d40;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px;
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 16px;
       border: none;
-      border-radius: 8px;
-      margin-top: 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .accept {
+      background-color: green;
+      color: white;
+    }
+    .reject {
+      background-color: red;
+      color: white;
+    }
+    footer {
+      background: #eeeeee;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      border-top: 2px solid #004d40;
+    }
+    .highlight {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h2>تأكيد بياناتك</h2>
-    <p><strong>الاسم:</strong> <span id="name"></span></p>
-    <p><strong>رقم الهوية:</strong> <span id="id"></span></p>
-    <p><strong>رقم الجوال:</strong> <span id="mobile"></span></p>
-    <p><strong>تاريخ الميلاد الهجري:</strong> <span id="birth"></span></p>
 
-    <button onclick="goNext()">التالي</button>
-  </div>
+<header>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</header>
+<div class="contract-title">عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</div>
 
-  <script>
-    document.getElementById("name").textContent = localStorage.getItem("clientName");
-    document.getElementById("id").textContent = localStorage.getItem("clientId");
-    document.getElementById("mobile").textContent = localStorage.getItem("clientMobile");
-    document.getElementById("birth").textContent = localStorage.getItem("clientBirth");
+<main id="contractText">
+  <!-- يتم تعبئة نص العقد ديناميكياً -->
+</main>
 
-    function goNext() {
-      window.location.href = "step4.html";
+<div class="buttons">
+  <button class="accept" onclick="goNext(true)">موافق</button>
+  <button class="reject" onclick="goNext(false)">رفض</button>
+</div>
+
+<footer>
+  <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
+  <p class="highlight">هذا النظام محمي بموجب المادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية</p>
+  <p id="footerTime"></p>
+  <p id="location"></p>
+</footer>
+
+<script>
+  const name = localStorage.getItem("clientName") || ".........";
+  const id = localStorage.getItem("clientId") || ".........";
+  const mobile = localStorage.getItem("clientMobile") || ".........";
+  const birth = localStorage.getItem("clientBirth") || ".........";
+
+  const now = new Date();
+  const datetime = now.getFullYear() + "/" +
+                   String(now.getMonth() + 1).padStart(2, '0') + "/" +
+                   String(now.getDate()).padStart(2, '0') + " - " +
+                   String(now.getHours()).padStart(2, '0') + ":" +
+                   String(now.getMinutes()).padStart(2, '0') + ":" +
+                   String(now.getSeconds()).padStart(2, '0');
+  document.getElementById("footerTime").textContent = "التاريخ والوقت: " + datetime;
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+    const lat = position.coords.latitude.toFixed(4);
+    const lon = position.coords.longitude.toFixed(4);
+    document.getElementById("location").textContent = "موقعك الحالي: (" + lat + ", " + lon + ")";
+  });
+
+  const contract = `
+    تم بعون الله وتوفيقه في هذا اليوم الموافق ${datetime}، الاتفاق بين:
+
+    الطرف الأول: شركة سرعة تملك العقار والحلول التمويلية المتكاملة.
+
+    والطرف الثاني: 
+    الاسم: ${name}
+    رقم الهوية: ${id}
+    رقم الجوال: ${mobile}
+    تاريخ الميلاد: ${birth}
+
+    ⸻
+
+    تمهيد:
+    حيث إن الطرف الأول مرخص له بمزاولة الوساطة العقارية وتقديم الحلول التمويلية، فقد تم الاتفاق على البنود التالية:
+
+    1. يلتزم الطرف الأول بمتابعة وإنهاء إجراءات التمويل العقاري للطرف الثاني.
+    2. يدفع الطرف الثاني للطرف الأول مبلغ 2.5% من قيمة العقار + 500 ريال رسوم عقد.
+    3. يقر الطرف الثاني أن جميع البيانات المقدمة صحيحة.
+    4. يتحمل الطرف الثاني مسؤولية تأخير أو رفض التمويل بسبب بيانات خاطئة.
+    5. لا يحق للطرف الثاني استرجاع المبلغ بعد توقيع هذا العقد.
+    6. في حال فسخ العقد من الطرف الثاني بعد البدء بالإجراءات، لا يُعاد المبلغ.
+    7. يتعاون الطرف الثاني مع الجهات التمويلية لتوفير المستندات اللازمة.
+    8. يتم التواصل بين الطرفين عبر الوسائل الإلكترونية المعتمدة.
+    9. يعتبر هذا العقد سندًا قانونيًا مُلزِمًا للطرفين.
+    10. يتم اعتماد التواقيع الإلكترونية كوسيلة موثوقة قانونًا.
+    11. تسري أنظمة المملكة العربية السعودية على هذا العقد.
+    12. عند الضغط على "موافق"، يُعتبر العقد مُبرمًا إلكترونيًا حسب المادة التاسعة من نظام التعاملات الإلكترونية.
+
+    والله الموفق.
+  `;
+
+  document.getElementById("contractText").innerText = contract;
+
+  function goNext(approved) {
+    if (approved) {
+      window.location.href = "confirm.html";
+    } else {
+      window.location.href = "rejected.html";
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>

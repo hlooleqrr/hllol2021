@@ -1,63 +1,126 @@
-<!-- هذا الملف خاص بإدخال الرقم السري للعملاء المصرح لهم -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>الدخول المصرح</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عقد إنهاء إجراءات تمويل عقاري</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f1f1f1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background-color: #ffffff;
       margin: 0;
+      padding: 40px 20px;
+      color: #222;
+      line-height: 2;
     }
-    h2 {
+    .container {
+      max-width: 800px;
+      margin: auto;
+      border: 2px solid #004d40;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
       color: #004d40;
+    }
+    .highlight {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 6px;
       margin-bottom: 20px;
     }
-    input {
-      padding: 10px;
-      width: 250px;
-      margin-bottom: 15px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px dashed #aaa;
+      padding-top: 15px;
+      text-align: center;
+    }
+    .btn-container {
+      margin-top: 30px;
+      text-align: center;
     }
     button {
-      background-color: #004d40;
-      color: white;
+      font-size: 18px;
+      padding: 12px 25px;
+      margin: 5px;
       border: none;
-      padding: 10px 30px;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #00695c;
+    .approve {
+      background-color: #388e3c;
+      color: white;
+    }
+    .reject {
+      background-color: #d32f2f;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <h2>فضلاً أدخل الرقم المصرح لك به</h2>
-  <input type="password" id="accessCode" placeholder="مثال: 00221" />
-  <button onclick="validateCode()">التالي</button>
+  <div class="container">
+    <h1>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h1>
+    <div class="highlight">
+      <p><strong>الطرف الأول:</strong> شركة الوساطة العقارية والتسويق | ترخيص رقم: 1100042624</p>
+      <p><strong>الطرف الثاني:</strong> <span id="clientName"></span></p>
+      <p><strong>السجل المدني:</strong> <span id="clientId"></span></p>
+      <p><strong>تاريخ الميلاد:</strong> <span id="birthdate"></span></p>
+      <p><strong>رقم الجوال:</strong> <span id="phone"></span></p>
+      <p><strong>العنوان:</strong> <span id="address"></span></p>
+    </div>
+
+    <ol>
+      <li>يدفع الطرف الثاني للطرف الأول نسبة 2.5٪ من قيمة العقار.</li>
+      <li>يشمل المبلغ رسوم العقد الإدارية بقيمة 500 ريال.</li>
+      <li>الطرف الأول لا يتحمل مسؤولية تغيير نسبة الفائدة من قبل الجهة التمويلية.</li>
+      <li>العقد يشمل إنهاء إجراءات التمويل فقط ولا يشمل ضمان الموافقة النهائية.</li>
+      <li>الطرف الثاني ملزم بالتعاون الكامل في تقديم البيانات الصحيحة.</li>
+      <li>تكون جميع المعاملات إلكترونية حسب نظام المعاملات السعودي.</li>
+      <li>في حال تراجع الطرف الثاني، لا يُسترد أي مبلغ.</li>
+      <li>يلتزم الطرف الأول بالسرية التامة لجميع معلومات العميل.</li>
+      <li>تُطبق الأنظمة واللوائح المعتمدة من الجهات الرسمية.</li>
+      <li>مدة صلاحية هذا العقد 30 يومًا من تاريخ التوقيع.</li>
+      <li>تُعتبر الموافقة الإلكترونية من الطرف الثاني توقيعًا معتمدًا.</li>
+      <li>يتم إرسال نسخة إلكترونية للطرف الثاني بعد التوقيع.</li>
+    </ol>
+
+    <div class="btn-container">
+      <button class="approve" onclick="confirmApproval()">موافقة</button>
+      <button class="reject" onclick="confirmRejection()">رفض</button>
+    </div>
+
+    <div class="footer">
+      ⛔ المادة التاسعة من نظام التعاملات الإلكترونية: يُعد العقد المبرم إلكترونيًا مُلزِمًا نظامًا إذا وافق الطرفان ⛔
+      <br><br>
+      التاريخ والوقت: <span id="datetime"></span>
+      <br>
+      جميع الحقوق محفوظة © سرعة تملك العقار
+    </div>
+  </div>
 
   <script>
-    function validateCode() {
-      const code = document.getElementById('accessCode').value;
-      const allowedCode = '00221';
+    const urlParams = new URLSearchParams(window.location.search);
+    document.getElementById('clientName').textContent = urlParams.get('name');
+    document.getElementById('clientId').textContent = urlParams.get('nationalid');
+    document.getElementById('address').textContent = urlParams.get('address');
+    document.getElementById('phone').textContent = urlParams.get('phone');
+    document.getElementById('birthdate').textContent = urlParams.get('birthdate');
 
-      if (code === allowedCode) {
-        localStorage.setItem('client_authenticated', 'true');
-        window.location.href = 'start.html';
-      } else {
-        alert('الرمز غير صحيح');
-      }
+    const now = new Date();
+    const datetimeStr = now.toLocaleDateString('ar-EG') + ' - الساعة ' + now.toLocaleTimeString('ar-EG');
+    document.getElementById('datetime').textContent = datetimeStr;
+
+    function confirmApproval() {
+      alert("تمت الموافقة على العقد. ✅");
+      window.location.href = "success.html";
+    }
+
+    function confirmRejection() {
+      alert("تم رفض العقد. ❌");
+      window.location.href = "rejected.html";
     }
   </script>
 </body>

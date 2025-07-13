@@ -1,113 +1,135 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>عرض العقد</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>عقد إنهاء إجراءات تمويل عقاري</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #fff;
-      color: #333;
+      margin: 0;
       padding: 20px;
-      line-height: 2;
+      background: #fefefe;
+      color: #222;
     }
-    .container {
-      max-width: 750px;
+    .contract-box {
+      max-width: 800px;
       margin: auto;
-      border: 2px solid #00695c;
       padding: 30px;
-      border-radius: 12px;
+      border: 3px solid #004d40;
+      border-radius: 16px;
+      background: #ffffff;
     }
-    h2 {
+    h1, h2 {
       text-align: center;
       color: #004d40;
-      margin-bottom: 20px;
     }
-    .highlight {
-      background-color: #e0f7fa;
-      padding: 10px;
-      margin: 10px 0;
+    .section {
+      margin-top: 30px;
+      line-height: 2;
     }
-    button {
-      margin-top: 25px;
-      padding: 10px 20px;
+    .signature-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .signature-buttons button {
+      width: 48%;
+      padding: 15px;
       font-size: 18px;
-      font-weight: bold;
-      border-radius: 8px;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
     .accept {
-      background: #00796b;
+      background-color: #00796b;
       color: white;
     }
     .reject {
-      background: #c62828;
+      background-color: #d32f2f;
       color: white;
-      margin-right: 15px;
+    }
+    .footer {
+      margin-top: 50px;
+      font-size: 14px;
+      text-align: center;
+      color: red;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
+  <div class="contract-box">
+    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h2>
 
-    <div id="clientData" class="highlight"></div>
+    <div class="section">
+      <p>تم بعون الله وتوفيقه في هذا اليوم <span id="todayDate"></span>، بين:</p>
 
-    <p>تم بعون الله وتوفيقه الاتفاق بين كل من:</p>
+      <p><strong>الطرف الأول:</strong> شركة الوساطة العقارية والتسويق - ترخيص 1100042624 - الرياض<br>
+        ويمثلها الأستاذ نايف المطيري، بصفته مدير الإدارة، ويشار إليه بالطرف الأول.</p>
 
-    <p><strong>الطرف الأول:</strong> شركة الوساطة العقارية والتسويق، ترخيص: 1100042624</p>
-    <p><strong>الطرف الثاني:</strong></p>
-    <ul>
-      <li id="p_name"></li>
-      <li id="p_id"></li>
-      <li id="p_dob"></li>
-      <li id="p_phone"></li>
-      <li id="p_address"></li>
-    </ul>
+      <p><strong>الطرف الثاني:</strong><br>
+      الاسم: <span id="name"></span><br>
+      السجل المدني: <span id="id"></span><br>
+      رقم الجوال: <span id="mobile"></span><br>
+      تاريخ الميلاد: <span id="birthdate"></span><br>
+      العنوان: <span id="address"></span>
+      </p>
+    </div>
 
-    <h3>بنود العقد:</h3>
-    <ol>
-      <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
-      <li>يدفع الطرف الثاني للطرف الأول مبلغ 2.5٪ من قيمة العقار كأتعاب.</li>
-      <li>تُضاف رسوم عقد 500 ريال على الطرف الثاني.</li>
-      <li>قيمة العقار المعتمدة هي شيك الجهة التمويلية أو عقد الرهن للبناء الذاتي.</li>
-      <li>يلتزم الطرف الثاني بتوفير المستندات المطلوبة للطرف الأول.</li>
-      <li>يُعتبر العقد ساريًا من تاريخ توقيعه من الطرفين.</li>
-      <li>في حال عدم الالتزام، للطرف الأول الحق باتخاذ الإجراءات النظامية.</li>
-      <li>لا يُسترد أي مبلغ بعد البدء بإجراءات التمويل.</li>
-      <li>مدة تنفيذ التمويل تعتمد على استجابة العميل وجهة التمويل.</li>
-      <li>الطرف الثاني يقر بمسؤوليته عن صحة البيانات المقدمة.</li>
-      <li>الطرف الأول لا يتحمل مسؤولية رفض الجهة التمويلية للطلب.</li>
-      <li>العقد خاضع للأنظمة والتعليمات المعمول بها في المملكة العربية السعودية.</li>
-    </ol>
+    <div class="section">
+      <h3>تمهيد:</h3>
+      <p>حيث أن الطرف الأول مرخص له بتقديم خدمات الوساطة العقارية، ويرغب الطرف الثاني بالحصول على خدمة إنهاء إجراءات تمويل عقاري.</p>
 
-    <div style="text-align: center;">
-      <button class="reject" onclick="reject()">أرفض العقد</button>
-      <button class="accept" onclick="accept()">أوافق على العقد</button>
+      <h3>البنود:</h3>
+      <ol>
+        <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
+        <li>يلتزم الطرف الثاني بدفع مبلغ 2.5٪ من قيمة العقار + 500 ريال رسوم.</li>
+        <li>تعتبر الدفعة مستحقة فور توقيع العقد أو تحويل الدفعة الأولى.</li>
+        <li>تُحتسب قيمة العقار بناءً على (شيك المالك أو عقد البناء الذاتي).</li>
+        <li>مدة الاتفاقية 30 يومًا ما لم يتفق الطرفان كتابيًا على خلاف ذلك.</li>
+        <li>إذا رغب الطرف الثاني في إلغاء الخدمة بعد التقديم، لا يُرد المبلغ.</li>
+        <li>الطرف الأول غير مسؤول عن تأخر الجهات التمويلية.</li>
+        <li>الطرف الأول لا يضمن الموافقة النهائية من البنك.</li>
+        <li>يلتزم الطرف الثاني بتوفير كافة المستندات المطلوبة.</li>
+        <li>يحق للطرف الأول إلغاء العقد في حال عدم تعاون الطرف الثاني.</li>
+        <li>تكون البيانات المدخلة إلكترونيًا ملزمة للطرفين.</li>
+        <li>يخضع هذا العقد لنظام المعاملات الإلكترونية السعودي.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <p>تمت الموافقة من الطرف الأول بتاريخ <span id="approvedDate"></span></p>
+    </div>
+
+    <div class="signature-buttons">
+      <button class="accept" onclick="goToConfirm()">موافق</button>
+      <button class="reject" onclick="goToRejection()">رافض</button>
+    </div>
+
+    <div class="footer">
+      <p>تنبيه: يعتبر التوقيع الإلكتروني في هذا العقد ملزماً للطرفين حسب المادة التاسعة من نظام المعاملات الإلكترونية.</p>
     </div>
   </div>
 
   <script>
-    const step1 = JSON.parse(localStorage.getItem("step1"));
-    const step2 = JSON.parse(localStorage.getItem("step2"));
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString('ar-SA');
+    document.getElementById('todayDate').textContent = dateStr + ' - الساعة ' + timeStr;
+    document.getElementById('approvedDate').textContent = new Date(now.getTime() - 21 * 60 * 1000).toLocaleString('ar-SA');
 
-    document.getElementById("p_name").innerText = "الاسم: " + step1.name;
-    document.getElementById("p_id").innerText = "رقم الهوية: " + step1.id;
-    document.getElementById("p_dob").innerText = "تاريخ الميلاد: " + step2.dob;
-    document.getElementById("p_phone").innerText = "رقم الجوال: " + step2.phone;
-    document.getElementById("p_address").innerText = "العنوان: " + step1.address;
+    document.getElementById('name').textContent = localStorage.getItem('name');
+    document.getElementById('id').textContent = localStorage.getItem('id');
+    document.getElementById('mobile').textContent = localStorage.getItem('mobile');
+    document.getElementById('birthdate').textContent = localStorage.getItem('birthdate');
+    document.getElementById('address').textContent = localStorage.getItem('address');
 
-    function accept() {
-      const now = new Date();
-      localStorage.setItem("acceptedAt", now.toLocaleString("ar-EG"));
-      localStorage.setItem("locked", "true");
-      window.location.href = "status.html";
+    function goToConfirm() {
+      window.location.href = "confirm.html";
     }
 
-    function reject() {
-      localStorage.setItem("locked", "true");
+    function goToRejection() {
       window.location.href = "rejected.html";
     }
   </script>

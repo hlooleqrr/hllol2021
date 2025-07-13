@@ -1,50 +1,112 @@
-<!-- الصفحة النهائية - تم إبرام العقد بنجاح -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>تم إبرام العقد</title>
+  <meta charset="UTF-8">
+  <title>صفحة المشرف</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e6fff5;
+      background-color: #f9f9f9;
+      padding: 30px;
       color: #004d40;
+    }
+    h1 {
+      color: #00332e;
       text-align: center;
-      padding: 60px 20px;
-      line-height: 2.2;
+      font-size: 26px;
+      margin-bottom: 40px;
     }
-    .message-box {
-      background-color: #ffffff;
-      border: 2px solid #00b28f;
-      border-radius: 12px;
-      padding: 40px;
-      max-width: 600px;
+    .container {
+      max-width: 700px;
       margin: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #fff;
+      padding: 20px 30px;
+      border: 2px solid #004d40;
+      border-radius: 12px;
     }
-    .message-box h1 {
-      color: #00796b;
-      font-size: 28px;
-      margin-bottom: 20px;
+    .entry {
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
     }
-    .message-box p {
+    .entry:last-child {
+      border-bottom: none;
+    }
+    .entry h3 {
+      margin: 0;
       font-size: 18px;
     }
-    .check {
-      font-size: 60px;
-      color: green;
-      margin-bottom: 20px;
+    .entry p {
+      margin: 5px 0;
+      color: #333;
+    }
+    .download-btn {
+      background-color: #004d40;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .download-btn:hover {
+      background-color: #00695c;
     }
   </style>
 </head>
 <body>
-  <div class="message-box">
-    <div class="check">✅</div>
-    <h1>تم إبرام العقد بنجاح</h1>
-    <p>نشكر لك ثقتك. تم تسجيل موافقتك إلكترونيًا.</p>
-    <p>سيتم التواصل معك قريبًا من قبل ممثل الجهة.</p>
-    <p style="margin-top: 40px;">جميع الحقوق محفوظة © سرعة تملك العقار</p>
+  <div class="container">
+    <h1>منصة الإدارة - العقود</h1>
+    <div id="entriesList"></div>
   </div>
+
+  <script>
+    const entries = JSON.parse(localStorage.getItem('contracts')) || [];
+
+    function downloadPDF(entry) {
+      const content = `
+        الطرف الثاني: ${entry.name}
+        رقم الهوية: ${entry.id}
+        العنوان: ${entry.address}
+        تاريخ الميلاد: ${entry.birth}
+        رقم الجوال: ${entry.mobile}
+        توقيع: ✔️
+
+        التاريخ: ${entry.date}
+        الوقت: ${entry.time}
+        الموقع: ${entry.location}
+      `;
+
+      const blob = new Blob([content], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `عقد_${entry.name}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function renderEntries() {
+      const list = document.getElementById("entriesList");
+      if (entries.length === 0) {
+        list.innerHTML = "<p>لا توجد بيانات حالياً.</p>";
+        return;
+      }
+
+      entries.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `
+          <h3>${entry.name}</h3>
+          <p>رقم الهوية: ${entry.id}</p>
+          <p>الهاتف: ${entry.mobile}</p>
+          <p>التاريخ: ${entry.date} | الوقت: ${entry.time}</p>
+          <button class="download-btn" onclick='downloadPDF(${JSON.stringify(entry)})'>تحميل PDF</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    renderEntries();
+  </script>
 </body>
 </html>

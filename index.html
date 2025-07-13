@@ -2,85 +2,72 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>سرعة تملك العقار</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الدخول للنظام</title>
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #e0f2f1);
-      color: #004d40;
       margin: 0;
-      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      background: #f9f9f9;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
+      color: #004d40;
     }
-    header {
-      background-color: #004d40;
-      color: white;
+    .login-box {
+      background: white;
+      border: 2px solid #004d40;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       text-align: center;
-      padding: 20px 10px;
-      font-size: 24px;
-      font-weight: bold;
+      width: 90%;
+      max-width: 400px;
     }
-    main {
-      flex: 1;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 18px;
-      margin-bottom: 30px;
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
     }
     button {
-      font-size: 20px;
-      padding: 12px 30px;
-      background-color: #00796b;
+      background-color: #004d40;
       color: white;
+      padding: 12px 25px;
+      margin-top: 20px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #004d40;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      background-color: #e0f2f1;
+    .error {
+      color: red;
+      margin-top: 15px;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    سرعة تملك العقار والحلول التمويلية المتكاملة
-  </header>
-
-  <main>
-    <h1>نرحب بك عميلنا العزيز</h1>
-    <p>نبرم معك هذا العقد بشكل إلكتروني لتسهيل الإجراءات</p>
-    <button onclick="window.location.href='step1.html'">ابدأ بسم الله</button>
-  </main>
-
-  <footer>
-    جميع الحقوق محفوظة &copy; سرعة تملك العقار<br>
-    <span id="now"></span>
-  </footer>
+  <div class="login-box">
+    <h2>مرحباً بك</h2>
+    <p>الرجاء إدخال الرمز السري للمتابعة</p>
+    <input type="password" id="password" placeholder="الرمز السري">
+    <button onclick="checkPassword()">دخول</button>
+    <p class="error" id="error">رمز الدخول غير صحيح</p>
+  </div>
 
   <script>
-    const now = new Date();
-    const formatter = new Intl.DateTimeFormat('ar-SA', {
-      dateStyle: 'full',
-      timeStyle: 'short'
-    });
-    document.getElementById('now').textContent = formatter.format(now);
+    function checkPassword() {
+      const pass = document.getElementById("password").value;
+      if (pass === "qq11qQ@2032") {
+        window.location.href = "step1.html";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
   </script>
 </body>
 </html>

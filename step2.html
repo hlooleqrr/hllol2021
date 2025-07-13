@@ -1,116 +1,186 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>إدخال البيانات</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>سرعة تملك العقار - البيانات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
-      padding: 30px;
+      margin: 0;
+      background: #f9fafb;
       color: #004d40;
+    }
+    .container {
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 20px 30px;
+      background: white;
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #004d40;
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+    h2 {
+      text-align: center;
+      color: #00796b;
+      margin-bottom: 30px;
     }
     label {
       display: block;
       margin-top: 20px;
-      margin-bottom: 5px;
     }
     input, select {
       width: 100%;
       padding: 10px;
       font-size: 16px;
-      margin-bottom: 15px;
+      margin-top: 5px;
     }
     button {
-      padding: 12px 30px;
+      margin-top: 30px;
+      padding: 12px 25px;
       font-size: 18px;
       background-color: #00796b;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+    .footer {
+      margin-top: 40px;
+      padding: 20px;
+      background: #eeeeee;
+      text-align: center;
+      font-size: 14px;
+      border-top: 2px solid #004d40;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-top: 30px;
+      font-size: 15px;
+      text-align: center;
     }
   </style>
 </head>
-<body>
+<body onload="getLocation(); updateTime();">
 
-<h2>أدخل معلوماتك:</h2>
+  <div class="container">
+    <h1>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <h2>نرحب بك عميلنا العزيز لإكمال بيانات العقد</h2>
 
-<label>اسمك الكريم:</label>
-<input type="text" id="clientName" required>
+    <label>اسمك الكريم:</label>
+    <input type="text" id="clientName" required />
 
-<label>رقم الهوية (10 أرقام):</label>
-<input type="text" id="clientId" maxlength="10" pattern="\d{10}" required>
+    <label>رقم الهوية (10 أرقام فقط):</label>
+    <input type="text" id="clientId" maxlength="10" pattern="\d{10}" required />
 
-<label>رقم الجوال (يبدأ بـ 05):</label>
-<input type="text" id="clientMobile" maxlength="10" pattern="05\d{8}" required>
+    <label>رقم الجوال (يبدأ بـ 05):</label>
+    <input type="text" id="clientMobile" maxlength="10" pattern="05\d{8}" required />
 
-<label>تاريخ الميلاد (هجري):</label>
-<div style="display: flex; gap: 10px;">
-  <select id="birthDay">
-    <option value="">اليوم</option>
-    <script>
-      for (let i = 1; i <= 30; i++) {
-        document.write(`<option value="${i.toString().padStart(2,'0')}">${i}</option>`);
-      }
-    </script>
-  </select>
+    <label>تاريخ الميلاد (هجري):</label>
+    <div style="display: flex; gap: 10px;">
+      <select id="birthDay">
+        <option value="">اليوم</option>
+        <script>
+          for (let i = 1; i <= 30; i++) {
+            let padded = i.toString().padStart(2, '0');
+            document.write(`<option value="${padded}">${padded}</option>`);
+          }
+        </script>
+      </select>
 
-  <select id="birthMonth">
-    <option value="">الشهر</option>
-    <option value="01">محرم</option>
-    <option value="02">صفر</option>
-    <option value="03">ربيع أول</option>
-    <option value="04">ربيع ثاني</option>
-    <option value="05">جمادى الأولى</option>
-    <option value="06">جمادى الآخرة</option>
-    <option value="07">رجب</option>
-    <option value="08">شعبان</option>
-    <option value="09">رمضان</option>
-    <option value="10">شوال</option>
-    <option value="11">ذو القعدة</option>
-    <option value="12">ذو الحجة</option>
-  </select>
+      <select id="birthMonth">
+        <option value="">الشهر</option>
+        <option value="01">محرم</option>
+        <option value="02">صفر</option>
+        <option value="03">ربيع أول</option>
+        <option value="04">ربيع ثاني</option>
+        <option value="05">جمادى الأولى</option>
+        <option value="06">جمادى الآخرة</option>
+        <option value="07">رجب</option>
+        <option value="08">شعبان</option>
+        <option value="09">رمضان</option>
+        <option value="10">شوال</option>
+        <option value="11">ذو القعدة</option>
+        <option value="12">ذو الحجة</option>
+      </select>
 
-  <select id="birthYear">
-    <option value="">السنة</option>
-    <script>
-      for (let y = 1445; y >= 1370; y--) {
-        document.write(`<option value="${y}">${y}</option>`);
-      }
-    </script>
-  </select>
-</div>
+      <select id="birthYear">
+        <option value="">السنة</option>
+        <script>
+          for (let y = 1445; y >= 1370; y--) {
+            document.write(`<option value="${y}">${y}</option>`);
+          }
+        </script>
+      </select>
+    </div>
 
-<button onclick="saveData()">التالي</button>
+    <button onclick="saveData()">التالي</button>
 
-<script>
-  function saveData() {
-    const name = document.getElementById("clientName").value.trim();
-    const id = document.getElementById("clientId").value.trim();
-    const mobile = document.getElementById("clientMobile").value.trim();
-    const year = document.getElementById("birthYear").value;
-    const month = document.getElementById("birthMonth").value;
-    const day = document.getElementById("birthDay").value;
+    <div class="warning">
+      هذا العقد يخضع لأنظمة التعاملات الإلكترونية، وبمجرد تعبئة البيانات فإنك تقر بصحتها وتوافق على الاستمرار في الإجراء الإلكتروني.
+    </div>
 
-    if (!name || id.length !== 10 || !id.match(/^\d+$/) ||
-        !mobile.startsWith("05") || mobile.length !== 10 ||
-        !year || !month || !day) {
-      alert("يرجى تعبئة جميع الحقول بشكل صحيح.");
-      return;
+    <div class="footer">
+      <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
+      <p id="datetime">التاريخ والوقت: ...</p>
+      <p id="geoLocation">جاري تحديد الموقع...</p>
+    </div>
+  </div>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('ar-SA');
+      const timeStr = now.toLocaleTimeString('ar-SA');
+      document.getElementById("datetime").innerText = `التاريخ والوقت: ${dateStr} - ${timeStr}`;
     }
 
-    localStorage.setItem("clientName", name);
-    localStorage.setItem("clientId", id);
-    localStorage.setItem("clientMobile", mobile);
-    localStorage.setItem("birthYear", year);
-    localStorage.setItem("birthMonth", month);
-    localStorage.setItem("birthDay", day);
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude.toFixed(5);
+          const lon = position.coords.longitude.toFixed(5);
+          document.getElementById("geoLocation").innerText = `الموقع: خط العرض ${lat} - خط الطول ${lon}`;
+        }, function() {
+          document.getElementById("geoLocation").innerText = "تعذر الحصول على الموقع";
+        });
+      } else {
+        document.getElementById("geoLocation").innerText = "الموقع غير مدعوم في هذا المتصفح";
+      }
+    }
 
-    window.location.href = "step3.html";
-  }
-</script>
+    function saveData() {
+      const name = document.getElementById("clientName").value.trim();
+      const id = document.getElementById("clientId").value.trim();
+      const mobile = document.getElementById("clientMobile").value.trim();
+      const year = document.getElementById("birthYear").value;
+      const month = document.getElementById("birthMonth").value;
+      const day = document.getElementById("birthDay").value;
 
+      if (!name || id.length !== 10 || !/^\d+$/.test(id) || !mobile.startsWith("05") || mobile.length !== 10 || !year || !month || !day) {
+        alert("يرجى تعبئة جميع الحقول بشكل صحيح.");
+        return;
+      }
+
+      localStorage.setItem("clientName", name);
+      localStorage.setItem("clientId", id);
+      localStorage.setItem("clientMobile", mobile);
+      localStorage.setItem("birthYear", year);
+      localStorage.setItem("birthMonth", month);
+      localStorage.setItem("birthDay", day);
+
+      window.location.href = "step3.html";
+    }
+  </script>
 </body>
 </html>

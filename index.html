@@ -2,20 +2,21 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
+  <title>دخول النظام</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>دخول العقد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f1f1f1;
+      background: #f9fafb;
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px 20px;
       color: #004d40;
     }
     input {
       padding: 12px;
       font-size: 1rem;
-      width: 260px;
+      width: 250px;
       border-radius: 8px;
       border: 2px solid #009688;
       text-align: center;
@@ -31,27 +32,35 @@
       cursor: pointer;
       font-weight: bold;
     }
+    #error {
+      margin-top: 20px;
+      color: red;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h2>أدخل الرقم المصرح لك من المختصين</h2>
-  <input type="password" id="entryCode" placeholder="مثال: 00221" />
-  <br/>
-  <button onclick="verifyCode()">متابعة</button>
+  <input type="password" id="accessCode" placeholder="مثال: 00221" />
+  <br />
+  <button onclick="validateCode()">دخول ➜</button>
+  <div id="error"></div>
 
   <script>
-    // التحقق إذا سبق ورفض أو وافق وتم حفظ الرد
-    if (localStorage.getItem("contract-locked") === "true") {
-      location.href = "blocked.html";
+    function validateCode() {
+      const code = document.getElementById("accessCode").value.trim();
+      if (code === "00221") {
+        localStorage.setItem("authorized", "true");
+        window.location.href = "step1.html";
+      } else {
+        document.getElementById("error").textContent = "⛔️ الرقم غير صحيح";
+      }
     }
 
-    function verifyCode() {
-      const input = document.getElementById("entryCode").value.trim();
-      if (input === "00221") {
-        location.href = "step1.html";
-      } else {
-        alert("الرقم غير صحيح ❌");
-      }
+    // إذا حاول يرجع بعد موافقة أو رفض
+    const locked = localStorage.getItem("locked");
+    if (locked === "true") {
+      document.body.innerHTML = "<h1>⛔️ تم الحفظ جميع الحقوق محفوظة ⛔️</h1>";
     }
   </script>
 </body>

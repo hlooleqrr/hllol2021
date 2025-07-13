@@ -1,96 +1,122 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الخطوة الثانية - بيانات إضافية</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>الخطوة 2 - الجوال وتاريخ الميلاد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f4f4f4;
+      background: #f4f4f4;
       padding: 20px;
       color: #004d40;
     }
-    .box {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      max-width: 500px;
+    .container {
+      max-width: 650px;
       margin: auto;
-      box-shadow: 0 0 10px #ccc;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #004d40;
     }
     h2 {
       text-align: center;
-      color: #00695c;
+      margin-bottom: 20px;
     }
     label {
-      display: block;
+      font-weight: bold;
       margin-top: 15px;
+      display: block;
     }
     input, select {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .btn {
-      margin-top: 20px;
-      background-color: #00695c;
-      color: white;
-      border: none;
       padding: 12px;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 2px solid #009688;
+      font-size: 1rem;
+    }
+    button {
       width: 100%;
-      font-size: 16px;
+      padding: 14px;
+      margin-top: 20px;
+      background: #00796b;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+    }
+    button:hover {
+      background: #004d40;
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h2>الخطوة ٢: بيانات إضافية</h2>
-    <form onsubmit="saveStep2(); return false;">
-      <label>رقم الجوال</label>
-      <input type="tel" id="phone" required>
+  <div class="container">
+    <h2>الخطوة 2: معلومات التواصل</h2>
 
-      <label>تاريخ الميلاد</label>
-      <div style="display: flex; gap: 5px;">
-        <select id="day" required></select>
-        <select id="month" required></select>
-        <select id="year" required></select>
-      </div>
+    <label>رقم الجوال:</label>
+    <input type="text" id="phone" placeholder="05xxxxxxxx" maxlength="10" />
 
-      <button class="btn" type="submit">التالي</button>
-    </form>
+    <label>تاريخ الميلاد (ميلادي):</label>
+    <select id="day">
+      <option value="">اليوم</option>
+    </select>
+    <select id="month">
+      <option value="">الشهر</option>
+    </select>
+    <select id="year">
+      <option value="">السنة</option>
+    </select>
+
+    <button id="continueBtn" disabled>متابعة العقد ➔</button>
   </div>
 
   <script>
-    const day = document.getElementById("day");
-    const month = document.getElementById("month");
-    const year = document.getElementById("year");
+    const phoneInput = document.getElementById('phone');
+    const daySelect = document.getElementById('day');
+    const monthSelect = document.getElementById('month');
+    const yearSelect = document.getElementById('year');
+    const continueBtn = document.getElementById('continueBtn');
 
     for (let i = 1; i <= 31; i++) {
-      day.innerHTML += `<option value="${i}">${i}</option>`;
+      daySelect.innerHTML += `<option value="${i}">${i}</option>`;
     }
     for (let i = 1; i <= 12; i++) {
-      month.innerHTML += `<option value="${i}">${i}</option>`;
+      monthSelect.innerHTML += `<option value="${i}">${i}</option>`;
     }
-    for (let i = 1950; i <= new Date().getFullYear(); i++) {
-      year.innerHTML += `<option value="${i}">${i}</option>`;
+    for (let i = 1960; i <= new Date().getFullYear(); i++) {
+      yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
     }
 
-    function saveStep2() {
-      const phone = document.getElementById("phone").value;
-      const dob = `${day.value}/${month.value}/${year.value}`;
+    function validate() {
+      const phone = phoneInput.value.trim();
+      const day = daySelect.value;
+      const month = monthSelect.value;
+      const year = yearSelect.value;
+      const isValid = /^05\d{8}$/.test(phone) && day && month && year;
+      continueBtn.disabled = !isValid;
+    }
 
-      const data = {
-        phone, dob
+    phoneInput.addEventListener('input', validate);
+    daySelect.addEventListener('change', validate);
+    monthSelect.addEventListener('change', validate);
+    yearSelect.addEventListener('change', validate);
+
+    continueBtn.addEventListener('click', () => {
+      const step1 = JSON.parse(localStorage.getItem('client-step1') || '{}');
+      const client = {
+        ...step1,
+        phone: phoneInput.value.trim(),
+        birthdate: `${yearSelect.value}-${monthSelect.value.padStart(2, '0')}-${daySelect.value.padStart(2, '0')}`
       };
-
-      localStorage.setItem("step2", JSON.stringify(data));
+      localStorage.setItem('client-data', JSON.stringify(client));
       window.location.href = "contract.html";
-    }
+    });
   </script>
 </body>
 </html>

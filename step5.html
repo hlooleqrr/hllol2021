@@ -85,9 +85,17 @@
       border-radius: 10px;
       padding: 15px;
     }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      padding: 10px;
+    }
   </style>
 </head>
-<body>
+<body onload="showFooterDetails()">
 
   <div class="header">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
@@ -103,8 +111,12 @@
     <button onclick="validateAndContinue()">تأكيد</button>
 
     <div class="legal">
-      ⚠️ تنبيه: سيتم تسجيل هذه الموافقة بشكل إلكتروني، وتُعد ملزمة قانونًا حسب المادة التاسعة من نظام المعاملات الإلكترونية.
+      ⚠️ تنبيه: سيتم تسجيل هذه الموافقة بشكل إلكتروني، وتُعد ملزمة قانونًا حسب المادة (9) من نظام المعاملات الإلكترونية الصادر بالمرسوم الملكي رقم (م/18) وتاريخ 8/3/1428هـ.
     </div>
+  </div>
+
+  <div class="footer" id="footerInfo">
+    يتم تحميل معلومات الوقت والموقع...
   </div>
 
   <script>
@@ -125,6 +137,27 @@
       }
 
       window.location.href = "step6.html";
+    }
+
+    function showFooterDetails() {
+      const now = new Date();
+      const date = now.toLocaleDateString('ar-EG');
+      const time = now.toLocaleTimeString('ar-EG');
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude.toFixed(5);
+          const lon = position.coords.longitude.toFixed(5);
+          document.getElementById("footerInfo").innerHTML =
+            `📍 إحداثيات: ${lat}, ${lon} | 📅 التاريخ: ${date} | 🕒 الوقت: ${time}`;
+        }, function() {
+          document.getElementById("footerInfo").innerHTML =
+            `📅 التاريخ: ${date} | 🕒 الوقت: ${time} | ⚠️ لم يتم السماح بتحديد الموقع`;
+        });
+      } else {
+        document.getElementById("footerInfo").innerHTML =
+          `📅 التاريخ: ${date} | 🕒 الوقت: ${time} | ⚠️ المتصفح لا يدعم تحديد الموقع`;
+      }
     }
   </script>
 

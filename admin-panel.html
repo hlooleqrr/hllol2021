@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>لوحة إدارة العقود</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #004d40;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #e0f2f1;
+      color: #004d40;
+    }
+    tr:nth-child(even) {
+      background-color: #f1f1f1;
+    }
+    .download-btn {
+      background-color: #00796b;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      background-color: #004d40;
+    }
+  </style>
+</head>
+<body>
+  <h1>📄 لوحة إدارة العقود المعبأة</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>الاسم</th>
+        <th>السجل المدني</th>
+        <th>تاريخ الميلاد</th>
+        <th>رقم الجوال</th>
+        <th>تاريخ الإرسال</th>
+        <th>تحميل العقد PDF</th>
+      </tr>
+    </thead>
+    <tbody id="contracts-table">
+      <!-- العقود المحفوظة ستظهر هنا -->
+    </tbody>
+  </table>
+
+  <script>
+    const storedContracts = JSON.parse(localStorage.getItem("contractsList") || "[]");
+
+    const table = document.getElementById("contracts-table");
+
+    if (storedContracts.length === 0) {
+      table.innerHTML = "<tr><td colspan='6'>لا توجد عقود مسجلة حتى الآن.</td></tr>";
+    } else {
+      storedContracts.forEach(contract => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${contract.name}</td>
+          <td>${contract.nationalId}</td>
+          <td>${contract.birthDate}</td>
+          <td>${contract.phone}</td>
+          <td>${contract.timestamp}</td>
+          <td><button class="download-btn" onclick='downloadContract(${JSON.stringify(contract)})'>📥 تحميل</button></td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    function downloadContract(data) {
+      const content = `
+        عقد إلكتروني:
+
+        الاسم: ${data.name}
+        السجل المدني: ${data.nationalId}
+        تاريخ الميلاد: ${data.birthDate}
+        رقم الجوال: ${data.phone}
+        العنوان: ${data.address}
+        تاريخ التوقيع: ${data.timestamp}
+
+        تم توليد هذا العقد من خلال منصة سرعة تملك العقار.
+      `;
+
+      const blob = new Blob([content], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `عقد_${data.name}.pdf`;
+      link.click();
+    }
+  </script>
+</body>
+</html>

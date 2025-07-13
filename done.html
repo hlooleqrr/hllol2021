@@ -1,51 +1,64 @@
+<!-- الصفحة السادسة - صفحة التأكيد على الموافقة -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تم إبرام العقد</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>تأكيد الموافقة على العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #e8f5e9;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+      background-color: #fefefe;
+      color: #222;
+      padding: 40px;
+      line-height: 2;
+      text-align: center;
     }
-    .done-box {
-      background: #ffffff;
-      border: 3px solid #388e3c;
+    .confirm-box {
+      border: 2px solid #004d40;
       border-radius: 12px;
       padding: 30px;
+      background: #fff;
+      display: inline-block;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
       width: 90%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      margin: 12px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
-    h2 {
-      color: #388e3c;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    p {
-      font-size: 18px;
-      color: #333;
-    }
-    .done-box .emoji {
-      font-size: 48px;
-      margin-bottom: 20px;
+    button {
+      background-color: #004d40;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="done-box">
-    <div class="emoji">✅</div>
-    <h2>تم إبرام العقد بنجاح</h2>
-    <p>نشكر لك استخدامك خدماتنا.</p>
-    <p>جميع الحقوق محفوظة © سرعة تملك العقار</p>
+  <div class="confirm-box">
+    <h2>تأكيد الموافقة النهائية</h2>
+    <p>الرجاء إدخال رقم الهوية وكتابة كلمة <strong>موافق</strong> للتأكيد النهائي.</p>
+    <input type="text" id="idConfirm" placeholder="رقم الهوية" required />
+    <input type="text" id="wordConfirm" placeholder="أكتب كلمة موافق" required />
+    <button onclick="checkConfirmation()">تأكيد</button>
+    <p id="error" style="color:red;"></p>
   </div>
+
+  <script>
+    function checkConfirmation() {
+      const id = document.getElementById("idConfirm").value.trim();
+      const word = document.getElementById("wordConfirm").value.trim();
+
+      const storedId = localStorage.getItem("client_id");
+
+      if (id === storedId && word === "موافق") {
+        window.location.href = "success.html";
+      } else {
+        document.getElementById("error").innerText = "تأكد من إدخال رقم الهوية الصحيح وكتابة كلمة موافق.";
+      }
+    }
+  </script>
 </body>
 </html>

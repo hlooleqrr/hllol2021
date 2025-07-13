@@ -1,135 +1,137 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تأكيد نهائي للعقد</title>
+  <meta charset="UTF-8" />
+  <title>تم إبرام العقد بنجاح</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #fff3e0;
       margin: 0;
-      padding: 30px;
-      color: #e65100;
-      text-align: center;
+      background-color: #e8f5e9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       min-height: 100vh;
     }
-    .box {
-      background-color: #fff8e1;
-      border: 2px solid #ff9800;
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-    }
-    label {
-      font-size: 20px;
-      margin-bottom: 10px;
-      display: block;
-    }
-    input[type="text"] {
-      font-size: 18px;
-      padding: 10px;
-      width: 80%;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      text-align: center;
-    }
-    button {
-      padding: 14px 30px;
-      font-size: 20px;
-      background-color: #e65100;
+
+    .header {
+      background-color: #004d40;
       color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    button:hover {
-      opacity: 0.9;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      width: 100%;
+      border-bottom: 4px solid #00796b;
     }
 
-    .legal-box {
-      background-color: #fff3f3;
-      border: 2px solid #e53935;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 40px auto 10px;
-      max-width: 90%;
-      text-align: right;
-      font-size: 15px;
+    .content {
+      background: white;
+      border: 3px solid #004d40;
+      border-radius: 14px;
+      padding: 30px 20px;
+      margin: 30px 15px;
+      text-align: center;
+      max-width: 600px;
+      width: 95%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: green;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #2e7d32;
+      margin-bottom: 15px;
+    }
+
+    .info {
+      font-size: 17px;
+      margin-top: 10px;
       color: #333;
+      line-height: 1.8;
     }
-    .legal-box h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #004d40;
+
+    .legal-note {
+      margin-top: 25px;
+      background-color: #fff0f0;
+      border: 2px solid #d32f2f;
+      color: #c62828;
+      padding: 15px;
+      font-size: 15px;
+      border-radius: 10px;
     }
-    .legal-box .warning {
-      color: #b71c1c;
-      font-weight: bold;
-      margin: 8px 0;
+
+    .footer {
+      margin-top: auto;
+      background-color: #f1f1f1;
+      color: #555;
+      padding: 15px;
+      text-align: center;
+      width: 100%;
+      font-size: 14px;
+      border-top: 1px solid #ccc;
     }
   </style>
 </head>
-<body>
+<body onload="displayDetails()">
 
-  <div class="box">
-    <h2>تأكيد إبرام العقد</h2>
-    <p>فضلاً أدخل رقم الهوية، ثم اكتب كلمة <strong>موافق</strong> لإتمام العقد</p>
-    
-    <label for="id">رقم الهوية:</label>
-    <input type="text" id="id" placeholder="أدخل رقم الهوية">
+  <div class="header">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <label for="confirmWord">اكتب كلمة "موافق":</label>
-    <input type="text" id="confirmWord" placeholder="موافق">
+  <div class="content">
+    <div class="success-icon">✅</div>
+    <h2>تم إبرام العقد بنجاح</h2>
 
-    <br>
-    <button onclick="finalize()">إرسال</button>
+    <div class="info" id="details">
+      جاري جلب التفاصيل...
+    </div>
+
+    <div class="legal-note">
+      ⚠️ تم توقيع هذا العقد إلكترونيًا ويُعد ملزمًا حسب المادة (9) من نظام المعاملات الإلكترونية الصادر بالمرسوم الملكي رقم (م/18) وتاريخ 8/3/1428هـ.
+    </div>
   </div>
 
-  <div class="legal-box">
-    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
-    <p class="warning">
-      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
-    </p>
-    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
-    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
+  <div class="footer" id="footerInfo">
+    يتم تحميل الموقع والتاريخ...
   </div>
 
   <script>
-    function finalize() {
-      const id = document.getElementById('id').value.trim();
-      const word = document.getElementById('confirmWord').value.trim();
+    function displayDetails() {
+      const now = new Date();
+      const date = now.toLocaleDateString('ar-EG');
+      const time = now.toLocaleTimeString('ar-EG');
 
-      if (id !== "" && word === "موافق") {
-        window.location.href = "step7.html";
+      const name = localStorage.getItem("clientName") || 'العميل';
+      const id = localStorage.getItem("clientId") || '**********';
+
+      const infoDiv = document.getElementById("details");
+      infoDiv.innerHTML = `
+        <strong>الاسم:</strong> ${name}<br>
+        <strong>رقم الهوية:</strong> ${id}<br>
+        <strong>📅 التاريخ:</strong> ${date}<br>
+        <strong>🕒 الوقت:</strong> ${time}<br>
+        <strong>📍 الموقع:</strong> جاري تحديد الموقع...
+      `;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude.toFixed(5);
+          const lon = position.coords.longitude.toFixed(5);
+          document.getElementById("footerInfo").innerHTML =
+            `📍 إحداثيات: ${lat}, ${lon} | 📅 ${date} | 🕒 ${time}`;
+          infoDiv.innerHTML += `<br><strong>الإحداثيات:</strong> ${lat}, ${lon}`;
+        }, function() {
+          document.getElementById("footerInfo").innerHTML =
+            `📅 ${date} | 🕒 ${time} | ⚠️ لم يتم السماح بالموقع`;
+        });
       } else {
-        alert("يجب إدخال رقم الهوية وكتابة كلمة موافق لإتمام العقد.");
+        document.getElementById("footerInfo").innerHTML =
+          `📅 ${date} | 🕒 ${time} | ⚠️ المتصفح لا يدعم الموقع`;
       }
-    }
-
-    const dtBox = document.getElementById("datetime");
-    const now = new Date();
-    const formatted = now.toLocaleString('ar-SA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    });
-    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
-
-    const locBox = document.getElementById("location");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
-      }, () => {
-        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
-      });
-    } else {
-      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
     }
   </script>
 

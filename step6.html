@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>قراءة العقد</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #fff8e1;
+      margin: 0;
+      padding: 30px;
+      color: #4e342e;
+      line-height: 2;
+    }
+    .contract-box {
+      border: 2px solid #4e342e;
+      border-radius: 12px;
+      padding: 20px;
+      background-color: #fffde7;
+    }
+    .next-btn {
+      margin-top: 30px;
+      background-color: #6d4c41;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .next-btn:hover {
+      background-color: #8d6e63;
+    }
+  </style>
+</head>
+<body>
 
+  <h2>عزيزي العميل، يرجى قراءة بنود العقد التالية:</h2>
+
+  <div class="contract-box" id="contractContent">
+    <!-- سيتم إدراج الاسم ورقم الهوية والعنوان من localStorage -->
+    <p>بسم الله الرحمن الرحيم</p>
+    <p>المملكة العربية السعودية</p>
+    <p>شركة الوساطة العقارية والتسويق - ترخيص رقم 1100042624</p>
+    <p>الطرف الأول: الأستاذ نايف المطيري بصفته مدير الإدارة.</p>
+    <p>الطرف الثاني: <span id="clientName"></span>، سجل مدني: <span id="clientId"></span>.</p>
+    <p>رقم الجوال: <span id="clientPhone"></span></p>
+    <p>تاريخ الميلاد: <span id="clientBirth"></span></p>
+
+    <ol>
+      <li>يلتزم الطرف الأول بتقديم الخدمات التمويلية حسب المتفق عليه.</li>
+      <li>يدفع الطرف الثاني للطرف الأول ٢.٥٪ من قيمة العقار + ٥٠٠ ريال رسوم إدارية.</li>
+      <li>يتم احتساب القيمة المعتمدة حسب جهة التمويل.</li>
+      <li>يتم التعامل بسرية تامة لحفظ بيانات العميل.</li>
+      <li>لا يحق للطرف الثاني المطالبة بالمبلغ المدفوع بعد توقيع العقد.</li>
+      <li>في حال تعذر إتمام التمويل لأسباب غير متعلقة بالطرف الأول، لا يتم استرجاع الرسوم.</li>
+      <li>الطرف الثاني مسؤول عن صحة البيانات المقدمة.</li>
+      <li>العقد ساري المفعول حتى إتمام عملية التمويل أو الإلغاء بالتراضي.</li>
+      <li>لا يُعتبر هذا العقد وسيلة ضغط على أي جهة تمويلية.</li>
+      <li>الطرف الأول غير مسؤول عن رفض الجهات التمويلية.</li>
+      <li>يتم إبرام العقد إلكترونيًا ويُعتمد بتاريخ توقيعه.</li>
+      <li>تُطبق على هذا العقد الأنظمة المعمول بها في المملكة العربية السعودية.</li>
+    </ol>
+
+    <p>وبهذا تم الاتفاق بين الطرفين على جميع ما ورد أعلاه.</p>
+  </div>
+
+  <button class="next-btn" onclick="goToNext()">التالي</button>
+
+  <script>
+    document.getElementById("clientName").innerText = localStorage.getItem("clientName") || "الاسم غير متوفر";
+    document.getElementById("clientId").innerText = localStorage.getItem("clientId") || "غير متوفر";
+    document.getElementById("clientPhone").innerText = localStorage.getItem("clientPhone") || "غير متوفر";
+    document.getElementById("clientBirth").innerText = localStorage.getItem("clientBirth") || "غير متوفر";
+
+    function goToNext() {
+      window.location.href = "step7.html";
+    }
+  </script>
+
+</body>
+</html>

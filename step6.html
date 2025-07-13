@@ -20,7 +20,7 @@
       color: white;
       padding: 20px;
       text-align: center;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: bold;
       width: 100%;
       border-bottom: 4px solid #00796b;
@@ -73,7 +73,7 @@
       padding: 15px;
       text-align: center;
       width: 100%;
-      font-size: 14px;
+      font-size: 15px;
       border-top: 1px solid #ccc;
     }
   </style>
@@ -86,18 +86,14 @@
     <div class="success-icon">✅</div>
     <h2>تم إبرام العقد بنجاح</h2>
 
-    <div class="info" id="details">
-      جاري جلب التفاصيل...
-    </div>
+    <div class="info" id="details">جاري تحميل التفاصيل...</div>
 
     <div class="legal-note">
-      ⚠️ تم توقيع هذا العقد إلكترونيًا ويُعد ملزمًا حسب المادة (9) من نظام المعاملات الإلكترونية الصادر بالمرسوم الملكي رقم (م/18) وتاريخ 8/3/1428هـ.
+      ⚠️ تم توقيع هذا العقد إلكترونيًا، ويُعد ملزمًا قانونيًا حسب المادة (9) من نظام المعاملات الإلكترونية الصادر بالمرسوم الملكي رقم (م/18) بتاريخ 8/3/1428هـ.
     </div>
   </div>
 
-  <div class="footer" id="footerInfo">
-    يتم تحميل الموقع والتاريخ...
-  </div>
+  <div class="footer" id="footerInfo">📅 يتم جلب التاريخ والموقع...</div>
 
   <script>
     function displayDetails() {
@@ -117,20 +113,37 @@
         <strong>📍 الموقع:</strong> جاري تحديد الموقع...
       `;
 
+      // الحفظ في localStorage للمشرف
+      let clients = JSON.parse(localStorage.getItem("clients") || "[]");
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           const lat = position.coords.latitude.toFixed(5);
           const lon = position.coords.longitude.toFixed(5);
+          const location = `${lat}, ${lon}`;
+
           document.getElementById("footerInfo").innerHTML =
-            `📍 إحداثيات: ${lat}, ${lon} | 📅 ${date} | 🕒 ${time}`;
+            `📍 الإحداثيات: ${lat}, ${lon} | 📅 ${date} | 🕒 ${time}`;
+
           infoDiv.innerHTML += `<br><strong>الإحداثيات:</strong> ${lat}, ${lon}`;
+
+          const newEntry = {
+            name: name,
+            id: id,
+            date: date,
+            time: time,
+            location: location
+          };
+
+          clients.push(newEntry);
+          localStorage.setItem("clients", JSON.stringify(clients));
         }, function() {
           document.getElementById("footerInfo").innerHTML =
             `📅 ${date} | 🕒 ${time} | ⚠️ لم يتم السماح بالموقع`;
         });
       } else {
         document.getElementById("footerInfo").innerHTML =
-          `📅 ${date} | 🕒 ${time} | ⚠️ المتصفح لا يدعم الموقع`;
+          `📅 ${date} | 🕒 ${time} | ⚠️ المتصفح لا يدعم تحديد الموقع`;
       }
     }
   </script>

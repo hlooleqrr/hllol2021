@@ -3,158 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>سرعة تملك العقار</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <title>دخول العقد</title>
   <style>
-    * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
-      margin: 0;
-      background: #f9fafb;
+      background: #f1f1f1;
+      text-align: center;
+      padding: 60px 20px;
       color: #004d40;
     }
-    .container {
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      border: 2px solid #004d40;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-    header {
-      background: linear-gradient(to right, #004d40, #00796b);
-      padding: 20px;
-      color: white;
+    input {
+      padding: 12px;
+      font-size: 1rem;
+      width: 260px;
       border-radius: 8px;
+      border: 2px solid #009688;
       text-align: center;
     }
-    header h1 {
-      font-size: 1.8rem;
-      margin: 0;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: inherit;
-    }
-    input {
-      border: 2px solid #009688;
-    }
-    input:focus {
-      border-color: #004d40;
-      outline: none;
-    }
     button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1rem;
       background: #00796b;
       color: white;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-    }
-    button:hover {
-      background: #004d40;
-    }
-    .hidden { display: none; }
-    footer {
-      margin-top: 30px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #d32f2f;
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <h1>سرعة تملك العقار<br>والحلول التمويلية المتكاملة</h1>
-    <p>نرحب بك عميلنا العزيز</p>
-  </header>
-  <p style="text-align:center; font-weight:bold;">نبرم معك هذا العقد<br><br>بسم الله الرحمن الرحيم</p>
-  <label>الاسم الكريم:</label>
-  <input type="text" id="fullName" placeholder="اكتب اسمك الكامل" />
-  <label>السجل المدني:</label>
-  <input type="text" id="idNumber" maxlength="10" placeholder="أدخل رقم السجل المدني" />
-  <div id="manualAddressContainer" class="hidden">
-    <label>📍 لم تشارك موقعك، يرجى إدخال عنوانك يدويًا:</label>
-    <input type="text" id="manualAddress" placeholder="مثال: الرياض، حي اليرموك، شارع رقم..." />
-  </div>
-  <button id="continueBtn" disabled>التالي ➔</button>
-</div>
-<footer>⚠️ هذا العقد يُعد سندًا تنفيذيًا حسب المادة 9 من نظام التعاملات الإلكترونية</footer>
-<script>
-let clientData = {
-  name: '',
-  id: '',
-  address: '',
-  response: '',
-  timestamp: '',
-};
-const fullNameInput = document.getElementById('fullName');
-const idInput = document.getElementById('idNumber');
-const manualAddressInput = document.getElementById('manualAddress');
-const manualAddressContainer = document.getElementById('manualAddressContainer');
-const continueBtn = document.getElementById('continueBtn');
+  <h2>أدخل الرقم المصرح لك من المختصين</h2>
+  <input type="password" id="entryCode" placeholder="مثال: 00221" />
+  <br/>
+  <button onclick="verifyCode()">متابعة</button>
 
-function validateInputs() {
-  const name = fullNameInput.value.trim();
-  const id = idInput.value.trim();
-  const isIdValid = /^\d{10}$/.test(id);
-  const isManualRequired = manualAddressContainer.style.display !== 'none';
-  const addressOk = !isManualRequired || manualAddressInput.value.trim() !== '';
-  continueBtn.disabled = !(name && isIdValid && addressOk);
-}
+  <script>
+    // التحقق إذا سبق ورفض أو وافق وتم حفظ الرد
+    if (localStorage.getItem("contract-locked") === "true") {
+      location.href = "blocked.html";
+    }
 
-fullNameInput.addEventListener('input', validateInputs);
-idInput.addEventListener('input', validateInputs);
-manualAddressInput.addEventListener('input', validateInputs);
-
-continueBtn.addEventListener('click', () => {
-  clientData.name = fullNameInput.value.trim();
-  clientData.id = idInput.value.trim();
-  clientData.address = manualAddressContainer.style.display === 'none'
-    ? clientData.address
-    : manualAddressInput.value.trim();
-  clientData.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
-  localStorage.setItem('contract-client', JSON.stringify(clientData));
-  location.href = 'contract.html';
-});
-
-function getGeolocation() {
-  if (!navigator.geolocation) {
-    manualAddressContainer.classList.remove('hidden');
-    manualAddressContainer.style.display = 'block';
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(success, fail, { timeout: 7000 });
-
-  function success(position) {
-    const lat = position.coords.latitude.toFixed(5);
-    const lon = position.coords.longitude.toFixed(5);
-    clientData.address = `إحداثيات الموقع: ${lat}, ${lon}`;
-    manualAddressContainer.classList.add('hidden');
-    validateInputs();
-    continueBtn.disabled = false; // ضروري لتمكين الزر بعد الموقع
-  }
-
-  function fail() {
-    manualAddressContainer.classList.remove('hidden');
-    manualAddressContainer.style.display = 'block';
-    validateInputs();
-  }
-}
-
-fullNameInput.addEventListener('blur', () => {
-  if (!clientData.address) getGeolocation();
-});
-</script>
+    function verifyCode() {
+      const input = document.getElementById("entryCode").value.trim();
+      if (input === "00221") {
+        location.href = "step1.html";
+      } else {
+        alert("الرقم غير صحيح ❌");
+      }
+    }
+  </script>
 </body>
 </html>

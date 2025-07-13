@@ -1,58 +1,70 @@
-<!-- الصفحة الثالثة - الاسم والسجل المدني -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>البيانات الشخصية</title>
+  <title>دخول الإدارة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
-      text-align: center;
-      padding: 50px 20px;
-    }
-    h2 {
+      background-color: #fafafa;
       color: #004d40;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
     }
     input {
+      width: 100%;
       padding: 12px;
-      margin: 10px 0;
-      width: 260px;
-      font-size: 16px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 6px;
+      font-size: 16px;
     }
     button {
+      width: 100%;
       background-color: #004d40;
       color: white;
+      padding: 14px;
       border: none;
-      padding: 12px 30px;
       border-radius: 6px;
-      font-size: 16px;
-      margin-top: 20px;
+      font-size: 18px;
       cursor: pointer;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h2>فضلاً أدخل اسمك الكريم والسجل المدني</h2>
-  <input type="text" id="clientName" placeholder="الاسم الكريم" />
-  <input type="text" id="clientID" placeholder="السجل المدني" />
-  <br />
-  <button onclick="goToNext()">التالي</button>
+  <div class="container">
+    <h2>دخول المشرف</h2>
+    <input type="password" id="adminPass" placeholder="أدخل الرمز السري" />
+    <div id="errorMsg" class="error"></div>
+    <button onclick="checkAdmin()">دخول</button>
+  </div>
 
   <script>
-    function goToNext() {
-      const name = document.getElementById("clientName").value.trim();
-      const id = document.getElementById("clientID").value.trim();
-
-      if (name && id) {
-        localStorage.setItem("client_name", name);
-        localStorage.setItem("client_id", id);
-        window.location.href = "page3.html";
+    function checkAdmin() {
+      const pass = document.getElementById("adminPass").value;
+      const correct = "11qqQ@2032";
+      if (pass === correct) {
+        window.location.href = "admin-dashboard.html";
       } else {
-        alert("يرجى تعبئة جميع الحقول");
+        document.getElementById("errorMsg").innerText = "رمز خاطئ";
       }
     }
   </script>

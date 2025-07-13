@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الخطوة الأولى - بيانات العميل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      color: #004d40;
+    }
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px #ccc;
+    }
+    h2 {
+      text-align: center;
+      color: #00695c;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .btn {
+      margin-top: 20px;
+      background-color: #00695c;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>الخطوة ١: بيانات العميل</h2>
+    <form onsubmit="saveStep1(); return false;">
+      <label>اسم العميل الكامل</label>
+      <input type="text" id="name" required>
+
+      <label>رقم الهوية الوطنية</label>
+      <input type="text" id="id" required>
+
+      <label>عنوانك (سيتم تحديده تلقائيًا أو اكتب يدويًا)</label>
+      <textarea id="address" placeholder="مثال: الرياض - حي المروج" required></textarea>
+
+      <button class="btn" type="submit">التالي</button>
+    </form>
+  </div>
+
+  <script>
+    // الموقع الجغرافي التلقائي
+    navigator.geolocation.getCurrentPosition(function(position) {
+      let link = `https://maps.google.com/?q=${position.coords.latitude},${position.coords.longitude}`;
+      document.getElementById("address").value = link;
+    }, function(error) {
+      console.log("موقع يدوي مطلوب");
+    });
+
+    function saveStep1() {
+      const name = document.getElementById("name").value;
+      const id = document.getElementById("id").value;
+      const address = document.getElementById("address").value;
+
+      const data = {
+        name, id, address
+      };
+
+      localStorage.setItem("step1", JSON.stringify(data));
+      window.location.href = "step2.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,187 +1,39 @@
+<!-- step2.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>بيانات الطرف الثاني</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بيانات العميل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f1f8e9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      min-height: 100vh;
-      margin: 0;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #004d40;
-      padding: 15px 10px;
-      border-bottom: 4px solid #00796b;
-      width: 100%;
-    }
-
-    .header img {
-      height: 50px;
-      margin-left: 15px;
-    }
-
-    .header span {
-      font-size: 22px;
-      font-weight: bold;
-      color: white;
-    }
-
-    h1 {
-      font-size: 22px;
-      color: #00796b;
-      margin: 25px 0 10px;
+      background-color: #f9f9f9;
+      padding: 20px;
       text-align: center;
     }
-
-    .form-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      border: 2px solid #33691e;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      padding: 10px;
       width: 90%;
       max-width: 400px;
-      text-align: center;
+      font-size: 18px;
+      margin-bottom: 15px;
     }
-
-    input {
-      padding: 10px;
-      margin: 10px 0;
-      width: 90%;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      text-align: center;
-    }
-
-    button {
-      padding: 10px 30px;
-      background-color: #33691e;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #558b2f;
-    }
-
     .error {
       color: red;
       font-size: 14px;
-      margin-top: 8px;
-    }
-
-    .legal-box {
-      background-color: #fff8f8;
-      border: 2px solid #d32f2f;
-      border-radius: 12px;
-      padding: 18px;
-      margin: 40px auto 20px;
-      max-width: 92%;
-      text-align: right;
-      font-size: 15px;
-      color: #444;
-    }
-
-    .legal-box h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #b71c1c;
-    }
-
-    .legal-box p {
-      margin: 5px 0;
-      line-height: 1.7;
     }
   </style>
 </head>
 <body>
+  <h2>الرجاء إدخال البيانات التالية</h2>
 
-  <div class="header">
-    <img src="logo.png" alt="شعار الشركة">
-    <span>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</span>
-  </div>
+  <label>الاسم الكريم:</label>
+  <input type="text" id="name" required>
 
-  <h1>عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</h1>
-
-  <div class="form-box">
-    <h2>الرجاء إدخال بيانات الطرف الثاني</h2>
-    <input type="text" id="name" placeholder="الاسم الكريم" required>
-    <input type="text" id="id" placeholder="رقم الهوية (10 أرقام)" required>
-    <div id="errorMsg" class="error"></div>
-    <button onclick="saveAndContinue()">التالي</button>
-  </div>
-
-  <div class="legal-box">
-    <h3>🚨 تنبيه قانوني</h3>
-    <p>
-      يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية،
-      ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
-    </p>
-    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
-    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
-  </div>
-
-  <script>
-    function saveAndContinue() {
-      const name = document.getElementById("name").value.trim();
-      const id = document.getElementById("id").value.trim();
-      const errorDiv = document.getElementById("errorMsg");
-
-      if (!name || !id) {
-        errorDiv.textContent = "يرجى تعبئة جميع الحقول.";
-        return;
-      }
-
-      if (!/^\d{10}$/.test(id)) {
-        errorDiv.textContent = "رقم الهوية يجب أن يكون 10 أرقام فقط.";
-        return;
-      }
-
-      localStorage.setItem("clientName", name);
-      localStorage.setItem("clientId", id);
-      window.location.href = "step3.html";
-    }
-
-    const dtBox = document.getElementById("datetime");
-    const now = new Date();
-    const formatted = now.toLocaleString('ar-SA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    });
-    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
-
-    const locBox = document.getElementById("location");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
-      }, () => {
-        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
-      });
-    } else {
-      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
-    }
-  </script>
-
-</body>
-</html>
+  <label>رقم الهوية (10 أرقام

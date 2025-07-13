@@ -2,116 +2,114 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>عرض العقد</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f9fafb;
-      margin: 0;
+      background: #fff;
+      color: #333;
       padding: 20px;
-      color: #004d40;
+      line-height: 2;
     }
     .container {
       max-width: 750px;
       margin: auto;
-      background: #fff;
-      border: 2px solid #004d40;
+      border: 2px solid #00695c;
+      padding: 30px;
       border-radius: 12px;
-      padding: 20px;
     }
-    h1 {
+    h2 {
       text-align: center;
-      font-size: 1.5rem;
-    }
-    .contract-text {
-      white-space: pre-wrap;
-      padding: 20px;
-      background: #f6fdfd;
-      border: 2px solid #009688;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow-y: auto;
+      color: #004d40;
       margin-bottom: 20px;
     }
+    .highlight {
+      background-color: #e0f7fa;
+      padding: 10px;
+      margin: 10px 0;
+    }
     button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 10px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 8px;
+      margin-top: 25px;
+      padding: 10px 20px;
+      font-size: 18px;
       font-weight: bold;
+      border-radius: 8px;
+      border: none;
       cursor: pointer;
     }
-    .btn-approve { background-color: #2e7d32; color: white; }
-    .btn-reject { background-color: #c62828; color: white; }
+    .accept {
+      background: #00796b;
+      color: white;
+    }
+    .reject {
+      background: #c62828;
+      color: white;
+      margin-right: 15px;
+    }
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>عرض عقد إنهاء إجراءات التمويل</h1>
-  <div class="contract-text" id="contractContent">جارٍ تحميل بيانات العقد...</div>
-  <button class="btn-approve" onclick="submitResponse('موافقة')">✅ أوافق على العقد</button>
-  <button class="btn-reject" onclick="submitResponse('رفض')">❌ أرفض العقد</button>
-</div>
-<script>
-  const data = JSON.parse(localStorage.getItem('contract-client') || '{}');
-  if (!data.name || !data.id || !data.phone || !data.birth) location.href = 'step1.html';
+  <div class="container">
+    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
 
-  const now = new Date();
-  const arabicDate = now.toLocaleString('ar-SA', { hour12: false });
+    <div id="clientData" class="highlight"></div>
 
-  const contractContent = `
-بسم الله الرحمن الرحيم
+    <p>تم بعون الله وتوفيقه الاتفاق بين كل من:</p>
 
-المملكة العربية السعودية
-الوساطة العقارية والتسويق - ترخيص: 1100042624 - الرياض
+    <p><strong>الطرف الأول:</strong> شركة الوساطة العقارية والتسويق، ترخيص: 1100042624</p>
+    <p><strong>الطرف الثاني:</strong></p>
+    <ul>
+      <li id="p_name"></li>
+      <li id="p_id"></li>
+      <li id="p_dob"></li>
+      <li id="p_phone"></li>
+      <li id="p_address"></li>
+    </ul>
 
-عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
+    <h3>بنود العقد:</h3>
+    <ol>
+      <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
+      <li>يدفع الطرف الثاني للطرف الأول مبلغ 2.5٪ من قيمة العقار كأتعاب.</li>
+      <li>تُضاف رسوم عقد 500 ريال على الطرف الثاني.</li>
+      <li>قيمة العقار المعتمدة هي شيك الجهة التمويلية أو عقد الرهن للبناء الذاتي.</li>
+      <li>يلتزم الطرف الثاني بتوفير المستندات المطلوبة للطرف الأول.</li>
+      <li>يُعتبر العقد ساريًا من تاريخ توقيعه من الطرفين.</li>
+      <li>في حال عدم الالتزام، للطرف الأول الحق باتخاذ الإجراءات النظامية.</li>
+      <li>لا يُسترد أي مبلغ بعد البدء بإجراءات التمويل.</li>
+      <li>مدة تنفيذ التمويل تعتمد على استجابة العميل وجهة التمويل.</li>
+      <li>الطرف الثاني يقر بمسؤوليته عن صحة البيانات المقدمة.</li>
+      <li>الطرف الأول لا يتحمل مسؤولية رفض الجهة التمويلية للطلب.</li>
+      <li>العقد خاضع للأنظمة والتعليمات المعمول بها في المملكة العربية السعودية.</li>
+    </ol>
 
-تم بعون الله وتوفيقه في: ${arabicDate}
+    <div style="text-align: center;">
+      <button class="reject" onclick="reject()">أرفض العقد</button>
+      <button class="accept" onclick="accept()">أوافق على العقد</button>
+    </div>
+  </div>
 
-الطرف الأول:
-شركة الوساطة العقارية والتسويق
-ويمثلها: الأستاذ نايف المطيري - مدير الإدارة
+  <script>
+    const step1 = JSON.parse(localStorage.getItem("step1"));
+    const step2 = JSON.parse(localStorage.getItem("step2"));
 
-الطرف الثاني:
-الاسم: ${data.name}
-السجل المدني: ${data.id}
-تاريخ الميلاد: ${data.birth}
-هاتف المعتمد: ${data.phone}
-عنوانه المعتمد: ${data.address}
+    document.getElementById("p_name").innerText = "الاسم: " + step1.name;
+    document.getElementById("p_id").innerText = "رقم الهوية: " + step1.id;
+    document.getElementById("p_dob").innerText = "تاريخ الميلاد: " + step2.dob;
+    document.getElementById("p_phone").innerText = "رقم الجوال: " + step2.phone;
+    document.getElementById("p_address").innerText = "العنوان: " + step1.address;
 
-التمهيد:
-حيث إن الطرف الأول مرخص في الوساطة العقارية، ويقوم بتسهيل التمويلات.
+    function accept() {
+      const now = new Date();
+      localStorage.setItem("acceptedAt", now.toLocaleString("ar-EG"));
+      localStorage.setItem("locked", "true");
+      window.location.href = "status.html";
+    }
 
-البنود:
-1. التمهيد جزء لا يتجزأ من العقد.
-2. يقوم الطرف الأول بإنهاء جميع الإجراءات التمويلية.
-3. يدفع الطرف الثاني 2.5% من قيمة العقار + 500 ريال رسوم.
-4. إن فشلت الصفقة لأسباب خارج الطرف الثاني، تُعاد الرسوم المستحقة.
-5. يلتزم الطرف الثاني بتقديم بيانات صحيحة.
-6. يمنع التواصل مع البنك مباشرة بدون علم الطرف الأول.
-7. للطرف الأول الحق في تفويض غيره.
-8. إذا انسحب الطرف الثاني، لا تُسترد الرسوم.
-9. مدة العقد 60 يومًا من توقيعه.
-10. القضاء المختص: محاكم الرياض.
-11. يُقر الطرف الثاني بالموافقة الكاملة.
-12. العقد ملزم بالتوقيع الإلكتروني.
-
-تمت الموافقة من الطرف الأول بتاريخ أعلاه.
-  `;
-  document.getElementById('contractContent').textContent = contractContent;
-
-  function submitResponse(type) {
-    data.response = type;
-    data.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
-    localStorage.setItem('contract-client', JSON.stringify(data));
-    localStorage.setItem('contract-locked', 'true'); // ✅ يمنع الدخول مرة ثانية
-    location.href = 'status.html';
-  }
-</script>
+    function reject() {
+      localStorage.setItem("locked", "true");
+      window.location.href = "rejected.html";
+    }
+  </script>
 </body>
 </html>

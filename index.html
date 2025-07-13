@@ -103,6 +103,7 @@ const idInput = document.getElementById('idNumber');
 const manualAddressInput = document.getElementById('manualAddress');
 const manualAddressContainer = document.getElementById('manualAddressContainer');
 const continueBtn = document.getElementById('continueBtn');
+
 function validateInputs() {
   const name = fullNameInput.value.trim();
   const id = idInput.value.trim();
@@ -111,9 +112,11 @@ function validateInputs() {
   const addressOk = !isManualRequired || manualAddressInput.value.trim() !== '';
   continueBtn.disabled = !(name && isIdValid && addressOk);
 }
+
 fullNameInput.addEventListener('input', validateInputs);
 idInput.addEventListener('input', validateInputs);
 manualAddressInput.addEventListener('input', validateInputs);
+
 continueBtn.addEventListener('click', () => {
   clientData.name = fullNameInput.value.trim();
   clientData.id = idInput.value.trim();
@@ -124,6 +127,7 @@ continueBtn.addEventListener('click', () => {
   localStorage.setItem('contract-client', JSON.stringify(clientData));
   location.href = 'contract.html';
 });
+
 function getGeolocation() {
   if (!navigator.geolocation) {
     manualAddressContainer.classList.remove('hidden');
@@ -131,19 +135,23 @@ function getGeolocation() {
     return;
   }
   navigator.geolocation.getCurrentPosition(success, fail, { timeout: 7000 });
+
   function success(position) {
     const lat = position.coords.latitude.toFixed(5);
     const lon = position.coords.longitude.toFixed(5);
     clientData.address = `إحداثيات الموقع: ${lat}, ${lon}`;
     manualAddressContainer.classList.add('hidden');
     validateInputs();
+    continueBtn.disabled = false; // ✅ يحل المشكلة
   }
+
   function fail() {
     manualAddressContainer.classList.remove('hidden');
     manualAddressContainer.style.display = 'block';
     validateInputs();
   }
 }
+
 fullNameInput.addEventListener('blur', () => {
   if (!clientData.address) getGeolocation();
 });

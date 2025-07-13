@@ -2,185 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>سرعة تملك العقار - البيانات</title>
+  <title>عرض العقد</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
+      background-color: #f9fafb;
       margin: 0;
-      background: #f9fafb;
+      padding: 0;
       color: #004d40;
     }
-    .container {
-      max-width: 700px;
+    .contract-container {
+      max-width: 750px;
       margin: 20px auto;
-      padding: 20px 30px;
+      padding: 30px;
       background: white;
-      border-radius: 12px;
-      border: 2px solid #004d40;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: 3px solid #004d40;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      overflow-y: auto;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
     }
     h1 {
-      text-align: center;
-      color: #004d40;
-      margin-bottom: 10px;
       font-size: 26px;
+      color: #004d40;
     }
     h2 {
-      text-align: center;
+      font-size: 20px;
       color: #00796b;
-      margin-bottom: 30px;
     }
-    label {
-      display: block;
-      margin-top: 20px;
+    .contract-text {
+      line-height: 2;
+      font-size: 17px;
+      white-space: pre-wrap;
     }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 5px;
-    }
-    button {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #00796b;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      display: block;
-      width: 100%;
-    }
-    .footer {
-      margin-top: 40px;
-      padding: 20px;
-      background: #eeeeee;
-      text-align: center;
-      font-size: 14px;
-      border-top: 2px solid #004d40;
-    }
-    .warning {
+    .highlight {
       color: red;
       font-weight: bold;
-      margin-top: 30px;
-      font-size: 15px;
       text-align: center;
+      margin-top: 30px;
+    }
+    .footer {
+      background: #eeeeee;
+      padding: 15px;
+      font-size: 14px;
+      text-align: center;
+      border-top: 2px solid #004d40;
+      margin-top: 30px;
     }
   </style>
 </head>
-<body onload="getLocation(); updateTime();">
+<body onload="renderContract(); getLocation();">
 
-  <div class="container">
-    <h1>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
-    <h2>نرحب بك عميلنا العزيز لإكمال بيانات العقد</h2>
+<div class="contract-container">
+  <h1>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+  <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
 
-    <label>اسمك الكريم:</label>
-    <input type="text" id="clientName" required />
-
-    <label>رقم الهوية (10 أرقام فقط):</label>
-    <input type="text" id="clientId" maxlength="10" pattern="\d{10}" required />
-
-    <label>رقم الجوال (يبدأ بـ 05):</label>
-    <input type="text" id="clientMobile" maxlength="10" pattern="05\d{8}" required />
-
-    <label>تاريخ الميلاد (هجري):</label>
-    <div style="display: flex; gap: 10px;">
-      <select id="birthDay">
-        <option value="">اليوم</option>
-        <script>
-          for (let i = 1; i <= 30; i++) {
-            let padded = i.toString().padStart(2, '0');
-            document.write(`<option value="${padded}">${padded}</option>`);
-          }
-        </script>
-      </select>
-
-      <select id="birthMonth">
-        <option value="">الشهر</option>
-        <option value="01">محرم</option>
-        <option value="02">صفر</option>
-        <option value="03">ربيع أول</option>
-        <option value="04">ربيع ثاني</option>
-        <option value="05">جمادى الأولى</option>
-        <option value="06">جمادى الآخرة</option>
-        <option value="07">رجب</option>
-        <option value="08">شعبان</option>
-        <option value="09">رمضان</option>
-        <option value="10">شوال</option>
-        <option value="11">ذو القعدة</option>
-        <option value="12">ذو الحجة</option>
-      </select>
-
-      <select id="birthYear">
-        <option value="">السنة</option>
-        <script>
-          for (let y = 1445; y >= 1370; y--) {
-            document.write(`<option value="${y}">${y}</option>`);
-          }
-        </script>
-      </select>
-    </div>
-
-    <button onclick="saveData()">التالي</button>
-
-    <div class="warning">
-      هذا العقد يخضع لأنظمة التعاملات الإلكترونية، وبمجرد تعبئة البيانات فإنك تقر بصحتها وتوافق على الاستمرار في الإجراء الإلكتروني.
-    </div>
-
-    <div class="footer">
-      <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
-      <p id="datetime">التاريخ والوقت: ...</p>
-      <p id="geoLocation">جاري تحديد الموقع...</p>
-    </div>
+  <div class="contract-text" id="contractBody">
+    <!-- سيتم تعبئته عبر الجافاسكربت -->
   </div>
 
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('ar-SA');
-      const timeStr = now.toLocaleTimeString('ar-SA');
-      document.getElementById("datetime").innerText = `التاريخ والوقت: ${dateStr} - ${timeStr}`;
-    }
+  <div class="highlight">
+    تنبيه: يخضع هذا العقد لأحكام نظام التعاملات الإلكترونية السعودي، ويُعد ملزمًا من لحظة الموافقة.
+  </div>
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const lat = position.coords.latitude.toFixed(5);
-          const lon = position.coords.longitude.toFixed(5);
-          document.getElementById("geoLocation").innerText = `الموقع: خط العرض ${lat} - خط الطول ${lon}`;
-        }, function() {
-          document.getElementById("geoLocation").innerText = "تعذر الحصول على الموقع";
-        });
-      } else {
-        document.getElementById("geoLocation").innerText = "الموقع غير مدعوم في هذا المتصفح";
-      }
-    }
+  <div class="footer">
+    <div><strong>شركة سرعة تملك العقار</strong></div>
+    <div id="datetime"></div>
+    <div id="geoLocation">جاري تحديد موقع العميل...</div>
+  </div>
+</div>
 
-    function saveData() {
-      const name = document.getElementById("clientName").value.trim();
-      const id = document.getElementById("clientId").value.trim();
-      const mobile = document.getElementById("clientMobile").value.trim();
-      const year = document.getElementById("birthYear").value;
-      const month = document.getElementById("birthMonth").value;
-      const day = document.getElementById("birthDay").value;
+<script>
+function renderContract() {
+  const name = localStorage.getItem("clientName") || "...............";
+  const id = localStorage.getItem("clientId") || "...............";
+  const mobile = localStorage.getItem("clientMobile") || "...............";
+  const year = localStorage.getItem("birthYear") || "........";
+  const month = localStorage.getItem("birthMonth") || "..";
+  const day = localStorage.getItem("birthDay") || "..";
 
-      if (!name || id.length !== 10 || !/^\d+$/.test(id) || !mobile.startsWith("05") || mobile.length !== 10 || !year || !month || !day) {
-        alert("يرجى تعبئة جميع الحقول بشكل صحيح.");
-        return;
-      }
+  const contract = `
+تم بحمد الله الاتفاق بين شركة سرعة تملك العقار والطرف الثاني حسب البيانات التالية:
 
-      localStorage.setItem("clientName", name);
-      localStorage.setItem("clientId", id);
-      localStorage.setItem("clientMobile", mobile);
-      localStorage.setItem("birthYear", year);
-      localStorage.setItem("birthMonth", month);
-      localStorage.setItem("birthDay", day);
+الاسم: ${name}
+رقم الهوية: ${id}
+رقم الجوال: ${mobile}
+تاريخ الميلاد (هجري): ${day} / ${month} / ${year}
 
-      window.location.href = "step3.html";
-    }
-  </script>
+بموجب هذا العقد، يتم إنهاء إجراءات التمويل العقاري عبر جهة تمويلية معتمدة، ويشمل ذلك مراجعة المستندات وتحديث البيانات.
+
+يتعهد الطرف الثاني بدفع الرسوم المحددة عند توقيع هذا العقد أو عند صدور الموافقة المبدئية من الجهة التمويلية.
+
+مدة العقد: تبدأ من تاريخ توقيع العقد وتستمر حتى الانتهاء من كامل الإجراءات أو الانسحاب بموجب إشعار رسمي.
+
+العنوان الرسمي للطرف الأول:
+شركة سرعة تملك العقار والحلول التمويلية المتكاملة
+ترخيص: 1100042624
+الرياض
+
+تم إبرام هذا العقد إلكترونيًا، ويُعتبر ساريًا نظامًا حسب المادة (2) من نظام التعاملات الإلكترونية السعودي.
+  `;
+
+  document.getElementById("contractBody").innerText = contract;
+
+  // تحديث التاريخ والوقت
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ar-SA');
+  const timeStr = now.toLocaleTimeString('ar-SA');
+  document.getElementById("datetime").innerText = `التاريخ والوقت: ${dateStr} - ${timeStr}`;
+}
+
+// الموقع الجغرافي
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude.toFixed(5);
+      const lon = position.coords.longitude.toFixed(5);
+      document.getElementById("geoLocation").innerText =
+        `موقع العميل: خط العرض ${lat} - خط الطول ${lon}`;
+    }, function() {
+      document.getElementById("geoLocation").innerText = "تعذر تحديد الموقع الجغرافي.";
+    });
+  } else {
+    document.getElementById("geoLocation").innerText = "الموقع غير مدعوم.";
+  }
+}
+</script>
+
 </body>
 </html>

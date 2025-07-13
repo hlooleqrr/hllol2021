@@ -1,80 +1,74 @@
-<!-- هذا الملف هو لوحة تحكم المشرف لعرض العقود الموقعة -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لوحة تحكم المشرف</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التحقق من الرمز</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #eef5f3;
-      padding: 30px;
-    }
-    h2 {
+      background-color: #f5f5f5;
       color: #004d40;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #bbb;
-      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
       text-align: center;
     }
-    th {
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #004d40;
+      border-radius: 6px;
+      text-align: center;
+      width: 240px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
       background-color: #004d40;
       color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00796b;
+    }
+    .error {
+      color: red;
+      margin-top: 15px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h2>العقود التي تم توقيعها</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>الاسم</th>
-        <th>رقم الهوية</th>
-        <th>رقم الجوال</th>
-        <th>تاريخ الميلاد</th>
-        <th>العنوان</th>
-        <th>التاريخ</th>
-        <th>الحالة</th>
-        <th>رابط الملف</th>
-      </tr>
-    </thead>
-    <tbody id="contractsTable"></tbody>
-  </table>
+  <h2>يرجى إدخال الرمز السري الخاص بك</h2>
+  <input type="password" id="code" placeholder="••••••••" maxlength="30" />
+  <button onclick="checkCode()">التالي</button>
+  <div class="error" id="error"></div>
 
   <script>
-    // هذا السطر إلزامي للربط الآمن
-    const SECURE_KEY = 'admin_secure_2025';
+    function checkCode() {
+      const code = document.getElementById('code').value.trim();
+      const adminCode = "qq11qQ@2032"; // رمز الدخول للمسؤول
+      const clientCode = "client123";  // رمز الدخول للعملاء
 
-    const auth = localStorage.getItem('admin_auth');
-    if (auth !== SECURE_KEY) {
-      alert('تم رفض الوصول، يرجى تسجيل الدخول.');
-      window.location.href = 'admin-login.html';
+      if (code === adminCode) {
+        window.location.href = "admin.html";
+      } else if (code === clientCode) {
+        window.location.href = "form.html";
+      } else {
+        document.getElementById('error').innerText = "رمز غير صحيح، حاول مرة أخرى.";
+      }
     }
-
-    const signedContracts = JSON.parse(localStorage.getItem('signedContracts') || '[]');
-    const tableBody = document.getElementById('contractsTable');
-
-    signedContracts.forEach(contract => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${contract.name}</td>
-        <td>${contract.nationalId}</td>
-        <td>${contract.phone}</td>
-        <td>${contract.birthDate}</td>
-        <td>${contract.address}</td>
-        <td>${contract.date}</td>
-        <td>${contract.status}</td>
-        <td><a href="${contract.pdfUrl}" target="_blank">عرض</a></td>
-      `;
-      tableBody.appendChild(row);
-    });
   </script>
 </body>
 </html>

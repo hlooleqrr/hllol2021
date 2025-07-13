@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>تأكيد نهائي للعقد</title>
   <style>
     body {
@@ -24,14 +24,16 @@
       font-size: 20px;
       margin-bottom: 10px;
       display: block;
+      text-align: right;
     }
     input[type="text"] {
       font-size: 18px;
-      padding: 10px;
+      padding: 12px;
       width: 80%;
       margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 8px;
+      text-align: center;
     }
     button {
       padding: 14px 30px;
@@ -41,6 +43,7 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      transition: opacity 0.3s ease;
     }
     button:hover {
       opacity: 0.9;
@@ -54,24 +57,25 @@
     <p>فضلاً أدخل رقم الهوية، ثم اكتب كلمة <strong>موافق</strong> لإتمام العقد</p>
     
     <label for="id">رقم الهوية:</label>
-    <input type="text" id="id" placeholder="أدخل رقم الهوية">
+    <input type="text" id="id" placeholder="أدخل رقم الهوية" />
 
     <label for="confirmWord">اكتب كلمة "موافق":</label>
-    <input type="text" id="confirmWord" placeholder="موافق">
+    <input type="text" id="confirmWord" placeholder="موافق" />
 
-    <br>
     <button onclick="finalize()">إرسال</button>
   </div>
 
   <script>
     function finalize() {
-      const id = document.getElementById('id').value.trim();
-      const word = document.getElementById('confirmWord').value.trim();
+      const idInput = document.getElementById('id').value.trim();
+      const wordInput = document.getElementById('confirmWord').value.trim();
 
-      if (id !== "" && word === "موافق") {
-        window.location.href = "done.html";
+      const storedId = localStorage.getItem('clientId') || '';
+
+      if (idInput === storedId && wordInput === 'موافق') {
+        window.location.href = 'done.html';
       } else {
-        alert("يجب إدخال رقم الهوية وكتابة كلمة موافق لإتمام العقد.");
+        alert('يجب إدخال رقم الهوية الصحيح وكتابة كلمة موافق لإتمام العقد.');
       }
     }
   </script>

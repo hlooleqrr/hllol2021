@@ -2,66 +2,85 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>دخول النظام</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <title>سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f9fafb;
-      text-align: center;
-      padding: 50px 20px;
+      background: linear-gradient(to bottom, #ffffff, #e0f2f1);
       color: #004d40;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100vh;
     }
-    input {
-      padding: 12px;
-      font-size: 1rem;
-      width: 250px;
-      border-radius: 8px;
-      border: 2px solid #009688;
+    header {
+      background-color: #004d40;
+      color: white;
       text-align: center;
+      padding: 20px 10px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    main {
+      flex: 1;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
     }
     button {
-      margin-top: 20px;
-      padding: 12px 25px;
-      font-size: 1rem;
-      background: #00796b;
+      font-size: 20px;
+      padding: 12px 30px;
+      background-color: #00796b;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
     }
-    #error {
-      margin-top: 20px;
-      color: red;
-      font-weight: bold;
+    button:hover {
+      background-color: #004d40;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      background-color: #e0f2f1;
     }
   </style>
 </head>
 <body>
-  <h2>أدخل الرقم المصرح لك من المختصين</h2>
-  <input type="password" id="accessCode" placeholder="مثال: 00221" />
-  <br />
-  <button onclick="validateCode()">دخول ➜</button>
-  <div id="error"></div>
+  <header>
+    سرعة تملك العقار والحلول التمويلية المتكاملة
+  </header>
+
+  <main>
+    <h1>نرحب بك عميلنا العزيز</h1>
+    <p>نبرم معك هذا العقد بشكل إلكتروني لتسهيل الإجراءات</p>
+    <button onclick="window.location.href='step1.html'">ابدأ بسم الله</button>
+  </main>
+
+  <footer>
+    جميع الحقوق محفوظة &copy; سرعة تملك العقار<br>
+    <span id="now"></span>
+  </footer>
 
   <script>
-    function validateCode() {
-      const code = document.getElementById("accessCode").value.trim();
-      if (code === "00221") {
-        localStorage.setItem("authorized", "true");
-        window.location.href = "step1.html";
-      } else {
-        document.getElementById("error").textContent = "⛔️ الرقم غير صحيح";
-      }
-    }
-
-    // إذا حاول يرجع بعد موافقة أو رفض
-    const locked = localStorage.getItem("locked");
-    if (locked === "true") {
-      document.body.innerHTML = "<h1>⛔️ تم الحفظ جميع الحقوق محفوظة ⛔️</h1>";
-    }
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('ar-SA', {
+      dateStyle: 'full',
+      timeStyle: 'short'
+    });
+    document.getElementById('now').textContent = formatter.format(now);
   </script>
 </body>
 </html>

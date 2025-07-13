@@ -1,62 +1,44 @@
-<!-- الصفحة الثانية - التحقق من الرمز السري -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>رمز التحقق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تم رفض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f2f2f2;
+      background-color: #ffebee;
+      color: #b71c1c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 20px;
+      max-width: 600px;
       text-align: center;
-      padding: 50px;
-      color: #004d40;
     }
-    h2 {
-      color: #00796b;
-    }
-    input {
-      padding: 10px;
-      font-size: 18px;
-      width: 250px;
-      border-radius: 6px;
-      border: 1px solid #aaa;
-      margin-top: 20px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 30px;
-      background-color: #004d40;
-      color: white;
-      border: none;
-      font-size: 18px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .error {
-      color: red;
-      margin-top: 10px;
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      font-size: 14px;
+      color: #c62828;
     }
   </style>
 </head>
 <body>
-  <h2>أدخل الرمز المصرح لك من المختصين</h2>
-  <input type="text" id="secretCode" placeholder="مثال: qq11qQ@2032" />
-  <div id="errorMsg" class="error"></div>
-  <button onclick="checkCode()">التالي</button>
+  <h1>❌ تم رفض العقد</h1>
+  <p>نأسف لذلك، نرجو التواصل مع ممثل الشركة لمزيد من المعلومات.</p>
 
-  <script>
-    const allowedCode = "qq11qQ@2032"; // الرمز السري الموحد
-    
-    function checkCode() {
-      const code = document.getElementById("secretCode").value.trim();
-      if (code === allowedCode) {
-        window.location.href = "page2.html";
-      } else {
-        document.getElementById("errorMsg").innerText = "⚠️ الرمز غير صحيح، حاول مرة أخرى.";
-      }
-    }
-  </script>
+  <div class="footer">
+    جميع الحقوق محفوظة © سرعة تملك العقار
+  </div>
 </body>
 </html>

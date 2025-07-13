@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة المشرف</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+      color: #004d40;
+    }
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #004d40;
+    }
+    .info {
+      background-color: #ffffff;
+      padding: 20px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      text-align: right;
+      direction: rtl;
+    }
+    .info h3 {
+      margin-top: 10px;
+      color: #00796b;
+    }
+    .info p {
+      margin: 6px 0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
 
+  <h1>مرحباً بك في لوحة التحكم للمشرف</h1>
+
+  <div class="info">
+    <h3>البيانات المُدخلة من العميل:</h3>
+    <p><strong>الاسم:</strong> <span id="clientName"></span></p>
+    <p><strong>السجل المدني:</strong> <span id="clientID"></span></p>
+    <p><strong>تاريخ ووقت الموافقة:</strong> <span id="approvalTime"></span></p>
+    <p><strong>الحالة:</strong> تمت الموافقة ✅</p>
+  </div>
+
+  <script>
+    // جلب البيانات من localStorage
+    document.getElementById("clientName").innerText = localStorage.getItem("clientName") || "غير متوفر";
+    document.getElementById("clientID").innerText = localStorage.getItem("clientID") || "غير متوفر";
+    document.getElementById("approvalTime").innerText = localStorage.getItem("approvalTime") || "غير محدد";
+  </script>
+
+</body>
+</html>

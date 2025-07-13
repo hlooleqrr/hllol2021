@@ -18,31 +18,25 @@
       text-align: center;
     }
 
-    header {
+    .company-header {
       background-color: #004d40;
       color: white;
-      padding: 30px 10px;
       font-size: 24px;
       font-weight: bold;
+      text-align: center;
+      padding: 20px 10px;
+      border-bottom: 3px solid #00796b;
     }
 
-    main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    h2 {
+    .main-title {
       font-size: 22px;
       color: #00796b;
-      margin-bottom: 15px;
+      margin: 20px 0 10px;
     }
 
-    p {
+    .welcome-text {
       font-size: 18px;
-      color: #555;
+      color: #444;
       margin-bottom: 25px;
     }
 
@@ -90,14 +84,25 @@
       font-size: 14px;
       border-top: 2px solid #f5c6cb;
     }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
-  <header>سرعة تملك العقار والحلول التمويلية المتكاملة</header>
+
+  <div class="company-header">
+    شركة سرعة تملك العقار والحلول التمويلية المتكاملة
+  </div>
 
   <main>
-    <h2>نرحب بك عميلنا العزيز</h2>
-    <p>نبرم معك هذا العقد</p>
+    <h1 class="main-title">عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</h1>
+    <p class="welcome-text">نرحب بك عميلنا العزيز</p>
     <button onclick="location.href='step1.html'">ابدأ بسم الله</button>
   </main>
 
@@ -139,5 +144,6 @@
       locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
     }
   </script>
+
 </body>
 </html>

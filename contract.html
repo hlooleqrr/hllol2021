@@ -1,136 +1,81 @@
+<!-- الصفحة الرابعة - رقم الجوال وتاريخ الميلاد -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>عقد إنهاء إجراءات تمويل عقاري</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>معلومات إضافية</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #fefefe;
-      color: #222;
-    }
-    .contract-box {
-      max-width: 800px;
-      margin: auto;
-      padding: 30px;
-      border: 3px solid #004d40;
-      border-radius: 16px;
-      background: #ffffff;
-    }
-    h1, h2 {
+      background-color: #f4f4f4;
       text-align: center;
+      padding: 40px 20px;
+    }
+    h2 {
       color: #004d40;
     }
-    .section {
-      margin-top: 30px;
-      line-height: 2;
+    input, select {
+      padding: 10px;
+      margin: 8px 0;
+      width: 260px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
-    .signature-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
-    }
-    .signature-buttons button {
-      width: 48%;
-      padding: 15px;
-      font-size: 18px;
+    button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      background-color: #004d40;
+      color: white;
       border: none;
-      border-radius: 8px;
+      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
-    }
-    .accept {
-      background-color: #00796b;
-      color: white;
-    }
-    .reject {
-      background-color: #d32f2f;
-      color: white;
-    }
-    .footer {
-      margin-top: 50px;
-      font-size: 14px;
-      text-align: center;
-      color: red;
     }
   </style>
 </head>
 <body>
-  <div class="contract-box">
-    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
-    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h2>
+  <h2>فضلاً أدخل رقم الجوال وتاريخ الميلاد</h2>
 
-    <div class="section">
-      <p>تم بعون الله وتوفيقه في هذا اليوم <span id="todayDate"></span>، بين:</p>
+  <input type="text" id="phone" placeholder="رقم الجوال" />
 
-      <p><strong>الطرف الأول:</strong> شركة الوساطة العقارية والتسويق - ترخيص 1100042624 - الرياض<br>
-        ويمثلها الأستاذ نايف المطيري، بصفته مدير الإدارة، ويشار إليه بالطرف الأول.</p>
+  <br />
+  <label>تاريخ الميلاد (ميلادي):</label><br />
+  <select id="day">
+    <option value="">اليوم</option>
+    ${[...Array(31)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+  </select>
+  <select id="month">
+    <option value="">الشهر</option>
+    ${[...Array(12)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
+  </select>
+  <select id="year">
+    <option value="">السنة</option>
+    ${[...Array(80)].map((_, i) => {
+      const year = new Date().getFullYear() - i;
+      return `<option value="${year}">${year}</option>`;
+    }).join('')}
+  </select>
 
-      <p><strong>الطرف الثاني:</strong><br>
-      الاسم: <span id="name"></span><br>
-      السجل المدني: <span id="id"></span><br>
-      رقم الجوال: <span id="mobile"></span><br>
-      تاريخ الميلاد: <span id="birthdate"></span><br>
-      العنوان: <span id="address"></span>
-      </p>
-    </div>
-
-    <div class="section">
-      <h3>تمهيد:</h3>
-      <p>حيث أن الطرف الأول مرخص له بتقديم خدمات الوساطة العقارية، ويرغب الطرف الثاني بالحصول على خدمة إنهاء إجراءات تمويل عقاري.</p>
-
-      <h3>البنود:</h3>
-      <ol>
-        <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
-        <li>يلتزم الطرف الثاني بدفع مبلغ 2.5٪ من قيمة العقار + 500 ريال رسوم.</li>
-        <li>تعتبر الدفعة مستحقة فور توقيع العقد أو تحويل الدفعة الأولى.</li>
-        <li>تُحتسب قيمة العقار بناءً على (شيك المالك أو عقد البناء الذاتي).</li>
-        <li>مدة الاتفاقية 30 يومًا ما لم يتفق الطرفان كتابيًا على خلاف ذلك.</li>
-        <li>إذا رغب الطرف الثاني في إلغاء الخدمة بعد التقديم، لا يُرد المبلغ.</li>
-        <li>الطرف الأول غير مسؤول عن تأخر الجهات التمويلية.</li>
-        <li>الطرف الأول لا يضمن الموافقة النهائية من البنك.</li>
-        <li>يلتزم الطرف الثاني بتوفير كافة المستندات المطلوبة.</li>
-        <li>يحق للطرف الأول إلغاء العقد في حال عدم تعاون الطرف الثاني.</li>
-        <li>تكون البيانات المدخلة إلكترونيًا ملزمة للطرفين.</li>
-        <li>يخضع هذا العقد لنظام المعاملات الإلكترونية السعودي.</li>
-      </ol>
-    </div>
-
-    <div class="section">
-      <p>تمت الموافقة من الطرف الأول بتاريخ <span id="approvedDate"></span></p>
-    </div>
-
-    <div class="signature-buttons">
-      <button class="accept" onclick="goToConfirm()">موافق</button>
-      <button class="reject" onclick="goToRejection()">رافض</button>
-    </div>
-
-    <div class="footer">
-      <p>تنبيه: يعتبر التوقيع الإلكتروني في هذا العقد ملزماً للطرفين حسب المادة التاسعة من نظام المعاملات الإلكترونية.</p>
-    </div>
-  </div>
+  <br />
+  <button onclick="saveAndGo()">التالي</button>
 
   <script>
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
-    const timeStr = now.toLocaleTimeString('ar-SA');
-    document.getElementById('todayDate').textContent = dateStr + ' - الساعة ' + timeStr;
-    document.getElementById('approvedDate').textContent = new Date(now.getTime() - 21 * 60 * 1000).toLocaleString('ar-SA');
+    function saveAndGo() {
+      const phone = document.getElementById("phone").value.trim();
+      const day = document.getElementById("day").value;
+      const month = document.getElementById("month").value;
+      const year = document.getElementById("year").value;
 
-    document.getElementById('name').textContent = localStorage.getItem('name');
-    document.getElementById('id').textContent = localStorage.getItem('id');
-    document.getElementById('mobile').textContent = localStorage.getItem('mobile');
-    document.getElementById('birthdate').textContent = localStorage.getItem('birthdate');
-    document.getElementById('address').textContent = localStorage.getItem('address');
-
-    function goToConfirm() {
-      window.location.href = "confirm.html";
-    }
-
-    function goToRejection() {
-      window.location.href = "rejected.html";
+      if (phone && day && month && year) {
+        const birth = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        localStorage.setItem("client_phone", phone);
+        localStorage.setItem("client_birth", birth);
+        window.location.href = "page4.html";
+      } else {
+        alert("يرجى إدخال جميع الحقول");
+      }
     }
   </script>
 </body>

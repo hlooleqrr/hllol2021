@@ -1,82 +1,103 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>تأكيد نهائي للعقد</title>
+  <meta charset="UTF-8">
+  <title>تم رفض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #fff3e0;
-      margin: 0;
-      padding: 30px;
-      color: #e65100;
+      background-color: #fff3f3;
+      color: #b71c1c;
       text-align: center;
+      padding: 60px 20px 30px;
+      min-height: 100vh;
     }
-    .box {
-      background-color: #fff8e1;
-      border: 2px solid #ff9800;
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 600px;
+    .rejected-box {
+      background-color: #ffffff;
+      border: 3px solid #b71c1c;
+      border-radius: 16px;
+      padding: 40px 20px;
+      max-width: 500px;
       margin: auto;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
-    label {
-      font-size: 20px;
-      margin-bottom: 10px;
-      display: block;
-      text-align: right;
-    }
-    input[type="text"] {
-      font-size: 18px;
-      padding: 12px;
-      width: 80%;
+    h1 {
+      font-size: 26px;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      text-align: center;
     }
-    button {
-      padding: 14px 30px;
-      font-size: 20px;
-      background-color: #e65100;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: opacity 0.3s ease;
+    p {
+      font-size: 18px;
+      color: #444;
     }
-    button:hover {
-      opacity: 0.9;
+    .cross {
+      font-size: 48px;
+      color: red;
+      margin: 20px 0;
+    }
+
+    .legal-box {
+      background-color: #fff3f3;
+      border: 2px solid #e53935;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 40px auto 10px;
+      max-width: 90%;
+      text-align: right;
+      font-size: 15px;
+      color: #333;
+    }
+    .legal-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #004d40;
+    }
+    .legal-box .warning {
+      color: #b71c1c;
+      font-weight: bold;
+      margin: 8px 0;
     }
   </style>
 </head>
 <body>
 
-  <div class="box">
-    <h2>تأكيد إبرام العقد</h2>
-    <p>فضلاً أدخل رقم الهوية، ثم اكتب كلمة <strong>موافق</strong> لإتمام العقد</p>
-    
-    <label for="id">رقم الهوية:</label>
-    <input type="text" id="id" placeholder="أدخل رقم الهوية" />
+  <div class="rejected-box">
+    <div class="cross">❌</div>
+    <h1>تم رفض العقد</h1>
+    <p>نعتذر منك، لقد قمت برفض بنود العقد. نرجو التواصل مع ممثل الشركة لمزيد من التفاصيل.</p>
+  </div>
 
-    <label for="confirmWord">اكتب كلمة "موافق":</label>
-    <input type="text" id="confirmWord" placeholder="موافق" />
-
-    <button onclick="finalize()">إرسال</button>
+  <div class="legal-box">
+    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
+    <p class="warning">
+      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
+    </p>
+    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
+    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
   </div>
 
   <script>
-    function finalize() {
-      const idInput = document.getElementById('id').value.trim();
-      const wordInput = document.getElementById('confirmWord').value.trim();
+    const dtBox = document.getElementById("datetime");
+    const now = new Date();
+    const formatted = now.toLocaleString('ar-SA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
 
-      const storedId = localStorage.getItem('clientId') || '';
-
-      if (idInput === storedId && wordInput === 'موافق') {
-        window.location.href = 'done.html';
-      } else {
-        alert('يجب إدخال رقم الهوية الصحيح وكتابة كلمة موافق لإتمام العقد.');
-      }
+    const locBox = document.getElementById("location");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
+      }, () => {
+        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
+      });
+    } else {
+      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
     }
   </script>
 

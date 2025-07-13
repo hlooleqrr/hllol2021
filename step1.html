@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>التحقق من هوية العميل</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0; padding: 0;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .container {
+      margin-top: 60px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      text-align: center;
+    }
+    button {
+      background-color: #004d40;
+      color: #fff;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00695c;
+    }
+    .error {
+      color: red;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
 
+<div class="container">
+  <h2>الرجاء إدخال الرمز المخصص لك</h2>
+  <input type="text" id="clientCode" placeholder="أدخل الرمز هنا" />
+  <div id="errorMsg" class="error"></div>
+  <button onclick="checkCode()">التالي</button>
+</div>
+
+<script>
+  function checkCode() {
+    const code = document.getElementById('clientCode').value.trim();
+    const errorDiv = document.getElementById('errorMsg');
+
+    if (code === 'qq11qQ@2032') {
+      window.location.href = 'step2.html';
+    } else if (code === 'admin#Naef@2032') {
+      window.location.href = 'admin.html';
+    } else {
+      errorDiv.textContent = "⚠️ الرمز غير صحيح، حاول مرة أخرى.";
+    }
+  }
+</script>
+
+</body>
+</html>

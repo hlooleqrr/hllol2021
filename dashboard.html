@@ -1,102 +1,122 @@
+<!-- الصفحة الخامسة - مراجعة وإدخال العقد -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لوحة العقود - المسؤول</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>عقد إنهاء إجراءات تمويل</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f3f3f3;
-      margin: 0;
-      padding: 20px;
+      background-color: #fefefe;
+      color: #222;
+      padding: 30px;
+      line-height: 2;
     }
-    h1 {
+    .contract-box {
+      border: 2px solid #004d40;
+      border-radius: 12px;
+      padding: 25px;
+      background: #fff;
+      margin-bottom: 20px;
+    }
+    .actions {
       text-align: center;
-      color: #004d40;
+      margin-top: 20px;
     }
-    input {
-      width: 100%;
-      max-width: 300px;
-      padding: 10px;
-      margin: 20px auto;
-      display: block;
+    button {
+      padding: 12px 24px;
       font-size: 16px;
+      margin: 10px;
+      border: none;
       border-radius: 6px;
-      border: 1px solid #aaa;
+      cursor: pointer;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid #ccc;
-      text-align: center;
-    }
-    th {
-      background-color: #004d40;
+    .approve {
+      background-color: #2e7d32;
       color: white;
     }
-    a.download {
-      background-color: #00796b;
+    .reject {
+      background-color: #c62828;
       color: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <h1>العقود الإلكترونية</h1>
+  <h2>مراجعة العقد</h2>
 
-  <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الجوال أو التاريخ" onkeyup="filterTable()">
+  <div class="contract-box" id="contractContent">
+    <!-- يتم ملء العقد تلقائياً عبر JavaScript -->
+  </div>
 
-  <table id="contractsTable">
-    <thead>
-      <tr>
-        <th>الاسم</th>
-        <th>رقم الجوال</th>
-        <th>تاريخ التوقيع</th>
-        <th>الحالة</th>
-        <th>تحميل PDF</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <!-- ستتم تعبئته تلقائياً -->
-    </tbody>
-  </table>
+  <div class="actions">
+    <button class="approve" onclick="goToConfirmation()">موافق</button>
+    <button class="reject" onclick="goToRejection()">رفض</button>
+  </div>
 
   <script>
-    const data = JSON.parse(localStorage.getItem('signedContracts')) || [];
+    function fillContract() {
+      const name = localStorage.getItem("client_name") || "...........";
+      const id = localStorage.getItem("client_id") || "...........";
+      const address = localStorage.getItem("client_address") || "...........";
+      const phone = localStorage.getItem("client_phone") || "...........";
+      const birth = localStorage.getItem("client_birth") || "...........";
 
-    const tbody = document.getElementById("tableBody");
+      const date = new Date();
+      const dateStr = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2,'0')}-${date.getDate().toString().padStart(2,'0')}`;
+      const timeStr = `${date.getHours()}:${date.getMinutes().toString().padStart(2,'0')}`;
 
-    data.forEach(contract => {
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td>${contract.name}</td>
-        <td>${contract.phone}</td>
-        <td>${contract.date}</td>
-        <td>${contract.status}</td>
-        <td><a href="${contract.pdfUrl}" class="download" download>تحميل</a></td>
+      const contractHTML = `
+        <strong>بسم الله الرحمن الرحيم</strong><br><br>
+        المملكة العربية السعودية<br>
+        شركة سرعة تملك العقار والحلول التمويلية المتكاملة<br>
+        ترخيص رقم: 1100042624<br><br>
+        <u><strong>عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</strong></u><br><br>
+        تم بعون الله وتوفيقه بتاريخ: ${dateStr} - الساعة ${timeStr}<br><br>
+        الطرف الأول: شركة سرعة تملك العقار ويمثلها الأستاذ نايف المطيري (مدير الإدارة).<br><br>
+        الطرف الثاني:<br>
+        الاسم: ${name}<br>
+        السجل المدني: ${id}<br>
+        تاريخ الميلاد: ${birth}<br>
+        الجوال المعتمد: ${phone}<br>
+        العنوان: ${address}<br><br>
+        التمهيد: حيث إن الطرف الأول مرخص بالوساطة العقارية ويقدم خدمات التمويل، وحيث رغب الطرف الثاني بالاستفادة من هذه الخدمات، فقد اتفق الطرفان على ما يلي:<br><br>
+        <ol>
+          <li>يدفع الطرف الثاني نسبة 2.5% من قيمة العقار للطرف الأول + 500 ريال رسوم عقد.</li>
+          <li>يلتزم الطرف الثاني بدقة المعلومات المقدمة.</li>
+          <li>لا يحق للطرف الثاني إلغاء الطلب بعد توقيع العقد إلا برسوم إدارية.</li>
+          <li>يقر الطرف الثاني بأن العقار المطلوب مطابق لاشتراطات الدعم السكني.</li>
+          <li>يتم تزويد الطرف الثاني بتقرير مفصل خلال 5 أيام عمل من توقيع العقد.</li>
+          <li>العقد ساري المفعول لمدة 60 يومًا من تاريخه.</li>
+          <li>في حال عدم تجاوب الطرف الثاني خلال مدة التنفيذ يُعد العقد ملغيًا دون استرداد المبلغ.</li>
+          <li>العقد لا يشمل مصاريف التقييم أو الرهن أو التأمين أو غيرها من مصاريف الجهات الأخرى.</li>
+          <li>يتم حفظ جميع البيانات بسرية تامة.</li>
+          <li>يتم إصدار نسخة إلكترونية من العقد للطرفين.</li>
+          <li>أي خلاف ينشأ يتم حله وفقًا للأنظمة المعمول بها في المملكة.</li>
+          <li>بموافقة الطرف الثاني على هذا العقد، يُعد العقد نافذًا وملزمًا للطرفين.</li>
+        </ol>
+        <br>
+        توقيع الطرف الأول: ......................................<br>
+        توقيع الطرف الثاني: ......................................<br>
+        التاريخ: ${dateStr}<br>
+        الوقت: ${timeStr}<br><br>
+        <div style="color:red; font-weight:bold;">
+          تنبيه: يخضع هذا العقد للمادة التاسعة من نظام المعاملات الإلكترونية، ويُعد ملزماً عند الموافقة إلكترونيًا.
+        </div>
       `;
 
-      tbody.appendChild(row);
-    });
-
-    function filterTable() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.querySelectorAll("#tableBody tr");
-
-      rows.forEach(row => {
-        const text = row.innerText.toLowerCase();
-        row.style.display = text.includes(search) ? "" : "none";
-      });
+      document.getElementById("contractContent").innerHTML = contractHTML;
     }
+
+    function goToConfirmation() {
+      window.location.href = "page5.html";
+    }
+
+    function goToRejection() {
+      window.location.href = "reject.html";
+    }
+
+    fillContract();
   </script>
 </body>
 </html>

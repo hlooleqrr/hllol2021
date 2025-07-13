@@ -1,106 +1,143 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تم إبرام العقد بنجاح</title>
+  <meta charset="UTF-8" />
+  <title>دخول المشرف</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e0f7fa;
-      color: #004d40;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      padding: 60px 20px 30px;
-      min-height: 100vh;
-    }
-    .success-box {
-      background-color: #ffffff;
-      border: 3px solid #004d40;
-      border-radius: 16px;
-      padding: 40px 20px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      font-size: 26px;
-      margin-bottom: 20px;
-      color: #00796b;
-    }
-    p {
-      font-size: 18px;
-      color: #333;
-    }
-    .checkmark {
-      font-size: 48px;
-      color: green;
-      margin: 20px 0;
     }
 
-    .legal-box {
-      background-color: #fff3f3;
-      border: 2px solid #e53935;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 40px auto 10px;
-      max-width: 90%;
-      text-align: right;
-      font-size: 15px;
-      color: #333;
-    }
-    .legal-box h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #004d40;
-    }
-    .legal-box .warning {
-      color: #b71c1c;
+    .header {
+      background-color: #004d40;
+      color: white;
+      padding: 20px;
+      font-size: 22px;
       font-weight: bold;
-      margin: 8px 0;
+    }
+
+    .box {
+      margin: 40px auto;
+      background-color: white;
+      border: 2px solid #004d40;
+      border-radius: 16px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #004d40;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .list {
+      margin-top: 30px;
+      text-align: right;
+    }
+
+    .list div {
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      color: #00695c;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <div class="success-box">
-    <div class="checkmark">✅</div>
-    <h1>تم إبرام العقد بنجاح</h1>
-    <p>نشكر لك تعاونك. سيتم التواصل معك من خلال البيانات التي قمت بإدخالها.</p>
+  <div class="header">دخول المشرف - سرعة تملك العقار</div>
+
+  <div class="box" id="loginBox">
+    <h2>أدخل الرقم السري للمشرف</h2>
+    <input type="password" id="adminPass" placeholder="••••••••" />
+    <br>
+    <button onclick="checkPassword()">دخول</button>
+    <div id="errorMsg" class="error"></div>
   </div>
 
-  <div class="legal-box">
-    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
-    <p class="warning">
-      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
-    </p>
-    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
-    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
+  <div class="box" id="adminPanel" style="display:none;">
+    <h2>قائمة العقود المبرمة</h2>
+    <div class="list" id="clientList">
+      <!-- يتم تعبئة الأسماء هنا -->
+    </div>
   </div>
 
   <script>
-    const dtBox = document.getElementById("datetime");
-    const now = new Date();
-    const formatted = now.toLocaleString('ar-SA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    });
-    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
+    const password = "123456"; // يمكن تغييره
 
-    const locBox = document.getElementById("location");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
-      }, () => {
-        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
+    const clients = JSON.parse(localStorage.getItem("clients") || "[]");
+
+    function checkPassword() {
+      const pass = document.getElementById("adminPass").value;
+      if (pass === password) {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        loadClients();
+      } else {
+        document.getElementById("errorMsg").textContent = "كلمة مرور غير صحيحة.";
+      }
+    }
+
+    function loadClients() {
+      const list = document.getElementById("clientList");
+      if (clients.length === 0) {
+        list.innerHTML = "<p>لا يوجد عقود حالياً.</p>";
+        return;
+      }
+
+      clients.forEach((client, i) => {
+        const div = document.createElement("div");
+        div.textContent = `${i + 1}- ${client.name} (هوية: ${client.id})`;
+        div.onclick = () => downloadContract(client);
+        list.appendChild(div);
       });
-    } else {
-      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
+    }
+
+    function downloadContract(client) {
+      const content = `
+        عقد إلكتروني رسمي من شركة سرعة تملك العقار
+        
+        الاسم: ${client.name}
+        رقم الهوية: ${client.id}
+        تاريخ الإبرام: ${client.date}
+        الوقت: ${client.time}
+        الإحداثيات: ${client.location}
+
+        هذا العقد مُبرم إلكترونيًا حسب نظام المعاملات الإلكترونية، المادة 9.
+      `;
+
+      const blob = new Blob([content], { type: "application/pdf" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `عقد_${client.name}.pdf`;
+      link.click();
     }
   </script>
-
 </body>
 </html>

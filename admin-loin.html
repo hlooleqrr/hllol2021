@@ -1,1 +1,80 @@
+<!-- هذا الملف هو لوحة تحكم المشرف لعرض العقود الموقعة -->
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة تحكم المشرف</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #eef5f3;
+      padding: 30px;
+    }
+    h2 {
+      color: #004d40;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #bbb;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #004d40;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>العقود التي تم توقيعها</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>الاسم</th>
+        <th>رقم الهوية</th>
+        <th>رقم الجوال</th>
+        <th>تاريخ الميلاد</th>
+        <th>العنوان</th>
+        <th>التاريخ</th>
+        <th>الحالة</th>
+        <th>رابط الملف</th>
+      </tr>
+    </thead>
+    <tbody id="contractsTable"></tbody>
+  </table>
+
+  <script>
+    // هذا السطر إلزامي للربط الآمن
+    const SECURE_KEY = 'admin_secure_2025';
+
+    const auth = localStorage.getItem('admin_auth');
+    if (auth !== SECURE_KEY) {
+      alert('تم رفض الوصول، يرجى تسجيل الدخول.');
+      window.location.href = 'admin-login.html';
+    }
+
+    const signedContracts = JSON.parse(localStorage.getItem('signedContracts') || '[]');
+    const tableBody = document.getElementById('contractsTable');
+
+    signedContracts.forEach(contract => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${contract.name}</td>
+        <td>${contract.nationalId}</td>
+        <td>${contract.phone}</td>
+        <td>${contract.birthDate}</td>
+        <td>${contract.address}</td>
+        <td>${contract.date}</td>
+        <td>${contract.status}</td>
+        <td><a href="${contract.pdfUrl}" target="_blank">عرض</a></td>
+      `;
+      tableBody.appendChild(row);
+    });
+  </script>
+</body>
+</html>

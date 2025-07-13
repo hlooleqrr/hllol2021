@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -132,7 +133,7 @@ continueBtn.addEventListener('click', () => {
     : manualAddressInput.value.trim();
   clientData.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
   localStorage.setItem('contract-client', JSON.stringify(clientData));
-  window.location.href = 'contract.html';
+  location.href = 'contract.html';
 });
 
 function getGeolocation() {
@@ -163,7 +164,8 @@ fullNameInput.addEventListener('blur', () => {
 });
 </script>
 </body>
-</html><!DOCTYPE html>
+</html><!-- contract.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -276,7 +278,8 @@ fullNameInput.addEventListener('blur', () => {
   }
 </script>
 </body>
-</html><!DOCTYPE html>
+</html><!-- done.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -299,7 +302,8 @@ fullNameInput.addEventListener('blur', () => {
   <h1>✅ تم إبرام العقد بنجاح</h1>
   <p>شكرًا لك، سيتم التواصل معك قريبًا.</p>
 </body>
-</html><!DOCTYPE html>
+</html><!-- rejected.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -322,113 +326,106 @@ fullNameInput.addEventListener('blur', () => {
   <h1>❌ تم رفض العقد رسميًا</h1>
   <p>يرجى التواصل مع الممثل القانوني. شكرًا.</p>
 </body>
-</html><!DOCTYPE html>
+</html><!-- status.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>لوحة مراجعة العقود</title>
+  <title>وضع العقد</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f0f0f0;
+      background: #f4f4f4;
+      padding: 40px;
       text-align: center;
-      padding: 50px 20px;
       color: #004d40;
     }
     input {
-      font-size: 1.2rem;
-      padding: 10px;
+      padding: 12px;
+      font-size: 1rem;
       width: 250px;
-      border: 2px solid #004d40;
       border-radius: 8px;
+      border: 2px solid #009688;
+      text-align: center;
     }
     button {
       margin-top: 20px;
-      font-size: 1.2rem;
-      padding: 10px 20px;
-      border: none;
-      background: #004d40;
+      padding: 12px 25px;
+      font-size: 1rem;
+      background: #00796b;
       color: white;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: bold;
     }
-    .result {
-      margin-top: 40px;
-      background: white;
-      border: 2px solid #00796b;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+    #result { margin-top: 30px; font-size: 1.2rem; }
+    #downloadBtn { display: none; }
   </style>
 </head>
 <body>
-  <h2>📄 عرض نتيجة العقد</h2>
-  <input type="password" id="code" placeholder="••••••••">
-  <br>
-  <button onclick="checkCode()">عرض النتيجة</button>
 
-  <div id="output" class="result" style="display:none"></div>
+<h2>نتيجة العقد (للمصرح لهم فقط)</h2>
+<p>أدخل الرقم للوصول إلى الرد</p>
+<input type="password" id="accessKey" placeholder="*****" />
+<br/>
+<button onclick="checkAccess()">عرض النتيجة</button>
 
-  <script>
-    const code = '99229917';
+<div id="result"></div>
+<button id="downloadBtn" onclick="downloadPDF()">📄 تحميل نسخة PDF</button>
 
-    function checkCode() {
-      const entered = document.getElementById('code').value.trim();
-      if (entered !== code) {
-        alert('رمز غير صحيح ❌');
-        return;
-      }
+<script>
+  const secret = '99229917';
+  const clientData = JSON.parse(localStorage.getItem('contract-client') || '{}');
 
-      const data = JSON.parse(localStorage.getItem('contract-client') || '{}');
-      if (!data.name || !data.id) {
-        document.getElementById('output').innerHTML = '<p>لا توجد بيانات عميل حالياً.</p>';
-        document.getElementById('output').style.display = 'block';
-        return;
-      }
-
-      const msg = data.response === 'موافقة'
-        ? `<h3 style="color:green;">✅ تم إبرام العقد</h3>`
-        : `<h3 style="color:red;">❌ تم رفض العقد</h3>`;
-
-      document.getElementById('output').innerHTML = `
-        ${msg}
-        <p><strong>الاسم:</strong> ${data.name}</p>
-        <p><strong>الهوية:</strong> ${data.id}</p>
-        <p><strong>العنوان:</strong> ${data.address}</p>
-        <p><strong>الوقت:</strong> ${data.timestamp}</p>
-        <br>
-        <button onclick="generatePDF()">تحميل العقد PDF</button>
-      `;
-      document.getElementById('output').style.display = 'block';
+  function checkAccess() {
+    const key = document.getElementById('accessKey').value.trim();
+    if (key !== secret) {
+      alert('رقم غير صحيح');
+      return;
     }
 
-    function generatePDF() {
-      const data = JSON.parse(localStorage.getItem('contract-client') || '{}');
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      doc.setFont("Helvetica");
-      doc.setFontSize(14);
-      doc.text(`عقد إنهاء إجراءات تمويل`, 20, 20);
-      doc.setFontSize(12);
-      doc.text(`الاسم: ${data.name}`, 20, 35);
-      doc.text(`رقم الهوية: ${data.id}`, 20, 45);
-      doc.text(`العنوان: ${data.address}`, 20, 55);
-      doc.text(`التاريخ والوقت: ${data.timestamp}`, 20, 65);
-      doc.text(`الرد: ${data.response}`, 20, 75);
-
-      doc.text(`تمت الموافقة من الطرف الأول:`, 20, 90);
-      doc.text(`الأستاذ نايف المطيري`, 20, 100);
-      doc.text(`مدير إدارة شركة الوساطة العقارية`, 20, 110);
-      doc.text(`تم التوقيع الإلكتروني وفق المادة 9 من نظام التعاملات الإلكترونية`, 20, 130);
-
-      doc.save(`عقد_${data.name}.pdf`);
+    if (!clientData.name || !clientData.id || !clientData.response) {
+      document.getElementById('result').innerHTML = '❗ لا يوجد عقد تم تعبئته.';
+      return;
     }
-  </script>
+
+    const resultText = clientData.response === 'موافقة'
+      ? '✅ تم إبرام العقد بنجاح'
+      : '❌ تم رفض العقد رسميًا';
+
+    document.getElementById('result').innerHTML = `
+      <p><strong>${resultText}</strong></p>
+      <p>الاسم: ${clientData.name}</p>
+      <p>السجل المدني: ${clientData.id}</p>
+      <p>العنوان: ${clientData.address}</p>
+      <p>الرد: ${clientData.response}</p>
+      <p>التاريخ والوقت: ${clientData.timestamp}</p>
+    `;
+    document.getElementById('downloadBtn').style.display = 'inline-block';
+  }
+
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const content = `
+عقد إنهاء إجراءات تمويل عقاري
+-------------------------------------
+الاسم: ${clientData.name}
+السجل المدني: ${clientData.id}
+العنوان: ${clientData.address}
+الرد: ${clientData.response}
+التاريخ والوقت: ${clientData.timestamp}
+`;
+
+    doc.setFont('Helvetica');
+    doc.setFontSize(14);
+    doc.text(content, 15, 30);
+    doc.save(`عقد_${clientData.name}.pdf`);
+  }
+</script>
 </body>
 </html>

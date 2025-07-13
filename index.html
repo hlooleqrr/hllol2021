@@ -142,7 +142,7 @@ function getGeolocation() {
     clientData.address = `إحداثيات الموقع: ${lat}, ${lon}`;
     manualAddressContainer.classList.add('hidden');
     validateInputs();
-    continueBtn.disabled = false; // ✅ يحل المشكلة
+    continueBtn.disabled = false; // ضروري لتمكين الزر بعد الموقع
   }
 
   function fail() {

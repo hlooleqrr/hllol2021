@@ -1,72 +1,50 @@
+<!-- الصفحة النهائية - تم إبرام العقد بنجاح -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تأكيد الموافقة على العقد</title>
+  <title>تم إبرام العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f3f3f3;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    .container {
-      margin-top: 80px;
-      padding: 20px;
-    }
-    h2 {
+      background-color: #e6fff5;
       color: #004d40;
+      text-align: center;
+      padding: 60px 20px;
+      line-height: 2.2;
     }
-    .btn {
-      padding: 15px 30px;
+    .message-box {
+      background-color: #ffffff;
+      border: 2px solid #00b28f;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .message-box h1 {
+      color: #00796b;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .message-box p {
       font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 15px;
     }
-    .btn-accept {
-      background-color: #2e7d32;
-      color: white;
-    }
-    .btn-reject {
-      background-color: #c62828;
-      color: white;
+    .check {
+      font-size: 60px;
+      color: green;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>هل توافق على إبرام هذا العقد؟</h2>
-    <button class="btn btn-accept" onclick="submitAgreement(true)">أوافق ✅</button>
-    <button class="btn btn-reject" onclick="submitAgreement(false)">لا أوافق ❌</button>
+  <div class="message-box">
+    <div class="check">✅</div>
+    <h1>تم إبرام العقد بنجاح</h1>
+    <p>نشكر لك ثقتك. تم تسجيل موافقتك إلكترونيًا.</p>
+    <p>سيتم التواصل معك قريبًا من قبل ممثل الجهة.</p>
+    <p style="margin-top: 40px;">جميع الحقوق محفوظة © سرعة تملك العقار</p>
   </div>
-
-  <script>
-    function submitAgreement(agreed) {
-      if (agreed) {
-        // بيانات وهمية كمثال
-        const userData = {
-          name: localStorage.getItem("username") || "غير معروف",
-          nationalId: localStorage.getItem("idNumber") || "0000000000",
-          phone: localStorage.getItem("phone") || "0000000000",
-          birthDate: localStorage.getItem("birthDate") || "01/01/2000",
-          address: localStorage.getItem("address") || "لم يُحدد"
-        };
-
-        // توليد PDF
-        generatePDF(userData);
-
-        // عرض رسالة نجاح
-        alert("تمت الموافقة على العقد ✅");
-        window.location.href = "success.html";
-      } else {
-        alert("تم رفض العقد ❌");
-        window.location.href = "rejected.html";
-      }
-    }
-  </script>
-  <script src="pdf-generator89.js"></script>
 </body>
 </html>

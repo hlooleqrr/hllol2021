@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>بيانات الطرف الثاني</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
@@ -10,20 +11,60 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 50px;
+      padding-top: 20px;
       min-height: 100vh;
+      margin: 0;
     }
-    h2 {
-      color: #33691e;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #004d40;
+      padding: 15px 10px;
+      border-bottom: 4px solid #00796b;
+      width: 100%;
     }
+
+    .header img {
+      height: 50px;
+      margin-left: 15px;
+    }
+
+    .header span {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #00796b;
+      margin: 25px 0 10px;
+      text-align: center;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      border: 2px solid #33691e;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
     input {
       padding: 10px;
       margin: 10px 0;
-      width: 300px;
-      border: 2px solid #33691e;
-      border-radius: 10px;
+      width: 90%;
+      border-radius: 8px;
+      border: 1px solid #ccc;
       font-size: 16px;
+      text-align: center;
     }
+
     button {
       padding: 10px 30px;
       background-color: #33691e;
@@ -34,45 +75,63 @@
       margin-top: 20px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #558b2f;
     }
 
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
     .legal-box {
-      background-color: #fff3f3;
-      border: 2px solid #e53935;
+      background-color: #fff8f8;
+      border: 2px solid #d32f2f;
       border-radius: 12px;
-      padding: 16px;
-      margin: 40px auto 10px;
-      max-width: 90%;
+      padding: 18px;
+      margin: 40px auto 20px;
+      max-width: 92%;
       text-align: right;
       font-size: 15px;
-      color: #333;
+      color: #444;
     }
+
     .legal-box h3 {
       margin: 0 0 10px;
       font-size: 18px;
-      color: #004d40;
-    }
-    .legal-box .warning {
       color: #b71c1c;
-      font-weight: bold;
-      margin: 8px 0;
+    }
+
+    .legal-box p {
+      margin: 5px 0;
+      line-height: 1.7;
     }
   </style>
 </head>
 <body>
 
-  <h2>الرجاء إدخال بيانات الطرف الثاني</h2>
-  <input type="text" id="name" placeholder="الاسم الكريم" required>
-  <input type="text" id="id" placeholder="رقم الهوية" required>
-  <br>
-  <button onclick="saveAndContinue()">التالي</button>
+  <div class="header">
+    <img src="logo.png" alt="شعار الشركة">
+    <span>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</span>
+  </div>
+
+  <h1>عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</h1>
+
+  <div class="form-box">
+    <h2>الرجاء إدخال بيانات الطرف الثاني</h2>
+    <input type="text" id="name" placeholder="الاسم الكريم" required>
+    <input type="text" id="id" placeholder="رقم الهوية (10 أرقام)" required>
+    <div id="errorMsg" class="error"></div>
+    <button onclick="saveAndContinue()">التالي</button>
+  </div>
 
   <div class="legal-box">
-    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
-    <p class="warning">
-      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
+    <h3>🚨 تنبيه قانوني</h3>
+    <p>
+      يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية،
+      ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
     </p>
     <p id="location">📍 موقع الدخول: يتم تحديده...</p>
     <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
@@ -82,13 +141,21 @@
     function saveAndContinue() {
       const name = document.getElementById("name").value.trim();
       const id = document.getElementById("id").value.trim();
-      if (name && id) {
-        localStorage.setItem("clientName", name);
-        localStorage.setItem("clientId", id);
-        window.location.href = "step3.html";
-      } else {
-        alert("يرجى تعبئة جميع الحقول.");
+      const errorDiv = document.getElementById("errorMsg");
+
+      if (!name || !id) {
+        errorDiv.textContent = "يرجى تعبئة جميع الحقول.";
+        return;
       }
+
+      if (!/^\d{10}$/.test(id)) {
+        errorDiv.textContent = "رقم الهوية يجب أن يكون 10 أرقام فقط.";
+        return;
+      }
+
+      localStorage.setItem("clientName", name);
+      localStorage.setItem("clientId", id);
+      window.location.href = "step3.html";
     }
 
     const dtBox = document.getElementById("datetime");

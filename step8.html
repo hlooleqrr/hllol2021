@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تأكيد نهائي للعقد</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #fff3e0;
+      margin: 0;
+      padding: 30px;
+      color: #e65100;
+      text-align: center;
+    }
+    .box {
+      background-color: #fff8e1;
+      border: 2px solid #ff9800;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      font-size: 20px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    input[type="text"] {
+      font-size: 18px;
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      padding: 14px 30px;
+      font-size: 20px;
+      background-color: #e65100;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
 
+  <div class="box">
+    <h2>تأكيد إبرام العقد</h2>
+    <p>فضلاً أدخل رقم الهوية، ثم اكتب كلمة <strong>موافق</strong> لإتمام العقد</p>
+    
+    <label for="id">رقم الهوية:</label>
+    <input type="text" id="id" placeholder="أدخل رقم الهوية">
+
+    <label for="confirmWord">اكتب كلمة "موافق":</label>
+    <input type="text" id="confirmWord" placeholder="موافق">
+
+    <br>
+    <button onclick="finalize()">إرسال</button>
+  </div>
+
+  <script>
+    function finalize() {
+      const id = document.getElementById('id').value.trim();
+      const word = document.getElementById('confirmWord').value.trim();
+
+      if (id !== "" && word === "موافق") {
+        window.location.href = "done.html";
+      } else {
+        alert("يجب إدخال رقم الهوية وكتابة كلمة موافق لإتمام العقد.");
+      }
+    }
+  </script>
+
+</body>
+</html>

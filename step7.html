@@ -1,143 +1,72 @@
+<!-- step7.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>دخول المشرف</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تم إبرام العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f1f1f1;
+      background-color: #e0f7fa;
       margin: 0;
-      padding: 0;
+      padding: 40px;
       text-align: center;
+      color: #004d40;
     }
-
-    .header {
-      background-color: #004d40;
-      color: white;
-      padding: 20px;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
     .box {
-      margin: 40px auto;
+      max-width: 700px;
+      margin: auto;
       background-color: white;
-      border: 2px solid #004d40;
-      border-radius: 16px;
-      padding: 30px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 3px solid #004d40;
+      border-radius: 14px;
+      padding: 50px 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-
-    input {
-      padding: 10px;
-      width: 80%;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #aaa;
-      margin-bottom: 15px;
-    }
-
-    button {
-      background-color: #004d40;
-      color: white;
-      border: none;
-      padding: 10px 30px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .list {
-      margin-top: 30px;
-      text-align: right;
-    }
-
-    .list div {
-      padding: 12px;
-      border-bottom: 1px solid #ccc;
-      cursor: pointer;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
       color: #00695c;
     }
-
-    .error {
-      color: red;
-      margin-top: 10px;
+    h1 {
+      font-size: 28px;
+      color: #00796b;
+      margin-bottom: 20px;
+    }
+    .info {
+      font-size: 18px;
+      line-height: 2;
+      margin-top: 30px;
     }
   </style>
 </head>
-<body>
+<body onload="fillInfo()">
 
-  <div class="header">دخول المشرف - سرعة تملك العقار</div>
-
-  <div class="box" id="loginBox">
-    <h2>أدخل الرقم السري للمشرف</h2>
-    <input type="password" id="adminPass" placeholder="••••••••" />
-    <br>
-    <button onclick="checkPassword()">دخول</button>
-    <div id="errorMsg" class="error"></div>
-  </div>
-
-  <div class="box" id="adminPanel" style="display:none;">
-    <h2>قائمة العقود المبرمة</h2>
-    <div class="list" id="clientList">
-      <!-- يتم تعبئة الأسماء هنا -->
+  <div class="box">
+    <div class="logo">شركة سرعة تملك العقار</div>
+    <h1>✅ تم إبرام العقد بنجاح</h1>
+    <div class="info">
+      <div id="datetime"></div>
+      <div id="location"></div>
     </div>
   </div>
 
   <script>
-    const password = "123456"; // يمكن تغييره
+    function fillInfo() {
+      const now = new Date();
+      document.getElementById("datetime").innerText = "التاريخ والوقت: " + now.toLocaleString('ar-EG');
 
-    const clients = JSON.parse(localStorage.getItem("clients") || "[]");
-
-    function checkPassword() {
-      const pass = document.getElementById("adminPass").value;
-      if (pass === password) {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
-        loadClients();
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude.toFixed(5);
+          const long = pos.coords.longitude.toFixed(5);
+          document.getElementById("location").innerText = `الموقع الجغرافي: خط العرض ${lat} - خط الطول ${long}`;
+        });
       } else {
-        document.getElementById("errorMsg").textContent = "كلمة مرور غير صحيحة.";
+        document.getElementById("location").innerText = "❌ لم يتم تحديد الموقع.";
       }
-    }
-
-    function loadClients() {
-      const list = document.getElementById("clientList");
-      if (clients.length === 0) {
-        list.innerHTML = "<p>لا يوجد عقود حالياً.</p>";
-        return;
-      }
-
-      clients.forEach((client, i) => {
-        const div = document.createElement("div");
-        div.textContent = `${i + 1}- ${client.name} (هوية: ${client.id})`;
-        div.onclick = () => downloadContract(client);
-        list.appendChild(div);
-      });
-    }
-
-    function downloadContract(client) {
-      const content = `
-        عقد إلكتروني رسمي من شركة سرعة تملك العقار
-        
-        الاسم: ${client.name}
-        رقم الهوية: ${client.id}
-        تاريخ الإبرام: ${client.date}
-        الوقت: ${client.time}
-        الإحداثيات: ${client.location}
-
-        هذا العقد مُبرم إلكترونيًا حسب نظام المعاملات الإلكترونية، المادة 9.
-      `;
-
-      const blob = new Blob([content], { type: "application/pdf" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `عقد_${client.name}.pdf`;
-      link.click();
     }
   </script>
+
 </body>
 </html>

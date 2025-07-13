@@ -1,81 +1,85 @@
-<!-- الصفحة الرابعة - رقم الجوال وتاريخ الميلاد -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>معلومات إضافية</title>
+  <title>لوحة المشرف</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding: 40px 20px;
-    }
-    h2 {
+      background-color: #f2f2f2;
       color: #004d40;
+      margin: 0;
+      padding: 20px;
     }
-    input, select {
-      padding: 10px;
-      margin: 8px 0;
-      width: 260px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .entry {
+      background-color: #fff;
+      margin-bottom: 15px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .entry strong {
+      color: #00695c;
     }
     button {
-      margin-top: 20px;
-      padding: 12px 28px;
+      margin-top: 10px;
+      padding: 10px 20px;
       background-color: #004d40;
       color: white;
       border: none;
-      font-size: 16px;
       border-radius: 6px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h2>فضلاً أدخل رقم الجوال وتاريخ الميلاد</h2>
-
-  <input type="text" id="phone" placeholder="رقم الجوال" />
-
-  <br />
-  <label>تاريخ الميلاد (ميلادي):</label><br />
-  <select id="day">
-    <option value="">اليوم</option>
-    ${[...Array(31)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
-  </select>
-  <select id="month">
-    <option value="">الشهر</option>
-    ${[...Array(12)].map((_, i) => `<option value="${i+1}">${i+1}</option>`).join('')}
-  </select>
-  <select id="year">
-    <option value="">السنة</option>
-    ${[...Array(80)].map((_, i) => {
-      const year = new Date().getFullYear() - i;
-      return `<option value="${year}">${year}</option>`;
-    }).join('')}
-  </select>
-
-  <br />
-  <button onclick="saveAndGo()">التالي</button>
+  <h1>السجلات المحفوظة</h1>
+  <div id="entriesContainer"></div>
 
   <script>
-    function saveAndGo() {
-      const phone = document.getElementById("phone").value.trim();
-      const day = document.getElementById("day").value;
-      const month = document.getElementById("month").value;
-      const year = document.getElementById("year").value;
+    const container = document.getElementById('entriesContainer');
+    const data = JSON.parse(localStorage.getItem("clients") || "[]");
 
-      if (phone && day && month && year) {
-        const birth = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-        localStorage.setItem("client_phone", phone);
-        localStorage.setItem("client_birth", birth);
-        window.location.href = "page4.html";
-      } else {
-        alert("يرجى إدخال جميع الحقول");
-      }
+    if (data.length === 0) {
+      container.innerHTML = "<p style='text-align:center'>لا توجد سجلات حالياً.</p>";
+    } else {
+      data.forEach((entry, i) => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `
+          <p><strong>الاسم:</strong> ${entry.name}</p>
+          <p><strong>رقم الهوية:</strong> ${entry.id}</p>
+          <p><strong>الجوال:</strong> ${entry.phone}</p>
+          <p><strong>تاريخ الميلاد:</strong> ${entry.birth}</p>
+          <p><strong>الموقع:</strong> ${entry.location}</p>
+          <p><strong>التاريخ:</strong> ${entry.date}</p>
+          <button onclick="download(${i})">تحميل PDF</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function download(index) {
+      const entry = data[index];
+      const doc = `
+        الاسم: ${entry.name}
+        رقم الهوية: ${entry.id}
+        الجوال: ${entry.phone}
+        تاريخ الميلاد: ${entry.birth}
+        الموقع: ${entry.location}
+        التاريخ: ${entry.date}
+      `;
+      const blob = new Blob([doc], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `client_${index + 1}.pdf`;
+      a.click();
     }
   </script>
 </body>

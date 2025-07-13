@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -22,8 +23,6 @@
       border: 2px solid #004d40;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
-    .page { display: none; }
-    .page.active { display: block; }
     header {
       background: linear-gradient(to right, #004d40, #00796b);
       padding: 20px;
@@ -65,18 +64,6 @@
     button:hover {
       background: #004d40;
     }
-    .btn-approve { background-color: #2e7d32; }
-    .btn-reject { background-color: #c62828; }
-    .contract-box {
-      margin-top: 20px;
-      padding: 15px;
-      border: 2px solid #009688;
-      background: #f6fdfd;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-    }
     .hidden { display: none; }
     footer {
       margin-top: 30px;
@@ -88,42 +75,29 @@
 </head>
 <body>
 <div class="container">
-  <!-- الصفحة 1 -->
-  <section class="page active" id="page1">
-    <header>
-      <h1>سرعة تملك العقار<br>والحلول التمويلية المتكاملة</h1>
-      <p>نرحب بك عميلنا العزيز</p>
-    </header>
-    <p style="text-align:center; font-weight:bold;">نبرم معك هذا العقد<br><br>بسم الله الرحمن الرحيم</p>
-    <button onclick="goToPage(2)">ابدأ</button>
-  </section>
+  <header>
+    <h1>سرعة تملك العقار<br>والحلول التمويلية المتكاملة</h1>
+    <p>نرحب بك عميلنا العزيز</p>
+  </header>
+  <p style="text-align:center; font-weight:bold;">نبرم معك هذا العقد<br><br>بسم الله الرحمن الرحيم</p>
 
-  <!-- الصفحة 2 -->
-  <section class="page" id="page2">
-    <label>الاسم الكريم:</label>
-    <input type="text" id="fullName" placeholder="اكتب اسمك الكامل" />
-    
-    <label>السجل المدني:</label>
-    <input type="text" id="idNumber" maxlength="10" placeholder="أدخل رقم السجل المدني" />
+  <label>الاسم الكريم:</label>
+  <input type="text" id="fullName" placeholder="اكتب اسمك الكامل" />
 
-    <div id="manualAddressContainer" class="hidden">
-      <label>📍 لم تشارك موقعك، يرجى إدخال عنوانك يدويًا:</label>
-      <input type="text" id="manualAddress" placeholder="مثال: الرياض، حي اليرموك، شارع رقم..." />
-    </div>
+  <label>السجل المدني:</label>
+  <input type="text" id="idNumber" maxlength="10" placeholder="أدخل رقم السجل المدني" />
 
-    <button id="continueBtn" disabled>التالي ➔</button>
-  </section>
+  <div id="manualAddressContainer" class="hidden">
+    <label>📍 لم تشارك موقعك، يرجى إدخال عنوانك يدويًا:</label>
+    <input type="text" id="manualAddress" placeholder="مثال: الرياض، حي اليرموك، شارع رقم..." />
+  </div>
 
-  <!-- باقي الصفحات سأرسلها بعد قليل في الجزء الثاني -->
+  <button id="continueBtn" disabled>التالي ➔</button>
 </div>
 
-<footer id="footerText">⚠️ هذا العقد يُعد سندًا تنفيذيًا حسب المادة 9 من نظام التعاملات الإلكترونية</footer>
+<footer>⚠️ هذا العقد يُعد سندًا تنفيذيًا حسب المادة 9 من نظام التعاملات الإلكترونية</footer>
 
 <script>
-// سيتم إضافة الجافاسكربت لاحقًا هنا
-</script>
-</body>
-</html><script>
 let clientData = {
   name: '',
   id: '',
@@ -132,17 +106,11 @@ let clientData = {
   timestamp: '',
 };
 
-const pages = document.querySelectorAll('.page');
 const fullNameInput = document.getElementById('fullName');
 const idInput = document.getElementById('idNumber');
 const manualAddressInput = document.getElementById('manualAddress');
 const manualAddressContainer = document.getElementById('manualAddressContainer');
 const continueBtn = document.getElementById('continueBtn');
-
-function goToPage(number) {
-  pages.forEach(p => p.classList.remove('active'));
-  document.getElementById('page' + number).classList.add('active');
-}
 
 function validateInputs() {
   const name = fullNameInput.value.trim();
@@ -164,12 +132,10 @@ continueBtn.addEventListener('click', () => {
     ? clientData.address
     : manualAddressInput.value.trim();
   clientData.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
-  clientData.response = ''; // لم يرد بعد
   localStorage.setItem('contract-client', JSON.stringify(clientData));
   window.location.href = 'contract.html';
 });
 
-// محاولة جلب الموقع الجغرافي
 function getGeolocation() {
   if (!navigator.geolocation) {
     manualAddressContainer.classList.remove('hidden');
@@ -193,11 +159,13 @@ function getGeolocation() {
   }
 }
 
-// بمجرد ما يكتب الاسم نحاول نجيب الموقع
 fullNameInput.addEventListener('blur', () => {
   if (!clientData.address) getGeolocation();
 });
-</script><!DOCTYPE html>
+</script>
+</body>
+</html><!-- contract.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -310,7 +278,8 @@ fullNameInput.addEventListener('blur', () => {
   }
 </script>
 </body>
-</html><!DOCTYPE html>
+</html><!-- done.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -333,7 +302,8 @@ fullNameInput.addEventListener('blur', () => {
   <h1>✅ تم إبرام العقد بنجاح</h1>
   <p>شكرًا لك، سيتم التواصل معك قريبًا.</p>
 </body>
-</html><!DOCTYPE html>
+</html><!-- rejected.html -->
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -355,114 +325,5 @@ fullNameInput.addEventListener('blur', () => {
 <body>
   <h1>❌ تم رفض العقد رسميًا</h1>
   <p>يرجى التواصل مع الممثل القانوني. شكرًا.</p>
-</body>
-</html><!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>للمصرح لهم فقط</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    body {
-      font-family: 'Tajawal', sans-serif;
-      background: #fafafa;
-      padding: 30px;
-      text-align: center;
-    }
-    input {
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid #004d40;
-      border-radius: 6px;
-      width: 250px;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 10px;
-      font-size: 1rem;
-      border: none;
-      background: #00796b;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    pre {
-      text-align: right;
-      background: #f0f0f0;
-      padding: 15px;
-      border: 1px solid #ccc;
-      margin-top: 20px;
-      direction: rtl;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
-<body>
-  <h2>📋 للمصرح لهم فقط</h2>
-  <input type="password" id="secret" placeholder="أدخل الرمز" />
-  <button onclick="checkAccess()">عرض العقد</button>
-  <div id="output" style="margin-top:20px;"></div>
-
-  <script>
-    let client = JSON.parse(localStorage.getItem('contract-client') || '{}');
-
-    function checkAccess() {
-      const code = document.getElementById('secret').value;
-      if (code !== '99229917') {
-        alert('رمز غير صحيح');
-        return;
-      }
-
-      if (!client.name) {
-        document.getElementById('output').innerHTML = '<p>لا يوجد عقد محفوظ حاليًا</p>';
-        return;
-      }
-
-      const result = `
-الاسم: ${client.name}
-رقم الهوية: ${client.id}
-العنوان: ${client.address}
-الحالة: ${client.response === 'موافقة' ? '✅ تمت الموافقة' : '❌ تم الرفض'}
-التاريخ والوقت: ${client.timestamp}
--------------------------------
-(العقد محفوظ محليًا في المتصفح)
-`;
-
-      document.getElementById('output').innerHTML = `
-        <pre>${result}</pre>
-        <button onclick="downloadPDF()">📥 تحميل العقد PDF</button>
-      `;
-    }
-
-    function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      const content = `
-بسم الله الرحمن الرحيم
-
-عقد إنهاء إجراءات تمويل عقاري
-
-الاسم: ${client.name}
-رقم الهوية: ${client.id}
-العنوان: ${client.address}
-الحالة: ${client.response}
-التاريخ: ${client.timestamp}
-
-البنود:
-1- التمهيد جزء لا يتجزأ من العقد
-...
-12- العقد ملزم إلكترونيًا
-
-ختم إلكتروني بتاريخ: ${new Date().toLocaleString('ar-SA', { hour12: false })}
-`;
-
-      doc.setFont('Helvetica');
-      doc.setFontSize(12);
-      doc.text(content, 10, 20, { maxWidth: 180 });
-      doc.save(`عقد_${client.name}.pdf`);
-    }
-  </script>
 </body>
 </html>

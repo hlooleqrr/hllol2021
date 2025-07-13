@@ -1,138 +1,145 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>عرض العقد</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <title>عرض العقد - سرعة تملك العقار</title>
   <style>
-    * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9fafb;
       margin: 0;
       padding: 0;
-      color: #004d40;
+      background: #f9f9f9;
+      color: #333;
     }
-    .contract-container {
-      max-width: 750px;
-      margin: 20px auto;
-      padding: 30px;
-      background: white;
-      border: 3px solid #004d40;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      overflow-y: auto;
-    }
-    h1, h2 {
+    header {
+      background-color: #004d40;
+      color: white;
+      padding: 20px;
       text-align: center;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 26px;
-      color: #004d40;
-    }
-    h2 {
-      font-size: 20px;
-      color: #00796b;
-    }
-    .contract-text {
-      line-height: 2;
-      font-size: 17px;
-      white-space: pre-wrap;
-    }
-    .highlight {
-      color: red;
+      font-size: 24px;
       font-weight: bold;
+    }
+    .subheader {
+      background: #00796b;
+      color: white;
+      padding: 10px;
       text-align: center;
-      margin-top: 30px;
+      font-size: 18px;
+    }
+    .contract-box {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border: 3px solid #004d40;
+      border-radius: 12px;
+      line-height: 2;
+    }
+    .btns {
+      text-align: center;
+      margin: 30px 0;
+    }
+    button {
+      font-size: 18px;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .agree {
+      background-color: #2e7d32;
+      color: white;
+    }
+    .refuse {
+      background-color: #c62828;
+      color: white;
     }
     .footer {
-      background: #eeeeee;
-      padding: 15px;
-      font-size: 14px;
+      padding: 20px;
+      background: #eee;
       text-align: center;
-      border-top: 2px solid #004d40;
+      font-size: 14px;
       margin-top: 30px;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
   </style>
 </head>
-<body onload="renderContract(); getLocation();">
+<body onload="insertClientData()">
 
-<div class="contract-container">
-  <h1>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
-  <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
+  <header>شركة سرعة تملك العقار</header>
+  <div class="subheader">عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</div>
 
-  <div class="contract-text" id="contractBody">
-    <!-- سيتم تعبئته عبر الجافاسكربت -->
+  <div class="contract-box" id="contractBox">
+    <p><strong>الطرف الثاني:</strong></p>
+    <p>الاسم: <span id="clientName"></span></p>
+    <p>رقم الهوية: <span id="clientNID"></span></p>
+    <p>رقم الجوال: <span id="clientMobile"></span></p>
+    <p>تاريخ الميلاد (هجري): <span id="clientBirth"></span></p>
+    <hr>
+    <p><strong>بنود العقد:</strong></p>
+    <ol>
+      <li>يلتزم الطرف الأول بتقديم خدمة الوساطة العقارية للطرف الثاني.</li>
+      <li>يقر الطرف الثاني أن توقيعه الإلكتروني على هذا العقد مُلزم قانونيًا حسب نظام التعاملات الإلكترونية.</li>
+      <li>يتحمل الطرف الثاني كامل المسؤولية عن صحة البيانات المقدمة.</li>
+      <li>يتم تنفيذ العقد بعد اكتمال كافة المستندات المطلوبة.</li>
+      <li>لا يجوز لأي طرف التراجع بعد توقيع العقد إلكترونيًا.</li>
+      <li>يتم التواصل بين الطرفين عبر البيانات المقدمة.</li>
+      <li>مدة صلاحية هذا العقد 30 يومًا من تاريخه.</li>
+      <li>لا يحق للطرف الثاني مطالبة الطرف الأول بأي تعويض في حال رفض التمويل من الجهة التمويلية.</li>
+      <li>يتعهد الطرف الثاني بعدم التعامل مع وسيط آخر لنفس العقار.</li>
+      <li>تُعتبر الرسوم المدفوعة غير قابلة للاسترداد بعد توقيع العقد.</li>
+      <li>جميع البنود السابقة مُلزمة للطرفين حال التوقيع الإلكتروني.</li>
+      <li>تخضع هذه الاتفاقية للأنظمة المعمول بها في المملكة العربية السعودية.</li>
+    </ol>
   </div>
 
-  <div class="highlight">
-    تنبيه: يخضع هذا العقد لأحكام نظام التعاملات الإلكترونية السعودي، ويُعد ملزمًا من لحظة الموافقة.
+  <div class="btns">
+    <button class="agree" onclick="acceptContract()">موافق</button>
+    <button class="refuse" onclick="rejectContract()">رفض</button>
   </div>
 
   <div class="footer">
-    <div><strong>شركة سرعة تملك العقار</strong></div>
+    <div class="warning">
+      ⚠️ تنبيه: يعتبر التوقيع الإلكتروني ملزمًا حسب المادة (2) من نظام التعاملات الإلكترونية السعودي.
+    </div>
     <div id="datetime"></div>
-    <div id="geoLocation">جاري تحديد موقع العميل...</div>
+    <div id="location"></div>
   </div>
-</div>
 
-<script>
-function renderContract() {
-  const name = localStorage.getItem("clientName") || "...............";
-  const id = localStorage.getItem("clientId") || "...............";
-  const mobile = localStorage.getItem("clientMobile") || "...............";
-  const year = localStorage.getItem("birthYear") || "........";
-  const month = localStorage.getItem("birthMonth") || "..";
-  const day = localStorage.getItem("birthDay") || "..";
+  <script>
+    function insertClientData() {
+      document.getElementById("clientName").textContent = localStorage.getItem("name") || "_____";
+      document.getElementById("clientNID").textContent = localStorage.getItem("nid") || "_____";
+      document.getElementById("clientMobile").textContent = localStorage.getItem("mobile") || "_____";
+      document.getElementById("clientBirth").textContent = localStorage.getItem("birth") || "_____";
 
-  const contract = `
-تم بحمد الله الاتفاق بين شركة سرعة تملك العقار والطرف الثاني حسب البيانات التالية:
+      const now = new Date();
+      document.getElementById("datetime").innerText = `التاريخ والوقت: ${now.toLocaleString('ar-EG')}`;
 
-الاسم: ${name}
-رقم الهوية: ${id}
-رقم الجوال: ${mobile}
-تاريخ الميلاد (هجري): ${day} / ${month} / ${year}
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude.toFixed(5);
+          const long = pos.coords.longitude.toFixed(5);
+          document.getElementById("location").innerText = `الموقع: خط العرض ${lat} - خط الطول ${long}`;
+        });
+      } else {
+        document.getElementById("location").innerText = "الموقع غير متوفر";
+      }
+    }
 
-بموجب هذا العقد، يتم إنهاء إجراءات التمويل العقاري عبر جهة تمويلية معتمدة، ويشمل ذلك مراجعة المستندات وتحديث البيانات.
+    function acceptContract() {
+      window.location.href = "step3.html";
+    }
 
-يتعهد الطرف الثاني بدفع الرسوم المحددة عند توقيع هذا العقد أو عند صدور الموافقة المبدئية من الجهة التمويلية.
-
-مدة العقد: تبدأ من تاريخ توقيع العقد وتستمر حتى الانتهاء من كامل الإجراءات أو الانسحاب بموجب إشعار رسمي.
-
-العنوان الرسمي للطرف الأول:
-شركة سرعة تملك العقار والحلول التمويلية المتكاملة
-ترخيص: 1100042624
-الرياض
-
-تم إبرام هذا العقد إلكترونيًا، ويُعتبر ساريًا نظامًا حسب المادة (2) من نظام التعاملات الإلكترونية السعودي.
-  `;
-
-  document.getElementById("contractBody").innerText = contract;
-
-  // تحديث التاريخ والوقت
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('ar-SA');
-  const timeStr = now.toLocaleTimeString('ar-SA');
-  document.getElementById("datetime").innerText = `التاريخ والوقت: ${dateStr} - ${timeStr}`;
-}
-
-// الموقع الجغرافي
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      const lat = position.coords.latitude.toFixed(5);
-      const lon = position.coords.longitude.toFixed(5);
-      document.getElementById("geoLocation").innerText =
-        `موقع العميل: خط العرض ${lat} - خط الطول ${lon}`;
-    }, function() {
-      document.getElementById("geoLocation").innerText = "تعذر تحديد الموقع الجغرافي.";
-    });
-  } else {
-    document.getElementById("geoLocation").innerText = "الموقع غير مدعوم.";
-  }
-}
-</script>
+    function rejectContract() {
+      window.location.href = "step4.html";
+    }
+  </script>
 
 </body>
 </html>

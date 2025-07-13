@@ -52,15 +52,17 @@
 <body>
 <div class="container">
   <h1>عرض عقد إنهاء إجراءات التمويل</h1>
-  <div class="contract-text" id="contractContent">جارٍ التحميل...</div>
+  <div class="contract-text" id="contractContent">جارٍ تحميل بيانات العقد...</div>
   <button class="btn-approve" onclick="submitResponse('موافقة')">✅ أوافق على العقد</button>
   <button class="btn-reject" onclick="submitResponse('رفض')">❌ أرفض العقد</button>
 </div>
 <script>
   const data = JSON.parse(localStorage.getItem('contract-client') || '{}');
-  if (!data.name || !data.id) location.href = 'index.html';
+  if (!data.name || !data.id || !data.phone || !data.birth) location.href = 'step1.html';
+
   const now = new Date();
   const arabicDate = now.toLocaleString('ar-SA', { hour12: false });
+
   const contractContent = `
 بسم الله الرحمن الرحيم
 
@@ -77,8 +79,10 @@
 
 الطرف الثاني:
 الاسم: ${data.name}
-رقم الهوية: ${data.id}
-العنوان: ${data.address}
+السجل المدني: ${data.id}
+تاريخ الميلاد: ${data.birth}
+هاتف المعتمد: ${data.phone}
+عنوانه المعتمد: ${data.address}
 
 التمهيد:
 حيث إن الطرف الأول مرخص في الوساطة العقارية، ويقوم بتسهيل التمويلات.
@@ -105,7 +109,8 @@
     data.response = type;
     data.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
     localStorage.setItem('contract-client', JSON.stringify(data));
-    location.href = 'status.html'; // ✅ لا يحول مباشرة إلى done/rejected
+    localStorage.setItem('contract-locked', 'true'); // ✅ يمنع الدخول مرة ثانية
+    location.href = 'status.html';
   }
 </script>
 </body>

@@ -1,145 +1,59 @@
-<!-- step4.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>عقد إنهاء إجراءات تمويل عقاري</title>
+  <title>تأكيد العقد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
+      background-color: #f0f9f7;
       margin: 0;
-      background: #f4f6f9;
-      color: #222;
-      line-height: 1.8;
-    }
-    .container {
-      max-width: 850px;
-      margin: 30px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      border: 3px solid #004d40;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
+      text-align: center;
       color: #004d40;
-      text-align: center;
-    }
-    p, li {
-      font-size: 17px;
-      margin: 10px 0;
-    }
-    ul {
-      padding-right: 20px;
-    }
-    .highlight {
-      color: red;
-      font-weight: bold;
-      margin-top: 30px;
-      text-align: center;
-    }
-    .data {
-      background-color: #e8f5e9;
-      padding: 15px;
-      border: 2px solid #004d40;
-      margin-bottom: 25px;
-      border-radius: 10px;
-    }
-    .btns {
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
+      min-height: 100vh;
     }
-    button {
-      padding: 12px 24px;
+    .box {
+      background: white;
+      margin: auto;
+      padding: 30px;
+      max-width: 600px;
+      border-radius: 12px;
+      border: 3px solid #00796b;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #00695c;
+      font-size: 26px;
+    }
+    p {
       font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      margin: 20px 0;
     }
-    .accept { background: #00796b; color: white; }
-    .reject { background: #c62828; color: white; }
-    footer {
-      margin-top: 60px;
-      background: #eeeeee;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      border-top: 2px solid #004d40;
+    .success {
+      font-size: 20px;
+      color: green;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>شركة سرعة تملك العقار</h1>
-    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
-
-    <div class="data">
-      <p><strong>الاسم:</strong> <span id="clientName"></span></p>
-      <p><strong>رقم الهوية:</strong> <span id="clientId"></span></p>
-      <p><strong>رقم الجوال:</strong> <span id="clientMobile"></span></p>
-      <p><strong>تاريخ الميلاد (هجري):</strong> <span id="clientBirth"></span></p>
-      <p><strong>تاريخ ووقت التوقيع:</strong> 2025/07/13 - 12:02:06</p>
-      <p><strong>موقع الجهاز الجغرافي:</strong> <span id="geoLocation">جارٍ تحديد الموقع...</span></p>
+  <div class="box">
+    <h1>✅ تم إبرام العقد بنجاح</h1>
+    <p>نشكر لك موافقتك على بنود العقد.</p>
+    <div class="success">
+      العقد الآن قيد التنفيذ من قبل شركة سرعة تملك العقار
     </div>
-
-    <ol>
-      <li>يدفع الطرف الثاني للطرف الأول 2.5% من قيمة العقار + 500 ريال رسوم عقد.</li>
-      <li>يلتزم الطرف الأول بإكمال كافة الإجراءات التمويلية.</li>
-      <li>يتعهد الطرف الثاني بتقديم معلومات دقيقة للطرف الأول.</li>
-      <li>أي تلاعب بالمعلومات يُلغي هذا العقد دون استرداد المبالغ.</li>
-      <li>مدة الاتفاقية تبدأ من تاريخ توقيع هذا العقد.</li>
-      <li>يتم التواصل عبر وسائل الاتصال المدخلة من الطرف الثاني.</li>
-      <li>الطرف الأول غير مسؤول عن رفض الجهات التمويلية لطلب الطرف الثاني.</li>
-      <li>في حال تم تقديم عرض تمويلي ورفضه الطرف الثاني، لا يُعاد أي مبلغ.</li>
-      <li>هذا العقد لا يُلغى بعد التوقيع إلا باتفاق الطرفين كتابة.</li>
-      <li>يحق للطرف الأول توكيل الغير لإتمام المعاملة.</li>
-      <li>جميع البنود نافذة وملزمة بمجرد التوقيع الإلكتروني.</li>
-      <li>تمت قراءة العقد والموافقة عليه من قبل الطرف الثاني.</li>
-    </ol>
-
-    <p class="highlight">
-      هذا العقد ملزم إلكترونيًا حسب المادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية.
-    </p>
-
-    <div class="btns">
-      <button class="accept" onclick="goToConfirmation()">✅ أوافق</button>
-      <button class="reject" onclick="goToReject()">❌ رفض</button>
-    </div>
+    <p style="margin-top:30px; font-size:14px;">📍 التاريخ والوقت: <span id="datetime"></span></p>
   </div>
 
-  <footer>
-    <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
-    <p>هذا العقد محمي بموجب <strong style="color:red;">المادة التاسعة</strong> من نظام التعاملات الإلكترونية السعودي.</p>
-    <p>التاريخ والوقت: 2025/07/13 - 12:02:06</p>
-  </footer>
-
   <script>
-    document.getElementById("clientName").textContent = localStorage.getItem("clientName");
-    document.getElementById("clientId").textContent = localStorage.getItem("clientId");
-    document.getElementById("clientMobile").textContent = localStorage.getItem("clientMobile");
-    document.getElementById("clientBirth").textContent = localStorage.getItem("clientBirth");
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        const coords = `خط العرض: ${position.coords.latitude.toFixed(4)}, خط الطول: ${position.coords.longitude.toFixed(4)}`;
-        document.getElementById("geoLocation").textContent = coords;
-      }, function() {
-        document.getElementById("geoLocation").textContent = "تعذر الحصول على الموقع";
-      });
-    } else {
-      document.getElementById("geoLocation").textContent = "غير مدعوم في هذا المتصفح";
-    }
-
-    function goToConfirmation() {
-      window.location.href = "confirm.html";
-    }
-
-    function goToReject() {
-      window.location.href = "rejected.html";
-    }
+    const now = new Date();
+    const datetime = now.toLocaleDateString('ar-SA') + ' - ' + now.toLocaleTimeString('ar-SA');
+    document.getElementById("datetime").innerText = datetime;
   </script>
 </body>
 </html>

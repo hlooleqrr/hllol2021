@@ -100,11 +100,12 @@
 تمت الموافقة من الطرف الأول بتاريخ أعلاه.
   `;
   document.getElementById('contractContent').textContent = contractContent;
+
   function submitResponse(type) {
     data.response = type;
     data.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
     localStorage.setItem('contract-client', JSON.stringify(data));
-    location.href = type === 'موافقة' ? 'done.html' : 'rejected.html';
+    location.href = 'status.html'; // ✅ لا يحول مباشرة إلى done/rejected
   }
 </script>
 </body>

@@ -2,116 +2,123 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سرعة تملك العقار والحلول التمويلية المتكاملة</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f9fafb;
+      background-color: #f5f5f5;
       color: #004d40;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100vh;
-    }
-    .main {
+      min-height: 100vh;
       text-align: center;
-      padding: 40px 20px;
+    }
+    .container {
+      margin-top: 80px;
     }
     h1 {
-      font-size: 26px;
-      background: #004d40;
-      color: #fff;
-      padding: 15px;
-      border-radius: 8px;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #004d40;
     }
     h2 {
-      color: #00796b;
-      margin-top: 30px;
+      font-size: 20px;
+      margin-bottom: 40px;
+      color: #00695c;
     }
     button {
-      margin-top: 40px;
-      padding: 12px 30px;
-      font-size: 20px;
-      background-color: #00695c;
+      background-color: #004d40;
       color: white;
+      font-size: 18px;
       border: none;
-      border-radius: 10px;
+      padding: 15px 40px;
+      border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #004d40;
+      background-color: #00796b;
     }
-    .footer {
-      text-align: center;
-      font-size: 13px;
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      font-size: 14px;
       color: red;
-      padding: 15px;
       border-top: 1px solid #ccc;
     }
-    .hidden {
-      display: none;
-    }
-    input {
-      padding: 10px;
-      font-size: 18px;
-      width: 70%;
-      max-width: 300px;
-      margin-top: 20px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    #location {
+      font-size: 13px;
+      color: #333;
+      margin-top: 10px;
     }
   </style>
 </head>
-<body>
-
-  <div class="main">
+<body onload="getLocation(); updateClock(); setInterval(updateClock, 1000)">
+  <div class="container">
     <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
     <h2>نرحب بك عميلنا العزيز</h2>
     <p>نبرم معك هذا العقد</p>
+    <br />
+    <button onclick="window.location.href='auth.html'">ابدأ بسم الله</button>
+  </div>
 
-    <button onclick="showInput()">ابدأ بسم الله</button>
-
-    <div id="codeSection" class="hidden">
-      <input type="password" id="accessCode" placeholder="أدخل الرمز السري">
-      <br>
-      <button onclick="checkCode()">دخول</button>
+  <footer>
+    <div style="color: red; font-weight: bold;">
+      تنبيه: يخضع هذا العقد لأحكام المادة التاسعة من نظام التعاملات الإلكترونية ويُعد ملزمًا للطرفين.
     </div>
-  </div>
-
-  <div class="footer">
-    ⚠️ نأمل قراءة العقد بعناية قبل الموافقة. <br>
-    التاريخ والوقت الآن: <span id="now"></span>
-  </div>
+    <div id="location"></div>
+    <div id="datetime"></div>
+    <div style="margin-top: 5px;">جميع الحقوق محفوظة © سرعة تملك العقار</div>
+  </footer>
 
   <script>
-    function showInput() {
-      document.getElementById('codeSection').classList.remove('hidden');
-    }
-
-    function checkCode() {
-      const code = document.getElementById('accessCode').value.trim();
-
-      // شفرات الدخول
-      const adminCode = "9999";
-      const clientCode = "1234";
-
-      if (code === adminCode) {
-        window.location.href = "admin-panel.html";
-      } else if (code === clientCode) {
-        window.location.href = "step1.html";
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
       } else {
-        alert("رمز غير صحيح. حاول مرة أخرى.");
+        document.getElementById('location').innerText = "لم يتم تحديد الموقع.";
       }
     }
 
-    // عرض الوقت والتاريخ
-    const now = new Date();
-    document.getElementById("now").innerText = now.toLocaleString('ar-EG');
-  </script>
+    function success(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+        .then(res => res.json())
+        .then(data => {
+          const address = data.address;
+          let text = '';
+          if (address.state) text += address.state + '، ';
+          if (address.city) text += address.city + '، ';
+          if (address.suburb) text += address.suburb;
+          document.getElementById('location').innerText = "الموقع: " + text;
+        })
+        .catch(() => {
+          document.getElementById('location').innerText = "لم يتم تحديد الموقع.";
+        });
+    }
 
+    function error() {
+      document.getElementById('location').innerText = "تم رفض إذن تحديد الموقع.";
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const options = {
+        timeZone: 'Asia/Riyadh',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+      };
+      const formatter = new Intl.DateTimeFormat('ar-EG', options);
+      document.getElementById('datetime').innerText = "التاريخ والوقت الآن: " + formatter.format(now);
+    }
+  </script>
 </body>
 </html>

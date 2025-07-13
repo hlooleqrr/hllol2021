@@ -1,70 +1,97 @@
+<!-- الصفحة الأولى لبدء التوقيع - ترحيب باسم الشركة والتاريخ والموقع -->
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>رمز الدخول</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <title>سرعة تملك العقار والحلول التمويلية المتكاملة</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e0f2f1;
-      color: #004d40;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       margin: 0;
-      padding: 20px;
+      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+      color: #004d40;
       text-align: center;
+      padding: 50px 20px;
     }
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    input {
-      padding: 14px;
-      font-size: 18px;
-      width: 250px;
-      border: 2px solid #004d40;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      background-color: #00796b;
+      font-size: 32px;
+      background-color: #004d40;
       color: white;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    h2 {
+      color: #00796b;
+      font-size: 22px;
+      margin-top: 30px;
+    }
+    p {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+    .button {
+      background-color: #004d40;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #004d40;
-    }
-    .error {
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #ffe6e6;
       color: red;
-      font-size: 16px;
-      margin-top: 10px;
+      font-size: 14px;
+      padding: 10px;
+      border-top: 2px solid red;
     }
   </style>
 </head>
-<body>
-  <h1>أدخل الرقم المصرح لك من المختصين</h1>
-  <input type="text" id="code" placeholder="أدخل الرقم..." maxlength="10" />
-  <button onclick="checkCode()">تأكيد</button>
-  <div class="error" id="errorMsg"></div>
+<body onload="setDateTime(); getLocation();">
+  <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+  <h2>نرحب بك عميلنا العزيز</h2>
+  <p>نبرم معك هذا العقد</p>
+  <button class="button" onclick="startContract()">ابدأ بسم الله</button>
+
+  <div class="footer" id="footerInfo">
+    يتم الآن تحديد موقعك والتاريخ والوقت...  
+  </div>
 
   <script>
-    function checkCode() {
-      const value = document.getElementById('code').value.trim();
-      if (value === "00221") {
-        window.location.href = "index.html";
+    const locationText = document.getElementById("footerInfo");
+
+    function startContract() {
+      window.location.href = 'page1.html';
+    }
+
+    function setDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                        hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const formatted = now.toLocaleString('ar-EG', options);
+      locationText.innerText += " | " + formatted;
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
       } else {
-        document.getElementById('errorMsg').textContent = "❌ الرقم غير صحيح، يرجى المحاولة من جديد.";
+        locationText.innerText += " | الموقع غير متاح";
       }
+    }
+
+    function showPosition(position) {
+      const lat = position.coords.latitude.toFixed(5);
+      const lon = position.coords.longitude.toFixed(5);
+      locationText.innerText = `📍 إحداثيات موقعك: ${lat}, ${lon} | ` + locationText.innerText;
+    }
+
+    function showError() {
+      locationText.innerText = "📍 الموقع غير متاح، يرجى كتابة عنوانك يدويًا لاحقًا.";
     }
   </script>
 </body>

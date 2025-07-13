@@ -1,120 +1,130 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>موافقة أو رفض العقد</title>
+  <meta charset="UTF-8" />
+  <title>تأكيد الموافقة النهائية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f1f8e9;
-      margin: 0;
-      padding: 30px;
-      color: #33691e;
-      line-height: 2;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
       min-height: 100vh;
-    }
-    .message-box {
-      background-color: #f9fbe7;
-      border: 2px solid #8bc34a;
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 600px;
-      margin: auto;
-    }
-    .btn {
-      margin: 20px 10px;
-      padding: 14px 32px;
-      font-size: 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .agree {
-      background-color: #388e3c;
-      color: white;
-    }
-    .refuse {
-      background-color: #d32f2f;
-      color: white;
-    }
-    .btn:hover {
-      opacity: 0.9;
+      margin: 0;
     }
 
-    .legal-box {
-      background-color: #fff3f3;
-      border: 2px solid #e53935;
-      border-radius: 12px;
-      padding: 16px;
-      margin: 40px auto 10px;
-      max-width: 90%;
-      text-align: right;
-      font-size: 15px;
-      color: #333;
-    }
-    .legal-box h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #004d40;
-    }
-    .legal-box .warning {
-      color: #b71c1c;
+    .header {
+      background-color: #004d40;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      font-size: 22px;
       font-weight: bold;
-      margin: 8px 0;
+      border-bottom: 4px solid #00796b;
+    }
+
+    .box {
+      background: white;
+      border: 3px solid #004d40;
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      margin-top: 40px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #33691e;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #33691e;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #558b2f;
+    }
+
+    .error {
+      color: red;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+
+    .legal {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #c62828;
+      font-weight: bold;
+      background: #fff4f4;
+      border: 2px solid #d32f2f;
+      border-radius: 10px;
+      padding: 15px;
     }
   </style>
 </head>
 <body>
 
-  <div class="message-box">
-    <h2>هل توافق على جميع بنود العقد أعلاه؟</h2>
-    <p>بالضغط على "موافق" سيتم تسجيل موافقتك، وبالضغط على "رفض" سيتم اعتبار العقد مرفوضًا.</p>
+  <div class="header">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <button class="btn agree" onclick="handleDecision(true)">موافق ✅</button>
-    <button class="btn refuse" onclick="handleDecision(false)">رفض ❌</button>
-  </div>
+  <div class="box">
+    <h2>تأكيد الموافقة على العقد</h2>
+    <p>يرجى إدخال رقم الهوية مرة أخرى وكتابة كلمة <strong>موافق</strong> لإبرام العقد.</p>
 
-  <div class="legal-box">
-    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
-    <p class="warning">
-      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
-    </p>
-    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
-    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
+    <input type="text" id="idConfirm" placeholder="أدخل رقم الهوية">
+    <input type="text" id="approvalWord" placeholder='اكتب "موافق" فقط'>
+
+    <div id="errorMsg" class="error"></div>
+
+    <button onclick="validateAndContinue()">تأكيد</button>
+
+    <div class="legal">
+      ⚠️ تنبيه: سيتم تسجيل هذه الموافقة بشكل إلكتروني، وتُعد ملزمة قانونًا حسب المادة التاسعة من نظام المعاملات الإلكترونية.
+    </div>
   </div>
 
   <script>
-    function handleDecision(agreed) {
-      if (agreed) {
-        window.location.href = "step6.html";
-      } else {
-        window.location.href = "step8.html";
+    function validateAndContinue() {
+      const idInput = document.getElementById("idConfirm").value.trim();
+      const word = document.getElementById("approvalWord").value.trim();
+      const error = document.getElementById("errorMsg");
+      const originalId = localStorage.getItem("clientId");
+
+      if (idInput !== originalId) {
+        error.textContent = "رقم الهوية غير مطابق.";
+        return;
       }
-    }
 
-    const dtBox = document.getElementById("datetime");
-    const now = new Date();
-    const formatted = now.toLocaleString('ar-SA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    });
-    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
+      if (word !== "موافق") {
+        error.textContent = "يرجى كتابة كلمة 'موافق' فقط.";
+        return;
+      }
 
-    const locBox = document.getElementById("location");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
-      }, () => {
-        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
-      });
-    } else {
-      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
+      window.location.href = "step6.html";
     }
   </script>
 

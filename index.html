@@ -1,72 +1,117 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تسجيل دخول المشرف</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سرعة تملك العقار</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f0f0f0;
+      background: #f9fafb;
+      color: #004d40;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      justify-content: space-between;
       height: 100vh;
     }
-    .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    .main {
       text-align: center;
-      max-width: 300px;
-      width: 100%;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 26px;
+      background: #004d40;
+      color: #fff;
+      padding: 15px;
+      border-radius: 8px;
     }
     h2 {
-      color: #004d40;
-      margin-bottom: 20px;
-    }
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 16px;
+      color: #00796b;
+      margin-top: 30px;
     }
     button {
-      background-color: #004d40;
+      margin-top: 40px;
+      padding: 12px 30px;
+      font-size: 20px;
+      background-color: #00695c;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      font-size: 16px;
+      border-radius: 10px;
       cursor: pointer;
     }
-    .error {
+    button:hover {
+      background-color: #004d40;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
       color: red;
-      margin-top: 10px;
+      padding: 15px;
+      border-top: 1px solid #ccc;
+    }
+    .hidden {
+      display: none;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      width: 70%;
+      max-width: 300px;
+      margin-top: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>🔒 دخول المشرف</h2>
-    <input type="password" id="adminPassword" placeholder="أدخل الرمز السري">
-    <button onclick="checkPassword()">دخول</button>
-    <div id="error" class="error"></div>
+
+  <div class="main">
+    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <h2>نرحب بك عميلنا العزيز</h2>
+    <p>نبرم معك هذا العقد</p>
+
+    <button onclick="showInput()">ابدأ بسم الله</button>
+
+    <div id="codeSection" class="hidden">
+      <input type="password" id="accessCode" placeholder="أدخل الرمز السري">
+      <br>
+      <button onclick="checkCode()">دخول</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    ⚠️ نأمل قراءة العقد بعناية قبل الموافقة. <br>
+    التاريخ والوقت الآن: <span id="now"></span>
   </div>
 
   <script>
-    function checkPassword() {
-      const input = document.getElementById("adminPassword").value;
-      const correct = "1409";
-      if (input === correct) {
+    function showInput() {
+      document.getElementById('codeSection').classList.remove('hidden');
+    }
+
+    function checkCode() {
+      const code = document.getElementById('accessCode').value.trim();
+
+      // شفرات الدخول
+      const adminCode = "9999";
+      const clientCode = "1234";
+
+      if (code === adminCode) {
         window.location.href = "admin-panel.html";
+      } else if (code === clientCode) {
+        window.location.href = "step1.html";
       } else {
-        document.getElementById("error").innerText = "❌ الرمز غير صحيح، حاول مرة أخرى.";
+        alert("رمز غير صحيح. حاول مرة أخرى.");
       }
     }
+
+    // عرض الوقت والتاريخ
+    const now = new Date();
+    document.getElementById("now").innerText = now.toLocaleString('ar-EG');
   </script>
+
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة العقود - المسؤول</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #004d40;
+    }
+    input {
+      width: 100%;
+      max-width: 300px;
+      padding: 10px;
+      margin: 20px auto;
+      display: block;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #004d40;
+      color: white;
+    }
+    a.download {
+      background-color: #00796b;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>العقود الإلكترونية</h1>
+
+  <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الجوال أو التاريخ" onkeyup="filterTable()">
+
+  <table id="contractsTable">
+    <thead>
+      <tr>
+        <th>الاسم</th>
+        <th>رقم الجوال</th>
+        <th>تاريخ التوقيع</th>
+        <th>الحالة</th>
+        <th>تحميل PDF</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <!-- ستتم تعبئته تلقائياً -->
+    </tbody>
+  </table>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem('signedContracts')) || [];
+
+    const tbody = document.getElementById("tableBody");
+
+    data.forEach(contract => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${contract.name}</td>
+        <td>${contract.phone}</td>
+        <td>${contract.date}</td>
+        <td>${contract.status}</td>
+        <td><a href="${contract.pdfUrl}" class="download" download>تحميل</a></td>
+      `;
+
+      tbody.appendChild(row);
+    });
+
+    function filterTable() {
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.querySelectorAll("#tableBody tr");
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(search) ? "" : "none";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>بيانات الطرف الثاني</title>
   <style>
     body {
@@ -11,55 +11,108 @@
       flex-direction: column;
       align-items: center;
       padding-top: 50px;
-      margin: 0;
-      height: 100vh;
+      min-height: 100vh;
     }
     h2 {
       color: #33691e;
     }
     input {
-      padding: 12px;
-      margin: 12px 0;
-      width: 320px;
+      padding: 10px;
+      margin: 10px 0;
+      width: 300px;
       border: 2px solid #33691e;
       border-radius: 10px;
       font-size: 16px;
-      text-align: center;
     }
     button {
-      padding: 12px 30px;
+      padding: 10px 30px;
       background-color: #33691e;
       color: white;
       border: none;
       border-radius: 10px;
-      font-size: 18px;
+      font-size: 16px;
       margin-top: 20px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
     button:hover {
       background-color: #558b2f;
+    }
+
+    .legal-box {
+      background-color: #fff3f3;
+      border: 2px solid #e53935;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 40px auto 10px;
+      max-width: 90%;
+      text-align: right;
+      font-size: 15px;
+      color: #333;
+    }
+    .legal-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: #004d40;
+    }
+    .legal-box .warning {
+      color: #b71c1c;
+      font-weight: bold;
+      margin: 8px 0;
     }
   </style>
 </head>
 <body>
 
   <h2>الرجاء إدخال بيانات الطرف الثاني</h2>
-  <input type="text" id="name" placeholder="الاسم الكريم" required />
-  <input type="text" id="id" placeholder="رقم الهوية" required />
+  <input type="text" id="name" placeholder="الاسم الكريم" required>
+  <input type="text" id="id" placeholder="رقم الهوية" required>
+  <br>
   <button onclick="saveAndContinue()">التالي</button>
+
+  <div class="legal-box">
+    <h3>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</h3>
+    <p class="warning">
+      ⛔️ تنبيه قانوني: يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية، ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
+    </p>
+    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
+    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
+  </div>
 
   <script>
     function saveAndContinue() {
-      const name = document.getElementById('name').value.trim();
-      const id = document.getElementById('id').value.trim();
-      if (!name || !id) {
-        alert('يرجى تعبئة جميع الحقول.');
-        return;
+      const name = document.getElementById("name").value.trim();
+      const id = document.getElementById("id").value.trim();
+      if (name && id) {
+        localStorage.setItem("clientName", name);
+        localStorage.setItem("clientId", id);
+        window.location.href = "step3.html";
+      } else {
+        alert("يرجى تعبئة جميع الحقول.");
       }
-      localStorage.setItem('clientName', name);
-      localStorage.setItem('clientId', id);
-      window.location.href = 'step3.html';
+    }
+
+    const dtBox = document.getElementById("datetime");
+    const now = new Date();
+    const formatted = now.toLocaleString('ar-SA', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
+
+    const locBox = document.getElementById("location");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
+      }, () => {
+        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
+      });
+    } else {
+      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
     }
   </script>
 

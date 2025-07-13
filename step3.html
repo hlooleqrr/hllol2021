@@ -2,158 +2,84 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عقد التمويل</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تم إبرام العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
+      background: #f0fdf4;
       margin: 0;
-      background-color: #f7f7f7;
-      color: #222;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background: #004d40;
-      color: white;
-      padding: 20px;
+      padding: 0;
       text-align: center;
+      color: #2e7d32;
+    }
+    .box {
+      max-width: 700px;
+      margin: 100px auto;
+      background: white;
+      border: 3px solid #2e7d32;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #1b5e20;
+    }
+    .info {
+      font-size: 18px;
+      margin-top: 30px;
+      line-height: 2;
+    }
+    .logo {
       font-size: 22px;
       font-weight: bold;
+      margin-bottom: 10px;
+      color: #004d40;
     }
-    .contract-title {
-      background: #00796b;
+    .btn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      background-color: #004d40;
       color: white;
-      padding: 10px;
-      font-size: 20px;
-    }
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 15px;
-      background: white;
-      line-height: 2;
-      border-top: 3px solid #004d40;
-      border-bottom: 3px solid #004d40;
-    }
-    .buttons {
-      display: flex;
-      justify-content: space-around;
-      padding: 20px;
-    }
-    button {
-      padding: 12px 30px;
-      font-size: 16px;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-    }
-    .accept {
-      background-color: green;
-      color: white;
-    }
-    .reject {
-      background-color: red;
-      color: white;
-    }
-    footer {
-      background: #eeeeee;
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      border-top: 2px solid #004d40;
-    }
-    .highlight {
-      color: red;
-      font-weight: bold;
     }
   </style>
 </head>
-<body>
+<body onload="fillInfo()">
 
-<header>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</header>
-<div class="contract-title">عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</div>
+  <div class="box">
+    <div class="logo">شركة سرعة تملك العقار</div>
+    <h1>✅ تم إبرام العقد بنجاح</h1>
+    <p class="info">
+      تم تسجيل موافقتك على العقد إلكترونيًا.<br>
+      هذا التوقيع ملزم قانونًا وفقًا لنظام التعاملات الإلكترونية.<br>
+      <span id="datetime"></span><br>
+      <span id="location"></span>
+    </p>
 
-<main id="contractText">
-  <!-- يتم تعبئة نص العقد ديناميكياً -->
-</main>
+    <button class="btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+  </div>
 
-<div class="buttons">
-  <button class="accept" onclick="goNext(true)">موافق</button>
-  <button class="reject" onclick="goNext(false)">رفض</button>
-</div>
+  <script>
+    function fillInfo() {
+      const now = new Date();
+      document.getElementById("datetime").innerText = `التاريخ والوقت: ${now.toLocaleString('ar-EG')}`;
 
-<footer>
-  <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
-  <p class="highlight">هذا النظام محمي بموجب المادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية</p>
-  <p id="footerTime"></p>
-  <p id="location"></p>
-</footer>
-
-<script>
-  const name = localStorage.getItem("clientName") || ".........";
-  const id = localStorage.getItem("clientId") || ".........";
-  const mobile = localStorage.getItem("clientMobile") || ".........";
-  const birth = localStorage.getItem("clientBirth") || ".........";
-
-  const now = new Date();
-  const datetime = now.getFullYear() + "/" +
-                   String(now.getMonth() + 1).padStart(2, '0') + "/" +
-                   String(now.getDate()).padStart(2, '0') + " - " +
-                   String(now.getHours()).padStart(2, '0') + ":" +
-                   String(now.getMinutes()).padStart(2, '0') + ":" +
-                   String(now.getSeconds()).padStart(2, '0');
-  document.getElementById("footerTime").textContent = "التاريخ والوقت: " + datetime;
-
-  navigator.geolocation.getCurrentPosition(function(position) {
-    const lat = position.coords.latitude.toFixed(4);
-    const lon = position.coords.longitude.toFixed(4);
-    document.getElementById("location").textContent = "موقعك الحالي: (" + lat + ", " + lon + ")";
-  });
-
-  const contract = `
-    تم بعون الله وتوفيقه في هذا اليوم الموافق ${datetime}، الاتفاق بين:
-
-    الطرف الأول: شركة سرعة تملك العقار والحلول التمويلية المتكاملة.
-
-    والطرف الثاني: 
-    الاسم: ${name}
-    رقم الهوية: ${id}
-    رقم الجوال: ${mobile}
-    تاريخ الميلاد: ${birth}
-
-    ⸻
-
-    تمهيد:
-    حيث إن الطرف الأول مرخص له بمزاولة الوساطة العقارية وتقديم الحلول التمويلية، فقد تم الاتفاق على البنود التالية:
-
-    1. يلتزم الطرف الأول بمتابعة وإنهاء إجراءات التمويل العقاري للطرف الثاني.
-    2. يدفع الطرف الثاني للطرف الأول مبلغ 2.5% من قيمة العقار + 500 ريال رسوم عقد.
-    3. يقر الطرف الثاني أن جميع البيانات المقدمة صحيحة.
-    4. يتحمل الطرف الثاني مسؤولية تأخير أو رفض التمويل بسبب بيانات خاطئة.
-    5. لا يحق للطرف الثاني استرجاع المبلغ بعد توقيع هذا العقد.
-    6. في حال فسخ العقد من الطرف الثاني بعد البدء بالإجراءات، لا يُعاد المبلغ.
-    7. يتعاون الطرف الثاني مع الجهات التمويلية لتوفير المستندات اللازمة.
-    8. يتم التواصل بين الطرفين عبر الوسائل الإلكترونية المعتمدة.
-    9. يعتبر هذا العقد سندًا قانونيًا مُلزِمًا للطرفين.
-    10. يتم اعتماد التواقيع الإلكترونية كوسيلة موثوقة قانونًا.
-    11. تسري أنظمة المملكة العربية السعودية على هذا العقد.
-    12. عند الضغط على "موافق"، يُعتبر العقد مُبرمًا إلكترونيًا حسب المادة التاسعة من نظام التعاملات الإلكترونية.
-
-    والله الموفق.
-  `;
-
-  document.getElementById("contractText").innerText = contract;
-
-  function goNext(approved) {
-    if (approved) {
-      window.location.href = "confirm.html";
-    } else {
-      window.location.href = "rejected.html";
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude.toFixed(5);
+          const long = pos.coords.longitude.toFixed(5);
+          document.getElementById("location").innerText = `الموقع: خط العرض ${lat} - خط الطول ${long}`;
+        });
+      } else {
+        document.getElementById("location").innerText = "الموقع غير متوفر";
+      }
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>

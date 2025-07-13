@@ -5,120 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سرعة تملك العقار والحلول التمويلية المتكاملة</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background-color: #f5f5f5;
+      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
       color: #004d40;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 100vh;
+      height: 100vh;
       text-align: center;
     }
-    .container {
-      margin-top: 80px;
-    }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #004d40;
-    }
-    h2 {
-      font-size: 20px;
-      margin-bottom: 40px;
-      color: #00695c;
-    }
-    button {
+
+    header {
       background-color: #004d40;
       color: white;
+      padding: 30px 10px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    h2 {
+      font-size: 22px;
+      color: #00796b;
+      margin-bottom: 15px;
+    }
+
+    p {
       font-size: 18px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    button {
+      font-size: 18px;
+      background-color: #00796b;
+      color: white;
+      padding: 12px 24px;
       border: none;
-      padding: 15px 40px;
       border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #00796b;
+      background-color: #004d40;
     }
+
     footer {
-      margin-top: auto;
-      padding: 20px;
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
       font-size: 14px;
-      color: red;
-      border-top: 1px solid #ccc;
-    }
-    #location {
-      font-size: 13px;
-      color: #333;
-      margin-top: 10px;
+      border-top: 2px solid #f5c6cb;
     }
   </style>
 </head>
-<body onload="getLocation(); updateClock(); setInterval(updateClock, 1000)">
-  <div class="container">
-    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+<body>
+  <header>سرعة تملك العقار والحلول التمويلية المتكاملة</header>
+
+  <main>
     <h2>نرحب بك عميلنا العزيز</h2>
     <p>نبرم معك هذا العقد</p>
-    <br />
-<button onclick="window.location.href='contract_file_2.html'">ابدأ بسم الله</button>
-  </div>
+    <button onclick="location.href='step1.html'">ابدأ بسم الله</button>
+  </main>
 
   <footer>
-    <div style="color: red; font-weight: bold;">
-      تنبيه: يخضع هذا العقد لأحكام المادة التاسعة من نظام التعاملات الإلكترونية ويُعد ملزمًا للطرفين.
-    </div>
-    <div id="location"></div>
-    <div id="datetime"></div>
-    <div style="margin-top: 5px;">جميع الحقوق محفوظة © سرعة تملك العقار</div>
+    ⚠️ نؤكد أن جميع معلوماتك سرية، ويُمنع مشاركتها لأي جهة. <br>
+    🕒 <span id="datetime"></span>
   </footer>
 
   <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        document.getElementById('location').innerText = "لم يتم تحديد الموقع.";
-      }
-    }
-
-    function success(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-        .then(res => res.json())
-        .then(data => {
-          const address = data.address;
-          let text = '';
-          if (address.state) text += address.state + '، ';
-          if (address.city) text += address.city + '، ';
-          if (address.suburb) text += address.suburb;
-          document.getElementById('location').innerText = "الموقع: " + text;
-        })
-        .catch(() => {
-          document.getElementById('location').innerText = "لم يتم تحديد الموقع.";
-        });
-    }
-
-    function error() {
-      document.getElementById('location').innerText = "تم رفض إذن تحديد الموقع.";
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const options = {
-        timeZone: 'Asia/Riyadh',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        day: 'numeric',
-        month: 'numeric',
-        year: 'numeric'
-      };
-      const formatter = new Intl.DateTimeFormat('ar-EG', options);
-      document.getElementById('datetime').innerText = "التاريخ والوقت الآن: " + formatter.format(now);
-    }
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    document.getElementById("datetime").textContent = now.toLocaleString('ar-SA', options);
   </script>
 </body>
 </html>

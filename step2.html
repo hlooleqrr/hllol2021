@@ -1,122 +1,113 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>الخطوة 2 - الجوال وتاريخ الميلاد</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>البيانات الأساسية</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-      color: #004d40;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     .container {
-      max-width: 650px;
-      margin: auto;
-      background: white;
+      background: #fff;
       padding: 30px;
       border-radius: 12px;
-      border: 2px solid #004d40;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 500px;
     }
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      color: #004d40;
     }
     label {
-      font-weight: bold;
-      margin-top: 15px;
       display: block;
+      margin-top: 20px;
+      font-weight: bold;
     }
     input, select {
       width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      border: 2px solid #009688;
-      font-size: 1rem;
+      padding: 10px;
+      margin-top: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
     }
     button {
+      margin-top: 25px;
+      padding: 12px;
       width: 100%;
-      padding: 14px;
-      margin-top: 20px;
-      background: #00796b;
+      font-size: 18px;
+      background-color: #004d40;
       color: white;
-      font-size: 1.1rem;
-      font-weight: bold;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-    }
-    button:hover {
-      background: #004d40;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>الخطوة 2: معلومات التواصل</h2>
+    <h2>البيانات الأساسية</h2>
+    <form action="contract.html" method="GET" onsubmit="storeData();">
+      <label for="name">الاسم الكريم</label>
+      <input type="text" id="name" name="name" required>
 
-    <label>رقم الجوال:</label>
-    <input type="text" id="phone" placeholder="05xxxxxxxx" maxlength="10" />
+      <label for="id">رقم السجل المدني</label>
+      <input type="text" id="id" name="id" required>
 
-    <label>تاريخ الميلاد (ميلادي):</label>
-    <select id="day">
-      <option value="">اليوم</option>
-    </select>
-    <select id="month">
-      <option value="">الشهر</option>
-    </select>
-    <select id="year">
-      <option value="">السنة</option>
-    </select>
+      <label for="mobile">رقم الجوال</label>
+      <input type="tel" id="mobile" name="mobile" required>
 
-    <button id="continueBtn" disabled>متابعة العقد ➔</button>
+      <label for="birthDay">تاريخ الميلاد (ميلادي)</label>
+      <div style="display: flex; gap: 5px;">
+        <select id="day" required>
+          <option value="">اليوم</option>
+          ${[...Array(31).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
+        </select>
+        <select id="month" required>
+          <option value="">الشهر</option>
+          ${[...Array(12).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
+        </select>
+        <select id="year" required>
+          <option value="">السنة</option>
+          ${[...Array(80).keys()].map(i => {
+            const y = new Date().getFullYear() - i;
+            return `<option value="${y}">${y}</option>`;
+          }).join('')}
+        </select>
+      </div>
+
+      <label for="address">العنوان</label>
+      <input type="text" id="address" name="address">
+
+      <button type="submit">التالي</button>
+    </form>
   </div>
 
   <script>
-    const phoneInput = document.getElementById('phone');
-    const daySelect = document.getElementById('day');
-    const monthSelect = document.getElementById('month');
-    const yearSelect = document.getElementById('year');
-    const continueBtn = document.getElementById('continueBtn');
+    function storeData() {
+      const name = document.getElementById("name").value;
+      const id = document.getElementById("id").value;
+      const mobile = document.getElementById("mobile").value;
+      const address = document.getElementById("address").value;
+      const birthDay = document.getElementById("day").value;
+      const birthMonth = document.getElementById("month").value;
+      const birthYear = document.getElementById("year").value;
 
-    for (let i = 1; i <= 31; i++) {
-      daySelect.innerHTML += `<option value="${i}">${i}</option>`;
+      localStorage.setItem("name", name);
+      localStorage.setItem("id", id);
+      localStorage.setItem("mobile", mobile);
+      localStorage.setItem("address", address);
+      localStorage.setItem("birthdate", `${birthDay}/${birthMonth}/${birthYear}`);
     }
-    for (let i = 1; i <= 12; i++) {
-      monthSelect.innerHTML += `<option value="${i}">${i}</option>`;
-    }
-    for (let i = 1960; i <= new Date().getFullYear(); i++) {
-      yearSelect.innerHTML += `<option value="${i}">${i}</option>`;
-    }
-
-    function validate() {
-      const phone = phoneInput.value.trim();
-      const day = daySelect.value;
-      const month = monthSelect.value;
-      const year = yearSelect.value;
-      const isValid = /^05\d{8}$/.test(phone) && day && month && year;
-      continueBtn.disabled = !isValid;
-    }
-
-    phoneInput.addEventListener('input', validate);
-    daySelect.addEventListener('change', validate);
-    monthSelect.addEventListener('change', validate);
-    yearSelect.addEventListener('change', validate);
-
-    continueBtn.addEventListener('click', () => {
-      const step1 = JSON.parse(localStorage.getItem('client-step1') || '{}');
-      const client = {
-        ...step1,
-        phone: phoneInput.value.trim(),
-        birthdate: `${yearSelect.value}-${monthSelect.value.padStart(2, '0')}-${daySelect.value.padStart(2, '0')}`
-      };
-      localStorage.setItem('client-data', JSON.stringify(client));
-      window.location.href = "contract.html";
-    });
   </script>
 </body>
 </html>

@@ -1,98 +1,71 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>إدخال رقم الجوال وتاريخ الميلاد</title>
+  <meta charset="UTF-8" />
+  <title>موافقة أو رفض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e8f5e9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 50px;
+      background-color: #f1f8e9;
+      margin: 0;
+      padding: 30px;
+      color: #33691e;
+      line-height: 2;
+      text-align: center;
     }
-    h2 {
-      color: #1b5e20;
+    .message-box {
+      background-color: #f9fbe7;
+      border: 2px solid #8bc34a;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
     }
-    input, select {
-      padding: 10px;
-      margin: 10px 0;
-      width: 300px;
-      border: 2px solid #1b5e20;
-      border-radius: 10px;
-      font-size: 16px;
-    }
-    button {
-      padding: 10px 30px;
-      background-color: #1b5e20;
-      color: white;
+    .btn {
+      margin: 20px 15px 0 15px;
+      padding: 14px 40px;
+      font-size: 20px;
       border: none;
       border-radius: 10px;
-      font-size: 16px;
-      margin-top: 20px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #2e7d32;
+    .agree {
+      background-color: #388e3c;
+      color: white;
+    }
+    .refuse {
+      background-color: #d32f2f;
+      color: white;
+    }
+    .btn:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
 <body>
 
-  <h2>رقم الجوال وتاريخ الميلاد</h2>
-  <input type="text" id="phone" placeholder="رقم الجوال" required>
+  <div class="message-box">
+    <h2>هل توافق على جميع بنود العقد أعلاه؟</h2>
+    <p>بالضغط على "موافق" سيتم تسجيل موافقتك، وبالضغط على "رفض" سيتم اعتبار العقد مرفوضًا.</p>
 
-  <label for="day">تاريخ الميلاد (ميلادي):</label>
-  <select id="day"></select>
-  <select id="month"></select>
-  <select id="year"></select>
-
-  <button onclick="saveAndContinue()">التالي</button>
+    <button class="btn agree" onclick="handleDecision(true)">موافق ✅</button>
+    <button class="btn refuse" onclick="handleDecision(false)">رفض ❌</button>
+  </div>
 
   <script>
-    // تعبئة القوائم
-    const daySelect = document.getElementById("day");
-    const monthSelect = document.getElementById("month");
-    const yearSelect = document.getElementById("year");
-
-    for (let i = 1; i <= 31; i++) {
-      let option = document.createElement("option");
-      option.value = i;
-      option.textContent = i;
-      daySelect.appendChild(option);
-    }
-
-    const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
-    for (let i = 0; i < months.length; i++) {
-      let option = document.createElement("option");
-      option.value = i + 1;
-      option.textContent = months[i];
-      monthSelect.appendChild(option);
-    }
-
-    const thisYear = new Date().getFullYear();
-    for (let i = thisYear - 100; i <= thisYear; i++) {
-      let option = document.createElement("option");
-      option.value = i;
-      option.textContent = i;
-      yearSelect.appendChild(option);
-    }
-
-    function saveAndContinue() {
-      const phone = document.getElementById("phone").value.trim();
-      const day = document.getElementById("day").value;
-      const month = document.getElementById("month").value;
-      const year = document.getElementById("year").value;
-
-      if (phone && day && month && year) {
-        localStorage.setItem("clientPhone", phone);
-        localStorage.setItem("clientBirth", `${day}-${month}-${year}`);
-        window.location.href = "step6.html";
+    function handleDecision(agreed) {
+      if (agreed) {
+        const approvalTime = new Date().toLocaleString('ar-SA', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+          hour: 'numeric', minute: 'numeric', hour12: false
+        });
+        localStorage.setItem('approvalTime', approvalTime);
+        window.location.href = 'step6.html';
       } else {
-        alert("يرجى تعبئة جميع الحقول.");
+        window.location.href = 'rejected.html';
       }
     }
   </script>
+
 </body>
 </html>

@@ -1,82 +1,108 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الدخول للعميل</title>
+  <meta charset="UTF-8" />
+  <title>إدخال رقم الجوال وتاريخ الميلاد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #e8f5e9;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      padding-top: 50px;
       margin: 0;
-    }
-    .container {
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      border: 3px solid #004d40;
+      height: 100vh;
     }
     h2 {
-      color: #004d40;
-      margin-bottom: 20px;
+      color: #1b5e20;
     }
-    input[type="password"] {
+    input, select {
       padding: 12px;
-      width: 90%;
-      margin-bottom: 20px;
-      border: 2px solid #004d40;
+      margin: 12px 0;
+      width: 320px;
+      border: 2px solid #1b5e20;
       border-radius: 10px;
-      font-size: 18px;
+      font-size: 16px;
       text-align: center;
+    }
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+      color: #1b5e20;
     }
     button {
       padding: 12px 30px;
-      background-color: #004d40;
+      background-color: #1b5e20;
       color: white;
       border: none;
       border-radius: 10px;
       font-size: 18px;
+      margin-top: 25px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #00796b;
-    }
-    .error {
-      color: red;
-      margin-top: 15px;
-      display: none;
+      background-color: #2e7d32;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>أدخل الرمز المخصص للدخول</h2>
-    <input type="password" id="code" placeholder="مثال: 00221">
-    <br>
-    <button onclick="checkCode()">التالي</button>
-    <div class="error" id="error">الرمز غير صحيح، حاول مرة أخرى.</div>
-  </div>
+
+  <h2>رقم الجوال وتاريخ الميلاد</h2>
+  <input type="text" id="phone" placeholder="رقم الجوال" required />
+
+  <label for="day">تاريخ الميلاد (ميلادي):</label>
+  <select id="day"></select>
+  <select id="month"></select>
+  <select id="year"></select>
+
+  <button onclick="saveAndContinue()">التالي</button>
 
   <script>
-    function checkCode() {
-      const code = document.getElementById("code").value.trim();
-      const adminCode = "11qqQQ@2032";
-      const userCode = "00221";
-      if (code === userCode) {
-        window.location.href = "step4.html";
-      } else if (code === adminCode) {
-        window.location.href = "admin.html";
-      } else {
-        document.getElementById("error").style.display = "block";
+    const daySelect = document.getElementById('day');
+    const monthSelect = document.getElementById('month');
+    const yearSelect = document.getElementById('year');
+
+    for(let i=1; i<=31; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      daySelect.appendChild(option);
+    }
+
+    const months = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+    months.forEach((m, idx) => {
+      const option = document.createElement('option');
+      option.value = idx + 1;
+      option.textContent = m;
+      monthSelect.appendChild(option);
+    });
+
+    const thisYear = new Date().getFullYear();
+    for(let y=thisYear-100; y<=thisYear; y++) {
+      const option = document.createElement('option');
+      option.value = y;
+      option.textContent = y;
+      yearSelect.appendChild(option);
+    }
+
+    function saveAndContinue() {
+      const phone = document.getElementById('phone').value.trim();
+      const day = daySelect.value;
+      const month = monthSelect.value;
+      const year = yearSelect.value;
+
+      if (!phone || !day || !month || !year) {
+        alert('يرجى تعبئة جميع الحقول.');
+        return;
       }
+      localStorage.setItem('clientPhone', phone);
+      localStorage.setItem('clientBirth', `${day}-${month}-${year}`);
+      window.location.href = 'step4.html';
     }
   </script>
+
 </body>
 </html>

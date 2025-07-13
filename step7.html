@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>موافقة أو رفض العقد</title>
   <style>
     body {
@@ -22,8 +22,8 @@
       margin: auto;
     }
     .btn {
-      margin: 20px 10px;
-      padding: 14px 32px;
+      margin: 20px 15px 0 15px;
+      padding: 14px 40px;
       font-size: 20px;
       border: none;
       border-radius: 10px;
@@ -55,9 +55,14 @@
   <script>
     function handleDecision(agreed) {
       if (agreed) {
-        window.location.href = "step8.html";
+        const approvalTime = new Date().toLocaleString('ar-SA', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+          hour: 'numeric', minute: 'numeric', hour12: false
+        });
+        localStorage.setItem('approvalTime', approvalTime);
+        window.location.href = 'step8.html';
       } else {
-        window.location.href = "rejected.html";
+        window.location.href = 'rejected.html';
       }
     }
   </script>

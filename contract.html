@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عرض العقد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 20px;
+      color: #004d40;
+    }
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background: #fff;
+      border: 2px solid #004d40;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .contract-text {
+      white-space: pre-wrap;
+      padding: 20px;
+      background: #f6fdfd;
+      border: 2px solid #009688;
+      border-radius: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-approve { background-color: #2e7d32; color: white; }
+    .btn-reject { background-color: #c62828; color: white; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>عرض عقد إنهاء إجراءات التمويل</h1>
+  <div class="contract-text" id="contractContent">جارٍ التحميل...</div>
+  <button class="btn-approve" onclick="submitResponse('موافقة')">✅ أوافق على العقد</button>
+  <button class="btn-reject" onclick="submitResponse('رفض')">❌ أرفض العقد</button>
+</div>
+<script>
+  const data = JSON.parse(localStorage.getItem('contract-client') || '{}');
+  if (!data.name || !data.id) location.href = 'index.html';
+  const now = new Date();
+  const arabicDate = now.toLocaleString('ar-SA', { hour12: false });
+  const contractContent = `
+بسم الله الرحمن الرحيم
+
+المملكة العربية السعودية
+الوساطة العقارية والتسويق - ترخيص: 1100042624 - الرياض
+
+عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
+
+تم بعون الله وتوفيقه في: ${arabicDate}
+
+الطرف الأول:
+شركة الوساطة العقارية والتسويق
+ويمثلها: الأستاذ نايف المطيري - مدير الإدارة
+
+الطرف الثاني:
+الاسم: ${data.name}
+رقم الهوية: ${data.id}
+العنوان: ${data.address}
+
+التمهيد:
+حيث إن الطرف الأول مرخص في الوساطة العقارية، ويقوم بتسهيل التمويلات.
+
+البنود:
+1. التمهيد جزء لا يتجزأ من العقد.
+2. يقوم الطرف الأول بإنهاء جميع الإجراءات التمويلية.
+3. يدفع الطرف الثاني 2.5% من قيمة العقار + 500 ريال رسوم.
+4. إن فشلت الصفقة لأسباب خارج الطرف الثاني، تُعاد الرسوم المستحقة.
+5. يلتزم الطرف الثاني بتقديم بيانات صحيحة.
+6. يمنع التواصل مع البنك مباشرة بدون علم الطرف الأول.
+7. للطرف الأول الحق في تفويض غيره.
+8. إذا انسحب الطرف الثاني، لا تُسترد الرسوم.
+9. مدة العقد 60 يومًا من توقيعه.
+10. القضاء المختص: محاكم الرياض.
+11. يُقر الطرف الثاني بالموافقة الكاملة.
+12. العقد ملزم بالتوقيع الإلكتروني.
+
+تمت الموافقة من الطرف الأول بتاريخ أعلاه.
+  `;
+  document.getElementById('contractContent').textContent = contractContent;
+  function submitResponse(type) {
+    data.response = type;
+    data.timestamp = new Date().toLocaleString('ar-SA', { hour12: false });
+    localStorage.setItem('contract-client', JSON.stringify(data));
+    location.href = type === 'موافقة' ? 'done.html' : 'rejected.html';
+  }
+</script>
+</body>
+</html>

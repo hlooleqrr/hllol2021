@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تأكيد الموافقة على العقد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .confirm-box {
+      background: white;
+      border: 3px solid #004d40;
+      border-radius: 12px;
+      padding: 30px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #004d40;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="confirm-box">
+    <h2>تأكيد التوقيع</h2>
+    <input type="text" id="verifyId" placeholder="أدخل رقم الهوية">
+    <input type="text" id="verifyWord" placeholder="اكتب كلمة (موافق)">
+    <button onclick="verifySignature()">إبرام العقد</button>
+    <div id="error" class="error">يرجى التأكد من صحة البيانات</div>
+  </div>
+
+  <script>
+    function verifySignature() {
+      const idInput = document.getElementById("verifyId").value.trim();
+      const wordInput = document.getElementById("verifyWord").value.trim();
+
+      const originalId = localStorage.getItem("id");
+
+      if (idInput === originalId && wordInput === "موافق") {
+        window.location.href = "done.html";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

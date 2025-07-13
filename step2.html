@@ -1,136 +1,115 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>إدخال البيانات</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f9f9f9;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    main {
-      flex: 1;
-      padding: 30px 20px;
-      text-align: center;
-    }
-    h1 {
+      padding: 30px;
       color: #004d40;
-      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 5px;
     }
     input, select {
-      width: 90%;
-      max-width: 400px;
-      padding: 12px;
-      margin: 10px 0;
+      width: 100%;
+      padding: 10px;
       font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      text-align: center;
+      margin-bottom: 15px;
     }
     button {
       padding: 12px 30px;
       font-size: 18px;
-      background-color: #004d40;
+      background-color: #00796b;
       color: white;
       border: none;
       border-radius: 8px;
-      margin-top: 20px;
       cursor: pointer;
-    }
-    footer {
-      background: #eeeeee;
-      text-align: center;
-      padding: 20px 10px;
-      font-size: 14px;
-      border-top: 2px solid #004d40;
-    }
-    .highlight {
-      color: red;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-<main>
-  <h1>مرحباً بك عميلنا الكريم</h1>
-  <p>نرجو تعبئة بياناتك بدقة</p>
+<h2>أدخل معلوماتك:</h2>
 
-  <input type="text" id="clientName" placeholder="الاسم الكريم" required />
+<label>اسمك الكريم:</label>
+<input type="text" id="clientName" required>
 
-  <input type="text" id="clientId" placeholder="رقم الهوية (10 أرقام)" maxlength="10" oninput="validateId(this)" />
+<label>رقم الهوية (10 أرقام):</label>
+<input type="text" id="clientId" maxlength="10" pattern="\d{10}" required>
 
-  <input type="text" id="clientMobile" placeholder="رقم الجوال (يبدا بـ 05)" maxlength="10" oninput="validateMobile(this)" />
+<label>رقم الجوال (يبدأ بـ 05):</label>
+<input type="text" id="clientMobile" maxlength="10" pattern="05\d{8}" required>
 
-  <select id="clientBirth">
-    <option value="">اختر تاريخ الميلاد (هجري)</option>
-    <option>1410/07/01</option>
-    <option>1412/07/01</option>
-    <option>1415/07/01</option>
-    <option>1418/07/01</option>
-    <option>1420/07/01</option>
-    <option>1425/07/01</option>
-    <option>1430/07/01</option>
-    <option>1435/07/01</option>
-    <option>1440/07/01</option>
-    <option>1445/07/01</option>
+<label>تاريخ الميلاد (هجري):</label>
+<div style="display: flex; gap: 10px;">
+  <select id="birthDay">
+    <option value="">اليوم</option>
+    <script>
+      for (let i = 1; i <= 30; i++) {
+        document.write(`<option value="${i.toString().padStart(2,'0')}">${i}</option>`);
+      }
+    </script>
   </select>
 
-  <br />
-  <button onclick="saveData()">التالي</button>
-</main>
+  <select id="birthMonth">
+    <option value="">الشهر</option>
+    <option value="01">محرم</option>
+    <option value="02">صفر</option>
+    <option value="03">ربيع أول</option>
+    <option value="04">ربيع ثاني</option>
+    <option value="05">جمادى الأولى</option>
+    <option value="06">جمادى الآخرة</option>
+    <option value="07">رجب</option>
+    <option value="08">شعبان</option>
+    <option value="09">رمضان</option>
+    <option value="10">شوال</option>
+    <option value="11">ذو القعدة</option>
+    <option value="12">ذو الحجة</option>
+  </select>
 
-<footer>
-  <p><strong>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</strong></p>
-  <p class="highlight">هذا النظام محمي بموجب المادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية</p>
-  <p id="datetime"></p>
-</footer>
+  <select id="birthYear">
+    <option value="">السنة</option>
+    <script>
+      for (let y = 1445; y >= 1370; y--) {
+        document.write(`<option value="${y}">${y}</option>`);
+      }
+    </script>
+  </select>
+</div>
+
+<button onclick="saveData()">التالي</button>
 
 <script>
-  function validateId(input) {
-    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
-  }
-
-  function validateMobile(input) {
-    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 10);
-    if (!input.value.startsWith("05")) {
-      input.setCustomValidity("رقم الجوال يجب أن يبدأ بـ 05");
-    } else {
-      input.setCustomValidity("");
-    }
-  }
-
   function saveData() {
     const name = document.getElementById("clientName").value.trim();
     const id = document.getElementById("clientId").value.trim();
     const mobile = document.getElementById("clientMobile").value.trim();
-    const birth = document.getElementById("clientBirth").value;
+    const year = document.getElementById("birthYear").value;
+    const month = document.getElementById("birthMonth").value;
+    const day = document.getElementById("birthDay").value;
 
-    if (name && id.length === 10 && mobile.length === 10 && mobile.startsWith("05") && birth) {
-      localStorage.setItem("clientName", name);
-      localStorage.setItem("clientId", id);
-      localStorage.setItem("clientMobile", mobile);
-      localStorage.setItem("clientBirth", birth);
-      window.location.href = "step3.html";
-    } else {
+    if (!name || id.length !== 10 || !id.match(/^\d+$/) ||
+        !mobile.startsWith("05") || mobile.length !== 10 ||
+        !year || !month || !day) {
       alert("يرجى تعبئة جميع الحقول بشكل صحيح.");
+      return;
     }
-  }
 
-  // عرض التاريخ والوقت
-  const now = new Date();
-  const formattedDateTime = now.getFullYear() + "/" +
-    String(now.getMonth() + 1).padStart(2, '0') + "/" +
-    String(now.getDate()).padStart(2, '0') + " - " +
-    String(now.getHours()).padStart(2, '0') + ":" +
-    String(now.getMinutes()).padStart(2, '0') + ":" +
-    String(now.getSeconds()).padStart(2, '0');
-  document.getElementById("datetime").textContent = "التاريخ والوقت: " + formattedDateTime;
+    localStorage.setItem("clientName", name);
+    localStorage.setItem("clientId", id);
+    localStorage.setItem("clientMobile", mobile);
+    localStorage.setItem("birthYear", year);
+    localStorage.setItem("birthMonth", month);
+    localStorage.setItem("birthDay", day);
+
+    window.location.href = "step3.html";
+  }
 </script>
 
 </body>

@@ -22,14 +22,8 @@
       margin: auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    h1 {
+    h1, h2 {
       text-align: center;
-      font-size: 24px;
-      color: #00332f;
-    }
-    h2 {
-      text-align: center;
-      font-size: 20px;
       margin-bottom: 10px;
     }
     .client-info, .contract {
@@ -74,13 +68,8 @@
     <h1>شركة سرعة تملك العقار</h1>
     <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
 
-    <div class="client-info">
-      <strong>الاسم:</strong> محمد الأحمد<br>
-      <strong>رقم الهوية:</strong> 1029384756<br>
-      <strong>رقم الجوال:</strong> 0555555555<br>
-      <strong>تاريخ الميلاد (هجري):</strong> 1412/07/01<br>
-      <strong>الموقع الجغرافي:</strong> خط العرض 24.774265، خط الطول 46.738586<br>
-      <strong>تاريخ الإبرام:</strong> 2025/07/13 - 12:38:52
+    <div class="client-info" id="clientData">
+      <!-- سيتم ملؤها عبر JavaScript -->
     </div>
 
     <div class="contract">
@@ -111,6 +100,23 @@
   <button onclick="downloadPDF()">تحميل العقد بصيغة PDF</button>
 
   <script>
+    // تعبئة بيانات العميل من localStorage
+    const name = localStorage.getItem('client_name') || '—';
+    const id = localStorage.getItem('client_id') || '—';
+    const phone = localStorage.getItem('client_phone') || '—';
+    const birth = localStorage.getItem('client_birth') || '—';
+    const location = localStorage.getItem('client_location') || '—';
+    const now = new Date().toLocaleString('ar-EG');
+
+    document.getElementById("clientData").innerHTML = `
+      <strong>الاسم:</strong> ${name}<br>
+      <strong>رقم الهوية:</strong> ${id}<br>
+      <strong>رقم الجوال:</strong> ${phone}<br>
+      <strong>تاريخ الميلاد (هجري):</strong> ${birth}<br>
+      <strong>الموقع الجغرافي:</strong> ${location}<br>
+      <strong>تاريخ الإبرام:</strong> ${now}
+    `;
+
     async function downloadPDF() {
       const { jsPDF } = window.jspdf;
       const content = document.getElementById('pdfContent');
@@ -120,7 +126,6 @@
       const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('contract.pdf');
     }

@@ -1,161 +1,66 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>شركة سرعة تملك العقار</title>
+  <meta charset="UTF-8">
+  <title>سرعة تملك العقار - العقد الإلكتروني</title>
   <style>
     body {
+      font-family: 'Tajawal', sans-serif;
       margin: 0;
       padding: 0;
-      font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+      background: #f7f9f9;
       color: #004d40;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       text-align: center;
     }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    header {
       background-color: #004d40;
-      padding: 15px 10px;
-      border-bottom: 4px solid #00796b;
-    }
-
-    .header img {
-      height: 50px;
-      margin-left: 15px;
-    }
-
-    .header span {
-      font-size: 22px;
-      font-weight: bold;
       color: white;
+      padding: 25px 10px;
+      font-size: 26px;
+      font-weight: bold;
     }
-
-    .main-title {
-      font-size: 22px;
+    .title {
+      font-size: 20px;
+      margin-top: 10px;
       color: #00796b;
-      margin: 25px 0 10px;
     }
-
-    .welcome-text {
-      font-size: 18px;
-      color: #333;
-      margin-bottom: 30px;
+    .content {
+      flex: 1;
+      padding: 30px;
     }
-
     button {
-      font-size: 18px;
       background-color: #00796b;
       color: white;
-      padding: 12px 24px;
+      padding: 15px 35px;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      margin-top: 40px;
     }
-
     button:hover {
-      background-color: #004d40;
+      background-color: #005b50;
     }
-
-    .legal-box {
-      background-color: #fff8f8;
-      border: 2px solid #d32f2f;
-      border-radius: 12px;
-      padding: 18px;
-      margin: 40px auto 20px;
-      max-width: 92%;
-      text-align: right;
-      font-size: 15px;
-      color: #444;
-    }
-
-    .legal-box h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #b71c1c;
-    }
-
-    .legal-box p {
-      margin: 5px 0;
-      line-height: 1.7;
-    }
-
-    footer {
-      background-color: #f8d7da;
-      color: #721c24;
-      padding: 10px;
-      font-size: 14px;
-      border-top: 2px solid #f5c6cb;
-    }
-
-    main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .footer {
       padding: 20px;
+      font-size: 14px;
+      background: #eee;
+      border-top: 2px solid #ccc;
+      margin-top: 30px;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      margin-top: 15px;
     }
   </style>
 </head>
-<body>
+<body onload="loadInfo()">
 
-  <div class="header">
-    <img src="logo.png" alt="شعار الشركة">
-    <span>شركة سرعة تملك العقار والحلول التمويلية المتكاملة</span>
-  </div>
+  <header>شركة سرعة تملك العقار</header>
+  <div class="title">الحلول التمويلية المتكاملة</div>
 
-  <main>
-    <h1 class="main-title">عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</h1>
-    <p class="welcome-text">نرحب بك عميلنا العزيز</p>
-    <button onclick="location.href='step1.html'">ابدأ بسم الله</button>
-  </main>
-
-  <div class="legal-box">
-    <h3>🚨 تنبيه قانوني</h3>
-    <p>
-      يخضع هذا العقد للمادة التاسعة من نظام التعاملات الإلكترونية في المملكة العربية السعودية،
-      ويُعد التفاعل مع هذا الموقع بمثابة موافقة صريحة على كافة البنود، وله حجية نظامية كاملة في الإثبات أمام الجهات الرسمية والقضائية.
-    </p>
-    <p id="location">📍 موقع الدخول: يتم تحديده...</p>
-    <p id="datetime">🕒 التاريخ والوقت: جاري التحميل...</p>
-  </div>
-
-  <footer>
-    ⚠️ نؤكد أن جميع معلوماتك سرية، ويُمنع مشاركتها لأي جهة.
-  </footer>
-
-  <script>
-    const dtBox = document.getElementById("datetime");
-    const now = new Date();
-    const formatted = now.toLocaleString('ar-SA', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    });
-    dtBox.textContent = "🕒 التاريخ والوقت: " + formatted;
-
-    const locBox = document.getElementById("location");
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        locBox.textContent = `📍 موقع الدخول: خط العرض ${pos.coords.latitude.toFixed(4)}, خط الطول ${pos.coords.longitude.toFixed(4)}`;
-      }, () => {
-        locBox.textContent = "📍 موقع الدخول: غير محدد (تم رفض الوصول للموقع)";
-      });
-    } else {
-      locBox.textContent = "📍 موقع الدخول: غير مدعوم في هذا المتصفح";
-    }
-  </script>
-
-</body>
-</html>
+ 

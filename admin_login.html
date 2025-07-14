@@ -1,64 +1,76 @@
+<!-- client_login.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تسجيل دخول المشرف</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بوابة الدخول</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f0f0f0;
+      background: #f1f1f1;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
-    .login-box {
-      background-color: white;
+    .box {
+      background: white;
       padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       text-align: center;
+      width: 90%;
+      max-width: 400px;
     }
-    input {
+    h2 {
+      margin-bottom: 30px;
+      color: #004d40;
+    }
+    input[type="number"] {
+      padding: 10px;
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
       font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
     button {
-      padding: 12px 25px;
-      background-color: #004d40;
+      background: #00796b;
       color: white;
       border: none;
-      border-radius: 8px;
+      padding: 12px 25px;
       font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
     }
-    .error {
-      color: red;
-      margin-top: 10px;
+    button:hover {
+      background: #005f56;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>دخول المشرف</h2>
-    <input type="text" id="username" placeholder="اسم المستخدم">
-    <input type="password" id="password" placeholder="كلمة المرور">
-    <button onclick="login()">دخول</button>
-    <div class="error" id="error-msg"></div>
+  <div class="box">
+    <h2>مرحباً بك، الرجاء إدخال الرقم المخصص لك</h2>
+    <input type="number" id="userCode" placeholder="أدخل الرقم هنا" />
+    <button onclick="start()">ابدأ</button>
   </div>
 
   <script>
-    function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+    function start() {
+      const code = document.getElementById("userCode").value.trim();
+      if (!code) {
+        alert("يرجى إدخال الرقم أولاً");
+        return;
+      }
 
-      // اسم المستخدم وكلمة المرور الصحيحة
-      if (username === "admin" && password === "1234") {
-        window.location.href = "admin_panel.html";
+      if (code === "998877") {
+        window.location.href = "admin_login.html";
+      } else if (code === "123456") {
+        window.location.href = "client_redirect.html";
       } else {
-        document.getElementById("error-msg").innerText = "اسم المستخدم أو كلمة المرور غير صحيحة";
+        alert("عذرًا، الرقم المدخل غير مصرح به");
       }
     }
   </script>

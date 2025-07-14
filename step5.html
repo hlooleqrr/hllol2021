@@ -1,162 +1,103 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مشاركة الموقع</title>
+  <meta charset="UTF-8">
+  <title>الخطوة 5 - تحديد الموقع</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      border: 2px solid #004d40;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      flex: 1;
-    }
-
-    .company-box {
-      background: #e0f2f1;
-      padding: 15px;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 10px;
-      border: 2px solid #00796b;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #004d40;
-    }
-
-    .btns {
+      background-color: #f4f6f7;
+      margin: 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin: 20px 0;
+      align-items: center;
+      height: 100vh;
+      color: #004d40;
     }
-
-    button {
-      background-color: #00796b;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
     }
-
-    #manualAddress {
-      display: none;
-      margin-top: 20px;
-    }
-
-    textarea {
-      width: 100%;
-      padding: 15px;
+    button, input {
       font-size: 16px;
+      padding: 12px 20px;
+      margin-top: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
     }
-
-    .footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 20px 10px;
-      background: #eee;
-      color: #333;
+    button {
+      background-color: #00796b;
+      color: white;
+      cursor: pointer;
+      width: 100%;
     }
-
-    .alert {
-      background-color: #ffebee;
-      color: #c62828;
-      padding: 10px;
-      border: 1px solid #c62828;
-      border-radius: 8px;
-      text-align: center;
-      margin-top: 20px;
+    button:hover {
+      background-color: #004d40;
+    }
+    #manualAddress {
+      width: 100%;
+      display: none;
+    }
+    .note {
+      margin-top: 10px;
+      color: red;
+      font-weight: bold;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <div class="company-box">💼 شركة سرعة تملك العقار</div>
+    <h2>هل تسمح بمشاركة موقعك الجغرافي؟</h2>
+    <button onclick="getLocation()">نعم، شارك موقعي</button>
+    <button onclick="refuseLocation()">لا، أُفضل إدخال العنوان يدويًا</button>
 
-    <h2>هل توافق على مشاركة موقعك الحالي؟</h2>
+    <input type="text" id="manualAddress" placeholder="اكتب عنوانك هنا" />
 
-    <div class="btns">
-      <button onclick="agreeLocation()">أوافق</button>
-      <button onclick="refuseLocation()">لا أوافق</button>
-    </div>
-
-    <div id="manualAddress">
-      <h3>الرجاء إدخال عنوانك المعتمد:</h3>
-      <textarea id="addressText" rows="4" placeholder="مثال: الرياض - حي النزهة - شارع عمر بن الخطاب"></textarea>
-      <br>
-      <button onclick="saveManualAddress()">التالي</button>
-    </div>
-
-    <div class="alert">
-      ⚠️ هذا الموقع يخضع لنظام المعاملات الإلكترونية - المادة التاسعة: يُعد هذا الإدخال ملزمًا إلكترونيًا.
-    </div>
-  </div>
-
-  <div class="footer" id="footerInfo">
-    📅 جاري تحميل الوقت والموقع...
+    <div class="note" id="noteMessage"></div>
   </div>
 
   <script>
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('ar-EG');
-    const timeStr = now.toLocaleTimeString('ar-EG');
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        document.getElementById("noteMessage").textContent = "المتصفح لا يدعم تحديد الموقع";
+      }
+    }
 
-    function agreeLocation() {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const coords = `${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
-          localStorage.setItem("location", coords);
-          localStorage.setItem("locationNote", `📍 ${coords}`);
-          window.location.href = "step6.html";
-        },
-        () => {
-          alert("لم نتمكن من تحديد الموقع، الرجاء إدخاله يدويًا.");
-          document.getElementById("manualAddress").style.display = "block";
-        }
-      );
+    function success(position) {
+      const coords = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+      localStorage.setItem("client_location", coords);
+      localStorage.setItem("location_status", "مشاركة الموقع");
+      window.location.href = "step6.html";
+    }
+
+    function error() {
+      document.getElementById("noteMessage").textContent = "حدث خطأ أثناء تحديد الموقع. يُرجى إدخال العنوان يدويًا.";
+      document.getElementById("manualAddress").style.display = "block";
     }
 
     function refuseLocation() {
       document.getElementById("manualAddress").style.display = "block";
+      document.getElementById("noteMessage").textContent = "تم رفض مشاركة الموقع، يُرجى إدخال العنوان يدويًا";
     }
 
-    function saveManualAddress() {
-      const address = document.getElementById("addressText").value.trim();
-      if (address.length < 5) {
-        alert("يرجى إدخال عنوان واضح.");
-        return;
+    document.getElementById("manualAddress").addEventListener("blur", function () {
+      const address = this.value;
+      if (address.length > 3) {
+        localStorage.setItem("client_location", address);
+        localStorage.setItem("location_status", "تم إدخال العنوان يدويًا");
+        window.location.href = "step6.html";
       }
-      localStorage.setItem("location", address);
-      localStorage.setItem("locationNote", `❌ رفض مشاركة الموقع - تم إدخال العنوان يدويًا: ${address}`);
-      window.location.href = "step6.html";
-    }
-
-    // العرض في الفوتر
-    const savedLocation = localStorage.getItem("locationNote") || "📍 لم يتم إدخال الموقع بعد";
-    document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${savedLocation}`;
+    });
   </script>
-
 </body>
 </html>

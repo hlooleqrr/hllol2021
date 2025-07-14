@@ -2,134 +2,65 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>لوحة المشرف - سرعة تملك العقار</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <title>تسجيل دخول المشرف</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 30px;
-      color: #004d40;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .container {
-      background: white;
-      padding: 30px;
+    .login-box {
+      background-color: white;
+      padding: 40px;
       border-radius: 12px;
-      border: 2px solid #004d40;
-      max-width: 800px;
-      margin: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1, h2 {
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
       text-align: center;
-      margin-bottom: 10px;
     }
-    .client-info, .contract {
-      text-align: right;
-      line-height: 2;
-      margin-top: 20px;
-    }
-    .alert {
-      background: #ffebee;
-      border-right: 6px solid red;
-      padding: 10px 15px;
-      margin-top: 20px;
-      font-weight: bold;
-      color: #c62828;
-    }
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #555;
-      border-top: 1px dashed #aaa;
-      padding-top: 15px;
-      text-align: center;
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
     }
     button {
-      margin-top: 30px;
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #00796b;
+      padding: 12px 25px;
+      background-color: #004d40;
       color: white;
       border: none;
       border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      display: block;
-      margin-right: auto;
-      margin-left: auto;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-
-  <div class="container" id="pdfContent">
-    <h1>شركة سرعة تملك العقار</h1>
-    <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
-
-    <div class="client-info" id="clientData">
-      <!-- سيتم ملؤها عبر JavaScript -->
-    </div>
-
-    <div class="contract">
-      <p><strong>البند 1:</strong> يلتزم الطرف الأول بمتابعة وإنهاء إجراءات التمويل العقاري للطرف الثاني لدى الجهات التمويلية.</p>
-      <p><strong>البند 2:</strong> يلتزم الطرف الثاني بدفع مبلغ 2.5% من قيمة العقار + 500 ريال رسوم إدارية عند توقيع العقد.</p>
-      <p><strong>البند 3:</strong> لا يُلزم الطرف الأول بإتمام التمويل خلال فترة زمنية محددة، وإنما بحسب توفر العروض.</p>
-      <p><strong>البند 4:</strong> يلتزم الطرف الثاني بالتعاون الكامل وتقديم الأوراق والمستندات المطلوبة.</p>
-      <p><strong>البند 5:</strong> لا يحق للطرف الثاني المطالبة بالمبلغ في حال رفض التمويل بسبب التزامات أو سمة أو أسباب خارجية.</p>
-      <p><strong>البند 6:</strong> يتم استحقاق المبلغ فور صدور العرض التمويلي أو تحويل الدفعة الأولى من البنك.</p>
-      <p><strong>البند 7:</strong> الطرف الأول غير مسؤول عن قيمة العقار أو حالته الإنشائية.</p>
-      <p><strong>البند 8:</strong> في حال انسحاب الطرف الثاني دون سبب مشروع، يُلزم بكامل الرسوم المتفق عليها.</p>
-      <p><strong>البند 9:</strong> العقد ملزم للطرفين إلكترونيًا بمجرد الدخول وقبوله عبر الموقع.</p>
-      <p><strong>البند 10:</strong> يخضع هذا العقد لأنظمة المملكة العربية السعودية.</p>
-      <p><strong>البند 11:</strong> يتم حفظ نسخة من العقد إلكترونيًا في نظام الشركة.</p>
-      <p><strong>البند 12:</strong> يعتبر هذا العقد ساريًا لمدة 60 يومًا من تاريخ توقيعه.</p>
-    </div>
-
-    <div class="alert">
-      تنبيه: بموجب المادة التاسعة من نظام التعاملات الإلكترونية، يعتبر هذا العقد موثقًا إلكترونيًا ويأخذ حكم العقود المكتوبة الرسمية.
-    </div>
-
-    <div class="footer">
-      سرعة تملك العقار © جميع الحقوق محفوظة<br>
-      www.hlooleqrr.com | الرياض | هاتف: 0500000000
-    </div>
+  <div class="login-box">
+    <h2>دخول المشرف</h2>
+    <input type="text" id="username" placeholder="اسم المستخدم">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    <button onclick="login()">دخول</button>
+    <div class="error" id="error-msg"></div>
   </div>
 
-  <button onclick="downloadPDF()">تحميل العقد بصيغة PDF</button>
-
   <script>
-    // تعبئة بيانات العميل من localStorage
-    const name = localStorage.getItem('client_name') || '—';
-    const id = localStorage.getItem('client_id') || '—';
-    const phone = localStorage.getItem('client_phone') || '—';
-    const birth = localStorage.getItem('client_birth') || '—';
-    const location = localStorage.getItem('client_location') || '—';
-    const now = new Date().toLocaleString('ar-EG');
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    document.getElementById("clientData").innerHTML = `
-      <strong>الاسم:</strong> ${name}<br>
-      <strong>رقم الهوية:</strong> ${id}<br>
-      <strong>رقم الجوال:</strong> ${phone}<br>
-      <strong>تاريخ الميلاد (هجري):</strong> ${birth}<br>
-      <strong>الموقع الجغرافي:</strong> ${location}<br>
-      <strong>تاريخ الإبرام:</strong> ${now}
-    `;
-
-    async function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const content = document.getElementById('pdfContent');
-      const canvas = await html2canvas(content);
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgProps = pdf.getImageProperties(imgData);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save('contract.pdf');
+      // اسم المستخدم وكلمة المرور الصحيحة
+      if (username === "admin" && password === "1234") {
+        window.location.href = "admin_panel.html";
+      } else {
+        document.getElementById("error-msg").innerText = "اسم المستخدم أو كلمة المرور غير صحيحة";
+      }
     }
   </script>
-
 </body>
 </html>

@@ -3,140 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>عرض العقد</title>
+  <title>رقم الهوية</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Tajawal', sans-serif;
       background: #f9f9f9;
-      color: #004d40;
-      margin: 0;
-      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 800px;
-      margin: 30px auto;
-      background: white;
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
       padding: 30px;
+      border-radius: 12px;
       border: 2px solid #004d40;
-      border-radius: 14px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      flex: 1;
     }
 
     .company-box {
-      border: 2px solid #004d40;
-      padding: 10px;
-      font-size: 20px;
+      background: #e0f2f1;
+      padding: 15px;
+      font-size: 22px;
       font-weight: bold;
-      background: #e0f7fa;
       border-radius: 10px;
+      border: 2px solid #00796b;
       text-align: center;
       margin-bottom: 25px;
     }
 
-    .contract-box {
-      border: 2px solid #ccc;
-      padding: 25px;
-      border-radius: 10px;
-      max-height: 400px;
-      overflow-y: auto;
-      background: #fcfcfc;
-    }
-
-    .button {
-      margin-top: 30px;
-      background: #004d40;
-      color: white;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    footer {
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 13px;
-      background: #fff3f3;
-      border-top: 1px solid #ccc;
-      color: #b30000;
+    h2 {
+      margin: 20px 0;
+      font-size: 20px;
       text-align: center;
+      color: #004d40;
     }
 
-    .gray-info {
-      color: gray;
-      font-size: 12px;
-      margin-top: 5px;
+    label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #004d40;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 17px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 20px 10px;
+      background: #eee;
+      color: #333;
+    }
+
+    .alert {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border: 1px solid #c62828;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <div class="company-box">💼 شركة سرعة تملك العقار</div>
 
-    <div class="contract-box" id="contractContent">
-      <h3 style="text-align:center;">عقد اتفاقية إنهاء إجراءات تمويل عقاري</h3>
-      <p>الطرف الأول: شركة سرعة تملك العقار والحلول التمويلية.</p>
-      <p>الطرف الثاني: <span id="client_name"></span></p>
-      <p>رقم الهوية: <span id="client_id"></span></p>
-      <p>رقم الجوال: <span id="client_mobile"></span></p>
-      <p>تاريخ الميلاد الهجري: <span id="client_birth"></span></p>
-      <p>📍 موقع العميل: <span id="location">جارٍ التحديد...</span></p>
-      <hr />
-      <ol>
-        <li>يلتزم الطرف الأول بتقديم كافة الخدمات اللازمة لإتمام التمويل العقاري.</li>
-        <li>يدفع الطرف الثاني للطرف الأول نسبة 2.5% من قيمة العقار + 500 ريال رسوم عقد.</li>
-        <li>يلتزم الطرف الثاني بتقديم كافة المستندات المطلوبة لإتمام الطلب.</li>
-        <li>لا يحق للطرف الثاني المطالبة باسترداد المبلغ بعد توقيع العقد.</li>
-        <li>يتم تحديد قيمة العقار بناءً على التقييم المعتمد من الجهة التمويلية.</li>
-        <li>في حال انسحاب الطرف الثاني، تُعتبر كافة المبالغ المدفوعة للطرف الأول مستحقة.</li>
-        <li>الطرف الأول لا يضمن الموافقة النهائية من الجهة التمويلية، بل يقوم بالإجراءات.</li>
-        <li>العقد ساري المفعول لمدة 30 يومًا من تاريخ التوقيع.</li>
-        <li>يلتزم الطرف الأول بالسرية التامة للبيانات والمستندات.</li>
-        <li>في حال وجود خلاف، تكون الجهة القضائية المختصة بمدينة الرياض هي المرجع.</li>
-        <li>يقر الطرف الثاني أن جميع البيانات المدخلة صحيحة وتحت مسؤوليته.</li>
-        <li>يُعتبر هذا العقد موثقًا إلكترونيًا حسب أنظمة المملكة.</li>
-      </ol>
-      <hr />
-      <p>تم إعداد هذا العقد إلكترونيًا بتاريخ: <span id="today_date"></span></p>
+    <h2>الرجاء إدخال رقم الهوية</h2>
+
+    <form onsubmit="saveID(); return false;">
+      <label for="idNumber">رقم الهوية (10 أرقام فقط):</label>
+      <input type="number" id="idNumber" required maxlength="10" oninput="enforceLength(this)" placeholder="أدخل رقم الهوية" />
+
+      <button type="submit">التالي</button>
+    </form>
+
+    <div class="alert">
+      ⚠️ هذا الموقع يخضع لنظام المعاملات الإلكترونية - المادة التاسعة: يُعد هذا الإدخال ملزمًا إلكترونيًا.
     </div>
-
-    <button class="button" onclick="window.location.href='step3.html'">التالي</button>
   </div>
 
-  <footer>
-    ⚠️ وفقًا للمادة التاسعة من نظام التعاملات الإلكترونية، فإن تعبئة هذا العقد تعتبر موافقة إلكترونية رسمية.
-    <div class="gray-info" id="datetime"></div>
-    <div class="gray-info" id="locationInfo">📍 موقعك الحالي: جارٍ التحديد...</div>
-  </footer>
+  <div class="footer" id="footerInfo">
+    📅 التاريخ والوقت يتم تحميلهما...
+  </div>
 
   <script>
-    // عرض البيانات
-    document.getElementById("client_name").innerText = localStorage.getItem("client_name");
-    document.getElementById("client_id").innerText = localStorage.getItem("client_id");
-    document.getElementById("client_mobile").innerText = localStorage.getItem("client_mobile");
-    document.getElementById("client_birth").innerText = localStorage.getItem("client_birth");
-
-    // التاريخ
-    const now = new Date();
-    const miladi = now.toLocaleDateString('ar-EG');
-    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    }).format(now);
-    document.getElementById("today_date").innerText = `الميلادي: ${miladi} | الهجري: ${hijri}`;
-    document.getElementById("datetime").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
-
-    // الموقع
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude.toFixed(5);
-        const lon = pos.coords.longitude.toFixed(5);
-        document.getElementById("location").innerText = `خط العرض ${lat}، خط الطول ${lon}`;
-        document.getElementById("locationInfo").innerText = `📍 موقعك الحالي: خط العرض ${lat}، خط الطول ${lon}`;
-      });
+    function enforceLength(input) {
+      if (input.value.length > 10) {
+        input.value = input.value.slice(0, 10);
+      }
     }
+
+    function saveID() {
+      const id = document.getElementById("idNumber").value;
+      if (id.length !== 10) {
+        alert("يجب أن يتكون رقم الهوية من 10 أرقام فقط.");
+        return;
+      }
+      localStorage.setItem("idNumber", id);
+      window.location.href = "step3.html";
+    }
+
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateStr = now.toLocaleDateString('ar-EG', options);
+    const timeStr = now.toLocaleTimeString('ar-EG');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const loc = `📍 ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${loc}`;
+      },
+      () => {
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | 📍 الموقع غير متاح`;
+      }
+    );
   </script>
+
 </body>
 </html>

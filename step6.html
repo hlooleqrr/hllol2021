@@ -1,56 +1,57 @@
-<!-- step6.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>عرض العقد</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <title>العقد الإلكتروني</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f5f5f5;
+      background-color: #f9f9f9;
       margin: 0;
       padding: 0;
+      color: #004d40;
     }
-    .header, .footer {
+    .header {
       background-color: #004d40;
       color: white;
+      padding: 20px;
       text-align: center;
-      padding: 15px;
+      font-size: 20px;
     }
-    .container {
-      max-width: 750px;
-      margin: 30px auto;
+    .contract-box {
+      margin: 20px auto;
+      padding: 25px;
       background-color: white;
-      padding: 30px;
-      border-radius: 12px;
-      border: 3px solid #004d40;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 2px solid #004d40;
+      border-radius: 10px;
+      max-width: 800px;
+      line-height: 2;
     }
-    h2 {
+    .footer {
       text-align: center;
-      color: #004d40;
-      margin-bottom: 25px;
+      font-size: 14px;
+      color: gray;
+      margin: 40px auto 10px;
     }
-    .highlight {
-      background-color: #ffe5e5;
-      color: #b71c1c;
-      padding: 10px;
-      border-radius: 8px;
+    .warning {
+      color: red;
       font-weight: bold;
-      margin-top: 25px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 16px;
     }
-    .btns {
+    .actions {
       text-align: center;
       margin-top: 30px;
     }
-    .btns button {
-      margin: 10px;
-      padding: 10px 25px;
-      font-size: 16px;
-      border: none;
+    .btn {
+      padding: 12px 24px;
+      font-size: 18px;
       border-radius: 6px;
+      border: none;
+      margin: 10px;
       cursor: pointer;
     }
     .accept {
@@ -61,88 +62,81 @@
       background-color: #c62828;
       color: white;
     }
-    ol {
-      padding-right: 20px;
-      line-height: 2;
-    }
   </style>
 </head>
-<body onload="loadContractData()">
-  <div class="header">
-    <h1>شركة سرعة تملك العقار</h1>
-    <p>الوساطة العقارية والتسويق | ترخيص: 1100042624</p>
-  </div>
+<body>
 
-  <div class="container">
-    <h2>عقد اتفاقية إنهاء إجراءات تمويل</h2>
+  <div class="header">شركة سرعة تملك العقار</div>
 
-    <p>تم بعون الله وتوفيقه في يوم <span id="today"></span>، إبرام هذا العقد بين:</p>
-    <p><strong>الطرف الأول:</strong> شركة سرعة تملك العقار، ويمثلها الأستاذ: نايف المطيري، بصفته مدير الإدارة.</p>
-    <p><strong>الطرف الثاني:</strong> <span id="clientName"></span>، يحمل الهوية رقم <span id="clientID"></span>، رقم الجوال <span id="clientPhone"></span>، والعنوان: <span id="clientAddress"></span>.</p>
+  <div class="contract-box" id="contract">
+    <div class="warning">بناءً على المادة (9) من نظام التعاملات الإلكترونية السعودي، فإن قبولك للعقد يُعد توقيعًا إلكترونيًا ملزمًا.</div>
+    
+    <h2 style="text-align: center;">عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
 
-    <p>بناءً على طلب الطرف الثاني، رغب في إنهاء إجراءات التمويل، وقد وافق الطرف الأول على ذلك مقابل الرسوم المبينة أدناه:</p>
+    <p>تم بعون الله وتوفيقه بتاريخ <span id="todayDate"></span> بين كل من:</p>
+
+    <p><strong>الطرف الأول:</strong> شركة سرعة تملك العقار، ويمثلها الأستاذ نايف المطيري بصفته مدير الإدارة.</p>
+
+    <p><strong>الطرف الثاني:</strong><br>
+    الاسم: <span id="client_name"></span><br>
+    رقم الهوية: <span id="client_id"></span><br>
+    رقم الجوال: <span id="client_phone"></span><br>
+    تاريخ الميلاد: <span id="client_birth"></span><br>
+    الموقع / العنوان: <span id="client_location"></span>
+    </p>
+
+    <p>تم الاتفاق على قيام الطرف الأول بإنهاء إجراءات التمويل العقاري من جهة تمويلية وفقًا للشروط والأحكام التالية:</p>
 
     <ol>
-      <li>يتعهد الطرف الأول بإكمال الإجراءات اللازمة للحصول على التمويل العقاري أو الشخصي المطلوب.</li>
-      <li>يدفع الطرف الثاني للطرف الأول مبلغًا قدره 2.5٪ من قيمة العقار + 500 ريال رسوم عقد.</li>
-      <li>تُستحق العمولة حال توقيع العقد أو تحويل الدفعة الأولى من الجهة التمويلية.</li>
-      <li>جميع البيانات المقدمة من الطرف الثاني صحيحة وملزمة له.</li>
-      <li>الطرف الأول غير مسؤول عن رفض الجهة التمويلية إذا كانت الشروط لا تنطبق على الطرف الثاني.</li>
-      <li>هذا العقد إلكتروني وملزم للطرفين حسب المادة التاسعة من نظام المعاملات الإلكترونية.</li>
-      <li>في حال إلغاء الطلب بعد توقيع العقد، لا يُسترد المبلغ المدفوع.</li>
-      <li>يلتزم الطرف الأول بتوفير العقار المناسب قدر الإمكان.</li>
-      <li>مدة هذا العقد 30 يومًا تبدأ من تاريخ توقيعه.</li>
-      <li>يتم إنهاء الإجراءات إلكترونيًا عبر المنصة أو بوساطة الفريق المختص.</li>
-      <li>تم إدخال موقع العميل وإحداثياته في العقد وتوثيقها إلكترونيًا.</li>
-      <li>كل ما لم يرد فيه نص يُرجع فيه لنظام المعاملات الإلكترونية السعودي.</li>
+      <li>يقوم الطرف الأول بالتواصل مع الجهات التمويلية المعتمدة.</li>
+      <li>يقوم الطرف الثاني بتوفير جميع المستندات المطلوبة.</li>
+      <li>يتم دفع رسوم قدرها 2.5٪ من قيمة العقار + 500 ريال رسوم عقد.</li>
+      <li>في حال رفض التمويل من البنك، لا يترتب على الطرف الثاني أي التزامات مالية.</li>
+      <li>يقر الطرف الثاني بصحة المعلومات المدخلة، وأنها تحت مسؤوليته الكاملة.</li>
+      <li>يتم إبرام هذا العقد إلكترونيًا ويُعد ملزمًا للطرفين.</li>
+      <li>يحق للطرف الأول التواصل مع أي جهة حكومية أو تمويلية نيابة عن الطرف الثاني.</li>
+      <li>يتم إرسال نسخة إلكترونية من العقد للطرف الثاني بعد الموافقة.</li>
+      <li>أي تزوير أو تحايل يعرّض الطرف الثاني للمساءلة القانونية.</li>
+      <li>مدة سريان هذا العقد 60 يومًا من تاريخ الإبرام.</li>
+      <li>يتم حفظ نسخة إلكترونية من العقد في أرشيف الطرف الأول.</li>
+      <li>يُطبق نظام التعاملات الإلكترونية السعودي على هذا العقد.</li>
     </ol>
 
-    <div class="highlight">
-      ⚠️ تنبيه: هذا العقد ملزم للطرفين حسب نظام المعاملات الإلكترونية السعودي، وأي محاولة للإنكار تُعد مخالفة صريحة للنظام.
-    </div>
-
-    <div class="btns">
-      <button class="accept" onclick="acceptContract()">✅ موافق</button>
-      <button class="reject" onclick="rejectContract()">❌ رفض</button>
+    <div class="actions">
+      <button class="btn accept" onclick="agreeContract()">موافق</button>
+      <button class="btn reject" onclick="rejectContract()">رفض</button>
     </div>
   </div>
 
   <div class="footer">
-    <p id="locationInfo">📍 الموقع: جاري التحقق...</p>
-    <p id="footerDate">📅</p>
+    <div id="footer_info"></div>
   </div>
 
   <script>
-    function loadContractData() {
-      const name = localStorage.getItem("client_name") || "الاسم غير معروف";
-      const id = localStorage.getItem("client_id") || "غير محدد";
-      const phone = localStorage.getItem("client_phone") || "غير محدد";
-      const address = localStorage.getItem("client_address") || "لم يُحدد";
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const time = today.toLocaleTimeString('ar-SA');
+    document.getElementById("todayDate").innerText = `${yyyy}/${mm}/${dd} - ${time}`;
+    document.getElementById("footer_info").innerText = `تاريخ: ${yyyy}/${mm}/${dd} - الساعة: ${time}`;
 
-      document.getElementById("clientName").innerText = name;
-      document.getElementById("clientID").innerText = id;
-      document.getElementById("clientPhone").innerText = phone;
-      document.getElementById("clientAddress").innerText = address;
+    document.getElementById("client_name").innerText = localStorage.getItem("client_name");
+    document.getElementById("client_id").innerText = localStorage.getItem("client_id");
+    document.getElementById("client_phone").innerText = localStorage.getItem("client_phone");
+    document.getElementById("client_birth").innerText = localStorage.getItem("client_birth");
+    document.getElementById("client_location").innerText = localStorage.getItem("client_location");
 
-      const today = new Date();
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById("today").innerText = today.toLocaleDateString('ar-SA', options);
-      document.getElementById("footerDate").innerText = "📅 التاريخ والوقت الآن: " + today.toLocaleString('ar-SA');
-
-      if (localStorage.getItem("client_location")) {
-        document.getElementById("locationInfo").innerText = "📍 موقعك: " + localStorage.getItem("client_location");
-      } else {
-        document.getElementById("locationInfo").innerText = "📍 لم يتم تفعيل الموقع";
-      }
-    }
-
-    function acceptContract() {
-      window.location.href = "confirm.html";
+    function agreeContract() {
+      localStorage.setItem("client_decision", "موافق");
+      window.location.href = "step7.html";
     }
 
     function rejectContract() {
-      window.location.href = "rejected.html";
+      localStorage.setItem("client_decision", "رافض");
+      window.location.href = "step7.html";
     }
   </script>
+
 </body>
 </html>

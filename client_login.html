@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>الدخول للعميل</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f9fafb;
+      color: #004d40;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      border: 2px solid #004d40;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+    }
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    footer {
+      position: fixed;
+      bottom: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>أدخل رقم الدخول المخصص لك</h2>
+    <input type="text" id="accessCode" placeholder="مثال: 123456" />
+    <button onclick="checkAccess()">دخول</button>
+  </div>
 
+  <footer>جميع الحقوق محفوظة لشركة سرعة تملك العقار ©</footer>
+
+  <script>
+    function checkAccess() {
+      const code = document.getElementById('accessCode').value.trim();
+
+      // قائمة رموز الدخول (للتجربة)
+      const adminCode = "999999";
+      const validClientCodes = ["123456", "654321", "111111"];
+
+      if (code === adminCode) {
+        window.location.href = "admin_login.html";
+      } else if (validClientCodes.includes(code)) {
+        localStorage.setItem("clientCode", code);
+        window.location.href = "client_redirect.html";
+      } else {
+        alert("رمز الدخول غير صحيح");
+      }
+    }
+  </script>
+</body>
+</html>

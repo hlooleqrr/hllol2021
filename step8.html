@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>تم إبرام العقد بنجاح</title>
+  <meta charset="UTF-8" />
+  <title>تم إبرام العقد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f4f6f7;
+      background: #f1f1f1;
       margin: 0;
       padding: 0;
       color: #004d40;
@@ -16,42 +16,52 @@
     .container {
       max-width: 700px;
       margin: 50px auto;
-      padding: 30px;
       background: white;
-      border-radius: 14px;
-      border: 2px solid #004d40;
+      padding: 40px;
+      border-radius: 16px;
       text-align: center;
-    }
-
-    .company-header {
-      font-size: 20px;
-      font-weight: bold;
-      padding: 10px;
-      margin-bottom: 20px;
-      background: #e0f7fa;
-      border-radius: 10px;
       border: 2px solid #004d40;
     }
 
-    .success {
-      font-size: 24px;
-      color: #2e7d32;
-      margin-bottom: 20px;
+    .company-box {
+      background: #e0f2f1;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #004d40;
+      border: 2px solid #004d40;
+      margin-bottom: 25px;
     }
 
-    .info {
-      font-size: 18px;
-      margin: 10px 0;
+    .success-icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+      color: green;
+    }
+
+    .message {
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .alert {
+      background-color: #fff3f3;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+      padding: 15px;
+      font-size: 14px;
+      border-radius: 8px;
+      margin-top: 30px;
     }
 
     footer {
-      margin-top: 40px;
-      padding: 15px;
-      font-size: 13px;
-      background: #fff3f3;
-      border-top: 1px solid #ccc;
-      color: #b30000;
       text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+      padding: 15px;
+      border-top: 1px solid #ccc;
     }
 
     .gray-info {
@@ -59,46 +69,52 @@
       font-size: 12px;
       margin-top: 5px;
     }
+
+    .back-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: #00796b;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 25px;
+    }
+
+    .back-button:hover {
+      background-color: #004d40;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-header">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
-    <div class="success">✅ تم إبرام العقد بنجاح</div>
-    <div class="info">نشكرك على إتمام الإجراءات.</div>
-    <div class="info" id="nameField"></div>
-    <div class="info" id="datetimeField"></div>
-    <div class="info" id="locationField"></div>
+    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+
+    <div class="success-icon">✅</div>
+    <div class="message">تم إبرام العقد بنجاح</div>
+
+    <div class="alert">
+      ⚠️ بموجب المادة التاسعة من نظام التعاملات الإلكترونية، يعتبر هذا العقد ملزمًا بشكل رسمي بعد الموافقة النهائية.
+    </div>
+
+    <a href="index.html" class="back-button">العودة للرئيسية</a>
   </div>
 
   <footer>
-    ⚠️ حسب المادة التاسعة من نظام التعاملات الإلكترونية، يعتبر إبرام العقد من خلال هذا الموقع ملزماً قانونياً.
+    شركة سرعة تملك العقار - جميع الحقوق محفوظة
     <div class="gray-info" id="footerDate"></div>
   </footer>
 
   <script>
-    // عرض الاسم من localStorage (إن وُجد)
-    const name = localStorage.getItem("clientName") || "العميل الكريم";
-    document.getElementById("nameField").innerText = `الاسم: ${name}`;
-
-    // عرض التاريخ
     const now = new Date();
     const miladi = now.toLocaleDateString('ar-EG');
     const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
       year: 'numeric', month: 'long', day: 'numeric'
     }).format(now);
-    document.getElementById("datetimeField").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
-    document.getElementById("footerDate").innerText = `📅 ${miladi} - ${now.toLocaleTimeString('ar-EG')}`;
-
-    // عرض الموقع
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude.toFixed(5);
-        const lon = pos.coords.longitude.toFixed(5);
-        document.getElementById("locationField").innerText = `📍 موقعك: خط العرض ${lat}، خط الطول ${lon}`;
-      });
-    }
+    const time = now.toLocaleTimeString('ar-EG');
+    document.getElementById("footerDate").innerText =
+      `📅 هجري: ${hijri} / ميلادي: ${miladi} - 🕒 ${time}`;
   </script>
 
 </body>

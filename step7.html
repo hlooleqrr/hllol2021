@@ -1,71 +1,132 @@
-<!-- step7.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تم إبرام العقد</title>
+  <title>مراجعة بيانات العقد</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #e0f7fa;
       margin: 0;
-      padding: 40px;
-      text-align: center;
-      color: #004d40;
+      background: #f1f1f1;
+      color: #333;
     }
-    .box {
+
+    .container {
       max-width: 700px;
-      margin: auto;
-      background-color: white;
-      border: 3px solid #004d40;
-      border-radius: 14px;
-      padding: 50px 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      margin: 30px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      border: 2px solid #004d40;
     }
-    .logo {
-      font-size: 24px;
+
+    .company-box {
+      background: #e0f2f1;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 18px;
       font-weight: bold;
-      margin-bottom: 20px;
-      color: #00695c;
+      color: #004d40;
+      text-align: center;
+      margin-bottom: 25px;
+      border: 2px solid #004d40;
     }
-    h1 {
-      font-size: 28px;
+
+    h2 {
+      text-align: center;
       color: #00796b;
       margin-bottom: 20px;
     }
-    .info {
-      font-size: 18px;
-      line-height: 2;
+
+    .data-box {
+      background-color: #fafafa;
+      border: 1px solid #ddd;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .data-box p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .alert {
+      background-color: #fff3f3;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+      padding: 15px;
+      font-size: 14px;
+      border-radius: 8px;
       margin-top: 30px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 30px;
+      padding: 15px;
+      border-top: 1px solid #ddd;
+    }
+
+    .gray-info {
+      color: gray;
+      font-size: 12px;
+      margin-top: 5px;
     }
   </style>
 </head>
-<body onload="fillInfo()">
+<body>
 
-  <div class="box">
-    <div class="logo">شركة سرعة تملك العقار</div>
-    <h1>✅ تم إبرام العقد بنجاح</h1>
-    <div class="info">
-      <div id="datetime"></div>
-      <div id="location"></div>
+  <div class="container">
+    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <h2>مراجعة بيانات العقد</h2>
+
+    <div class="data-box">
+      <p>🔹 الاسم: <span id="clientName">جارٍ التحميل...</span></p>
+      <p>🔹 رقم الهوية: <span id="clientID">جارٍ التحميل...</span></p>
+      <p>🔹 الجوال: <span id="clientPhone">جارٍ التحميل...</span></p>
+      <p>🔹 تاريخ الميلاد: <span id="clientDOB">جارٍ التحميل...</span></p>
+      <p>📍 الموقع الحالي: <span id="clientLocation">جارٍ التحميل...</span></p>
+      <p>🕒 التاريخ والوقت: <span id="clientDatetime">جارٍ التحميل...</span></p>
+    </div>
+
+    <div class="alert">
+      ⚠️ حسب المادة التاسعة من نظام التعاملات الإلكترونية، تعتبر العقود الإلكترونية ملزمة شرعًا ونظامًا عند الموافقة.
     </div>
   </div>
 
-  <script>
-    function fillInfo() {
-      const now = new Date();
-      document.getElementById("datetime").innerText = "التاريخ والوقت: " + now.toLocaleString('ar-EG');
+  <footer>
+    شركة سرعة تملك العقار - جميع الحقوق محفوظة
+    <div class="gray-info" id="footerDate"></div>
+  </footer>
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const lat = pos.coords.latitude.toFixed(5);
-          const long = pos.coords.longitude.toFixed(5);
-          document.getElementById("location").innerText = `الموقع الجغرافي: خط العرض ${lat} - خط الطول ${long}`;
-        });
-      } else {
-        document.getElementById("location").innerText = "❌ لم يتم تحديد الموقع.";
-      }
-    }
+  <script>
+    // استرجاع البيانات من localStorage
+    document.getElementById("clientName").innerText = localStorage.getItem("clientName") || "غير محدد";
+    document.getElementById("clientID").innerText = localStorage.getItem("clientID") || "غير محدد";
+    document.getElementById("clientPhone").innerText = localStorage.getItem("clientPhone") || "غير محدد";
+    document.getElementById("clientDOB").innerText = localStorage.getItem("clientDOB") || "غير محدد";
+
+    // التاريخ والوقت
+    const now = new Date();
+    const miladi = now.toLocaleDateString('ar-EG');
+    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    }).format(now);
+    const fullDateTime = `${miladi} - ${now.toLocaleTimeString('ar-EG')}`;
+    document.getElementById("clientDatetime").innerText = `${hijri} / ${fullDateTime}`;
+    document.getElementById("footerDate").innerText = `📅 التاريخ: هجري ${hijri} / ميلادي ${miladi} - ${now.toLocaleTimeString('ar-EG')}`;
+
+    // الموقع الجغرافي
+    navigator.geolocation.getCurrentPosition(pos => {
+      const { latitude, longitude } = pos.coords;
+      document.getElementById("clientLocation").innerText = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+    }, () => {
+      document.getElementById("clientLocation").innerText = "لم يتم تحديد الموقع";
+    });
   </script>
 
 </body>

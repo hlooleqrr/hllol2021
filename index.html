@@ -2,87 +2,84 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
       margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+      background: #f7f7f7;
       color: #004d40;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
-      text-align: center;
+      min-height: 100vh;
     }
-    header {
-      background: #004d40;
-      padding: 30px 10px;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 5px solid #00796b;
-    }
-    .main {
+    .container {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      max-width: 700px;
+      margin: auto;
+      padding: 40px;
+      background: white;
+      border: 3px solid #004d40;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
     }
     h1 {
       font-size: 28px;
-      margin-bottom: 20px;
+      color: #002920;
     }
-    p {
-      font-size: 18px;
-      margin-bottom: 30px;
-      color: #444;
+    h2 {
+      font-size: 22px;
+      margin-top: 10px;
+      color: #00796b;
     }
-    button {
-      padding: 15px 35px;
-      font-size: 18px;
-      background-color: #00796b;
+    .start-button {
+      margin-top: 40px;
+      padding: 15px 30px;
+      font-size: 20px;
       color: white;
+      background-color: #00796b;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #005f56;
+    .start-button:hover {
+      background-color: #005a4f;
     }
     footer {
-      padding: 15px;
-      background-color: #e0e0e0;
+      margin-top: 60px;
       font-size: 14px;
-      color: #c62828;
-      border-top: 2px solid #ccc;
+      color: #666;
+      border-top: 1px solid #ccc;
+      padding-top: 15px;
+    }
+    .alert {
+      margin-top: 30px;
+      background-color: #fff3cd;
+      color: #856404;
+      padding: 10px;
+      border: 1px solid #ffeeba;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <header>
-    شركة سرعة تملك العقار<br>
-    <div style="font-size: 16px; margin-top: 5px;">الحلول التمويلية المتكاملة</div>
-  </header>
+  <div class="container">
+    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <h2>نرحب بك عميلنا العزيز</h2>
+    <p>نبرم معك هذا العقد</p>
 
-  <div class="main">
-    <h1>نرحب بك عميلنا العزيز</h1>
-    <p>نبرم معك هذا العقد بعد الإجابة على الأسئلة التالية</p>
-    <button onclick="goNext()">ابدأ بسم الله</button>
+    <div class="alert">
+      تنبيه: يتم حماية هذا العقد بموجب المادة التاسعة من نظام التجارة الإلكترونية، ويُعد ملزمًا للطرفين بعد الموافقة.
+    </div>
+
+    <button class="start-button" onclick="location.href='step1.html'">ابدأ بسم الله</button>
+
+    <footer>
+      &copy; 2025 سرعة تملك العقار | التاريخ: 1446/01/09 هـ - 2025/07/14 م
+    </footer>
   </div>
-
-  <footer>
-    ⚠️ نؤكد أن جميع البيانات تحفظ بسرية تامة | يتم استخدام الموقع لأغراض التعاقد الرسمية فقط
-  </footer>
-
-  <script>
-    function goNext() {
-      window.location.href = "client_login.html";
-    }
-  </script>
 </body>
 </html>

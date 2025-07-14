@@ -2,146 +2,162 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تأكيد الموافقة النهائية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تاريخ الميلاد</title>
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
-      background: #f2f2f2;
       margin: 0;
-      padding: 0;
-      color: #004d40;
+      font-family: 'Tajawal', sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .container {
       max-width: 700px;
-      margin: 40px auto;
-      background: white;
+      margin: auto;
+      background: #fff;
       padding: 30px;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 2px solid #004d40;
-      text-align: center;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      flex: 1;
     }
 
     .company-box {
-      border: 2px solid #004d40;
-      padding: 10px;
-      font-size: 20px;
+      background: #e0f2f1;
+      padding: 15px;
+      font-size: 22px;
       font-weight: bold;
-      background: #e0f7fa;
       border-radius: 10px;
+      border: 2px solid #00796b;
+      text-align: center;
       margin-bottom: 25px;
     }
 
     h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
+      font-size: 20px;
+      text-align: center;
+      color: #004d40;
     }
 
-    input {
-      width: 80%;
+    select {
+      width: 100%;
       padding: 12px;
-      margin: 10px 0;
-      font-size: 16px;
-      border: 1px solid #ccc;
+      font-size: 17px;
+      margin: 10px 0 20px;
       border-radius: 8px;
     }
 
     button {
-      padding: 12px 30px;
-      font-size: 18px;
-      background-color: #004d40;
+      background-color: #00796b;
       color: white;
+      padding: 12px 25px;
       border: none;
+      font-size: 18px;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 20px;
+      width: 100%;
     }
 
-    .error {
-      color: red;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    footer {
-      margin-top: 40px;
-      padding: 15px;
-      font-size: 13px;
-      background: #fff3f3;
-      border-top: 1px solid #ccc;
-      color: #b30000;
+    .footer {
       text-align: center;
+      font-size: 14px;
+      padding: 20px 10px;
+      background: #eee;
+      color: #333;
     }
 
-    .gray-info {
-      color: gray;
-      font-size: 12px;
-      margin-top: 5px;
+    .alert {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border: 1px solid #c62828;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
-    <h2>يرجى تأكيد الموافقة بكتابة رقم الهوية وكلمة "موافق"</h2>
+    <div class="company-box">💼 شركة سرعة تملك العقار</div>
 
-    <input type="text" id="nationalId" maxlength="10" placeholder="رقم الهوية (10 أرقام)" oninput="enforceMaxLength(this)">
-    <br>
-    <input type="text" id="approvalWord" placeholder='اكتب "موافق"' />
-    <br>
-    <button onclick="confirmAgreement()">تأكيد</button>
+    <h2>الرجاء إدخال تاريخ ميلادك بالهجري</h2>
 
-    <div id="errorMsg" class="error"></div>
+    <form onsubmit="saveHijri(); return false;">
+      <select id="day" required></select>
+      <select id="month" required></select>
+      <select id="year" required></select>
+
+      <button type="submit">التالي</button>
+    </form>
+
+    <div class="alert">
+      ⚠️ هذا الموقع يخضع لنظام المعاملات الإلكترونية - المادة التاسعة: يُعد هذا الإدخال ملزمًا إلكترونيًا.
+    </div>
   </div>
 
-  <footer>
-    ⚠️ وفقًا للمادة التاسعة من نظام التعاملات الإلكترونية، فإن الموافقة الإلكترونية هنا تُعد ملزمة قانونيًا.
-    <div class="gray-info" id="datetime"></div>
-    <div class="gray-info" id="locationInfo">📍 موقعك الحالي: جارٍ التحديد...</div>
-  </footer>
+  <div class="footer" id="footerInfo">
+    📅 جاري تحميل الوقت والموقع...
+  </div>
 
   <script>
-    function enforceMaxLength(el) {
-      if (el.value.length > 10) {
-        el.value = el.value.slice(0, 10);
-      }
-    }
-
-    function confirmAgreement() {
-      const id = document.getElementById("nationalId").value;
-      const word = document.getElementById("approvalWord").value.trim();
-      const error = document.getElementById("errorMsg");
-
-      if (id.length !== 10 || isNaN(id)) {
-        error.textContent = "رقم الهوية يجب أن يكون 10 أرقام صحيحة.";
-        return;
-      }
-
-      if (word !== "موافق") {
-        error.textContent = 'يرجى كتابة كلمة "موافق" بشكل صحيح.';
-        return;
-      }
-
-      window.location.href = "done.html";
-    }
-
-    // عرض التاريخ
     const now = new Date();
-    const miladi = now.toLocaleDateString('ar-EG');
-    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    }).format(now);
-    document.getElementById("datetime").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateStr = now.toLocaleDateString('ar-EG', options);
+    const timeStr = now.toLocaleTimeString('ar-EG');
 
-    // عرض الموقع
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude.toFixed(5);
-        const lon = pos.coords.longitude.toFixed(5);
-        document.getElementById("locationInfo").innerText = `📍 موقعك الحالي: خط العرض ${lat}، خط الطول ${lon}`;
-      });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const loc = `📍 ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${loc}`;
+      },
+      () => {
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | 📍 الموقع غير متاح`;
+      }
+    );
+
+    const daySelect = document.getElementById('day');
+    const monthSelect = document.getElementById('month');
+    const yearSelect = document.getElementById('year');
+
+    for (let i = 1; i <= 30; i++) {
+      let opt = document.createElement('option');
+      opt.value = i;
+      opt.text = `اليوم ${i}`;
+      daySelect.appendChild(opt);
+    }
+
+    const months = ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'];
+    for (let i = 0; i < 12; i++) {
+      let opt = document.createElement('option');
+      opt.value = i + 1;
+      opt.text = `الشهر ${months[i]}`;
+      monthSelect.appendChild(opt);
+    }
+
+    for (let y = 1370; y <= 1445; y++) {
+      let opt = document.createElement('option');
+      opt.value = y;
+      opt.text = `السنة ${y}`;
+      yearSelect.appendChild(opt);
+    }
+
+    // تعيين القيمة الافتراضية
+    daySelect.value = 1;
+    monthSelect.value = 1;
+    yearSelect.value = 1412;
+
+    function saveHijri() {
+      const day = document.getElementById("day").value.padStart(2, '0');
+      const month = document.getElementById("month").value.padStart(2, '0');
+      const year = document.getElementById("year").value;
+      const fullDate = `${year}/${month}/${day}`;
+      localStorage.setItem("hijriDate", fullDate);
+      window.location.href = "step5.html";
     }
   </script>
 

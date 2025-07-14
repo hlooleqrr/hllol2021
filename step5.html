@@ -2,106 +2,140 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تأكيد العقد</title>
+  <title>مشاركة موقعك</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
-      background-color: #fdfdfd;
       margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: 'Tajawal', sans-serif;
+      background: #f4f4f4;
       color: #004d40;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    .box {
+
+    .container {
+      flex: 1;
       max-width: 700px;
-      margin: 60px auto;
+      margin: 40px auto;
+      padding: 30px;
       background: white;
-      border: 3px solid #004d40;
-      border-radius: 15px;
-      padding: 40px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      text-align: center;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .info {
-      font-size: 16px;
-      line-height: 2;
-      margin-bottom: 30px;
-    }
-    input {
-      width: 100%;
+
+    .company-name {
+      background: #e0f2f1;
       padding: 12px;
-      margin-top: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 8px;
+      border: 2px solid #00796b;
       margin-bottom: 20px;
+    }
+
+    .message {
+      margin: 20px 0;
+      font-size: 18px;
+    }
+
+    .manual-input {
+      display: none;
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
     }
+
     button {
-      padding: 12px 28px;
-      font-size: 16px;
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 18px;
       background-color: #00796b;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
     }
-    .error {
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13px;
+      padding: 15px;
+      border-top: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+
+    .refused-note {
       color: red;
       margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
-<body onload="loadData()">
+<body>
 
-  <div class="box">
-    <h1>تأكيد نهائي قبل إبرام العقد</h1>
-    <div class="info" id="summary"></div>
+  <div class="container">
+    <div class="company-name">شركة سرعة تملك العقار</div>
+    <h2>يرجى السماح بمشاركة موقعك</h2>
+    <div class="message">نستخدم موقعك الجغرافي لتوثيق العقد حسب الأنظمة.</div>
 
-    <form onsubmit="return confirmSubmission();">
-      <input type="text" id="nidConfirm" placeholder="أدخل رقم الهوية للتأكيد" required pattern="^[0-9]{10}$">
-      <input type="text" id="agreeWord" placeholder="اكتب كلمة (موافق)" required>
-      <button type="submit">إبرام العقد ✅</button>
-    </form>
-    <div class="error" id="errorMsg"></div>
+    <div class="manual-input" id="manualDiv">
+      <p>أدخل عنوانك الكامل المعتمد:</p>
+      <input type="text" id="manualAddress" placeholder="مثال: الرياض - حي النرجس - شارع الملك سلمان">
+    </div>
+
+    <button onclick="submitLocation()">متابعة</button>
   </div>
 
+  <footer>
+    <div id="footerNote">جارٍ تحديد الموقع...</div>
+    <div id="refusedText" class="refused-note"></div>
+  </footer>
+
   <script>
-    function loadData() {
-      const name = localStorage.getItem("name") || "غير معروف";
-      const nid = localStorage.getItem("nid") || "غير معروف";
-      const mobile = localStorage.getItem("mobile") || "غير معروف";
-      const birth = localStorage.getItem("birth") || "غير معروف";
-      const now = new Date().toLocaleString('ar-EG');
+    let locationAccepted = false;
+    let manual = false;
 
-      navigator.geolocation.getCurrentPosition(pos => {
-        const lat = pos.coords.latitude.toFixed(5);
-        const long = pos.coords.longitude.toFixed(5);
-        document.getElementById("summary").innerHTML = `
-          الاسم: ${name}<br>
-          رقم الهوية: ${nid}<br>
-          رقم الجوال: ${mobile}<br>
-          تاريخ الميلاد: ${birth}<br>
-          التاريخ والوقت الحالي: ${now}<br>
-          الموقع: خط العرض ${lat} - خط الطول ${long}
-        `;
-      });
-    }
-
-    function confirmSubmission() {
-      const enteredNid = document.getElementById("nidConfirm").value.trim();
-      const requiredNid = localStorage.getItem("nid");
-      const word = document.getElementById("agreeWord").value.trim();
-
-      if (enteredNid !== requiredNid || word !== "موافق") {
-        document.getElementById("errorMsg").textContent = "البيانات غير صحيحة، يرجى التحقق.";
-        return false;
+    // طلب الموقع مباشرة عند الدخول
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        locationAccepted = true;
+        const coords = `إحداثيات: ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
+        localStorage.setItem("clientLocation", coords);
+        document.getElementById("footerNote").innerText = coords;
+      },
+      (error) => {
+        manual = true;
+        document.getElementById("manualDiv").style.display = "block";
+        document.getElementById("refusedText").innerText = "❌ تم رفض مشاركة الموقع، يرجى كتابة عنوانك المعتمد.";
+        document.getElementById("footerNote").innerText = "❌ رفض مشاركة الموقع";
       }
+    );
 
-      window.location.href = "step3.html";
-      return false;
+    function submitLocation() {
+      if (manual) {
+        const addr = document.getElementById("manualAddress").value.trim();
+        if (!addr) {
+          alert("يرجى كتابة عنوانك الكامل قبل المتابعة.");
+          return;
+        }
+        localStorage.setItem("clientLocation", "العنوان اليدوي: " + addr);
+        document.getElementById("footerNote").innerText = "📍 تم إدخال العنوان يدويًا: " + addr;
+      }
+      window.location.href = "step6.html";
     }
   </script>
 

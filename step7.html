@@ -2,131 +2,110 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>مراجعة بيانات العقد</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تأكيد العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
+      background: #f9f9f9;
+      color: #004d40;
       margin: 0;
-      background: #f1f1f1;
-      color: #333;
+      padding: 0;
     }
-
     .container {
-      max-width: 700px;
+      max-width: 600px;
       margin: 30px auto;
-      padding: 30px;
       background: white;
-      border-radius: 16px;
+      padding: 30px;
+      border-radius: 12px;
       border: 2px solid #004d40;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
-
     .company-box {
       background: #e0f2f1;
       padding: 15px;
-      border-radius: 10px;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: bold;
-      color: #004d40;
+      border-radius: 10px;
+      border: 2px solid #00796b;
       text-align: center;
-      margin-bottom: 25px;
-      border: 2px solid #004d40;
-    }
-
-    h2 {
-      text-align: center;
-      color: #00796b;
       margin-bottom: 20px;
     }
-
-    .data-box {
-      background-color: #fafafa;
-      border: 1px solid #ddd;
-      padding: 15px 20px;
-      border-radius: 10px;
-      margin-bottom: 25px;
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 18px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      direction: ltr;
     }
-
-    .data-box p {
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    .alert {
-      background-color: #fff3f3;
-      color: #c62828;
-      border: 1px solid #ef9a9a;
-      padding: 15px;
-      font-size: 14px;
+    button {
+      background: #00796b;
+      color: white;
+      padding: 12px 20px;
+      font-size: 18px;
+      border: none;
       border-radius: 8px;
-      margin-top: 30px;
+      cursor: pointer;
+      width: 100%;
     }
-
-    footer {
+    .alert {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border: 1px solid #c62828;
+      border-radius: 8px;
       text-align: center;
-      font-size: 13px;
-      color: #555;
-      margin-top: 30px;
-      padding: 15px;
-      border-top: 1px solid #ddd;
+      margin-top: 20px;
     }
-
-    .gray-info {
-      color: gray;
-      font-size: 12px;
-      margin-top: 5px;
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 20px 10px;
+      background: #eee;
+      color: #333;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
-    <h2>مراجعة بيانات العقد</h2>
+    <div class="company-box">💼 شركة سرعة تملك العقار</div>
 
-    <div class="data-box">
-      <p>🔹 الاسم: <span id="clientName">جارٍ التحميل...</span></p>
-      <p>🔹 رقم الهوية: <span id="clientID">جارٍ التحميل...</span></p>
-      <p>🔹 الجوال: <span id="clientPhone">جارٍ التحميل...</span></p>
-      <p>🔹 تاريخ الميلاد: <span id="clientDOB">جارٍ التحميل...</span></p>
-      <p>📍 الموقع الحالي: <span id="clientLocation">جارٍ التحميل...</span></p>
-      <p>🕒 التاريخ والوقت: <span id="clientDatetime">جارٍ التحميل...</span></p>
-    </div>
+    <h3 style="text-align:center;">تأكيد الهوية قبل إنهاء العقد</h3>
 
-    <div class="alert">
-      ⚠️ حسب المادة التاسعة من نظام التعاملات الإلكترونية، تعتبر العقود الإلكترونية ملزمة شرعًا ونظامًا عند الموافقة.
-    </div>
+    <label>أدخل رقم الهوية مرة أخرى:</label>
+    <input type="text" id="idConfirm" maxlength="10" />
+
+    <label>اكتب كلمة (موافق) باللغة العربية:</label>
+    <input type="text" id="confirmationWord" placeholder="موافق" />
+
+    <button onclick="verifyConfirmation()">تأكيد العقد</button>
+
+    <div id="alertBox" class="alert" style="display:none;">⚠️ يرجى التأكد من البيانات المدخلة.</div>
   </div>
 
-  <footer>
-    شركة سرعة تملك العقار - جميع الحقوق محفوظة
-    <div class="gray-info" id="footerDate"></div>
-  </footer>
+  <div class="footer" id="footerInfo">📅 ...</div>
 
   <script>
-    // استرجاع البيانات من localStorage
-    document.getElementById("clientName").innerText = localStorage.getItem("clientName") || "غير محدد";
-    document.getElementById("clientID").innerText = localStorage.getItem("clientID") || "غير محدد";
-    document.getElementById("clientPhone").innerText = localStorage.getItem("clientPhone") || "غير محدد";
-    document.getElementById("clientDOB").innerText = localStorage.getItem("clientDOB") || "غير محدد";
-
-    // التاريخ والوقت
+    const savedId = localStorage.getItem("id") || "";
     const now = new Date();
-    const miladi = now.toLocaleDateString('ar-EG');
-    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    }).format(now);
-    const fullDateTime = `${miladi} - ${now.toLocaleTimeString('ar-EG')}`;
-    document.getElementById("clientDatetime").innerText = `${hijri} / ${fullDateTime}`;
-    document.getElementById("footerDate").innerText = `📅 التاريخ: هجري ${hijri} / ميلادي ${miladi} - ${now.toLocaleTimeString('ar-EG')}`;
+    const loc = localStorage.getItem("locationNote") || "الموقع غير محدد";
 
-    // الموقع الجغرافي
-    navigator.geolocation.getCurrentPosition(pos => {
-      const { latitude, longitude } = pos.coords;
-      document.getElementById("clientLocation").innerText = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
-    }, () => {
-      document.getElementById("clientLocation").innerText = "لم يتم تحديد الموقع";
-    });
+    document.getElementById("footerInfo").innerText = `📅 ${now.toLocaleDateString('ar-EG')} - ${now.toLocaleTimeString('ar-EG')} | ${loc}`;
+
+    function verifyConfirmation() {
+      const enteredId = document.getElementById("idConfirm").value.trim();
+      const enteredWord = document.getElementById("confirmationWord").value.trim();
+
+      if (enteredId === savedId && enteredWord === "موافق") {
+        window.location.href = "success.html";
+      } else {
+        document.getElementById("alertBox").style.display = "block";
+      }
+    }
   </script>
 
 </body>

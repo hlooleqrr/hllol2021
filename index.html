@@ -2,143 +2,121 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>شركة سرعة تملك العقار</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>سرعة تملك العقار - البداية</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+      background: linear-gradient(to bottom, #ffffff, #f0f0f0);
       color: #004d40;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       justify-content: space-between;
-      padding: 20px;
-    }
-    header {
+      height: 100vh;
       text-align: center;
-      margin-top: 30px;
     }
-    header h1 {
-      font-size: 28px;
+
+    .container {
+      padding: 40px 20px;
+    }
+
+    .company-box {
+      border: 2px solid #004d40;
+      padding: 15px;
+      font-size: 22px;
       font-weight: bold;
-      color: #00352c;
+      background: #e0f7fa;
+      border-radius: 10px;
+      margin-bottom: 20px;
     }
-    header h2 {
-      font-size: 18px;
-      color: #00796b;
-      margin-top: 8px;
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #00251a;
     }
-    .welcome {
-      text-align: center;
-      margin: 40px 0;
-    }
-    .welcome p {
+
+    h2 {
       font-size: 20px;
-      margin-bottom: 15px;
+      color: #00695c;
+      margin-bottom: 30px;
     }
-    .btn-start {
-      display: inline-block;
-      padding: 14px 28px;
-      background-color: #00796b;
+
+    .start-button {
+      padding: 15px 30px;
+      background-color: #004d40;
       color: white;
-      font-size: 18px;
       border: none;
       border-radius: 8px;
-      text-decoration: none;
+      font-size: 18px;
       cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
-    .btn-start:hover {
-      background-color: #004d40;
+
+    .start-button:hover {
+      background-color: #00695c;
     }
-    .alert {
-      background: #ffebee;
-      border-right: 6px solid red;
-      padding: 12px 16px;
-      font-size: 15px;
-      color: #c62828;
-      margin: 30px 0 10px;
-      text-align: right;
-    }
+
     footer {
-      font-size: 14px;
-      color: #333;
-      text-align: center;
-      border-top: 1px dashed #ccc;
-      padding-top: 12px;
-      margin-top: auto;
+      padding: 15px;
+      font-size: 13px;
+      background: #fff3f3;
+      border-top: 1px solid #ccc;
+      color: #b30000;
+    }
+
+    .gray-info {
+      color: gray;
+      font-size: 12px;
+      margin-top: 5px;
     }
   </style>
 </head>
-<body onload="loadDateTimeAndLocation()">
+<body>
 
-  <header>
-    <h1>شركة سرعة تملك العقار</h1>
-    <h2>الحلول التمويلية المتكاملة</h2>
-  </header>
-
-  <div class="welcome">
-    <p>نرحب بك عميلنا العزيز</p>
-    <p>نبرم معك هذا العقد...</p>
-    <a href="2.html" class="btn-start">ابدأ بسم الله</a>
+  <div class="container">
+    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <h1>نرحب بك عميلنا العزيز</h1>
+    <h2>نبرم معك هذا العقد</h2>
+    <button class="start-button" onclick="startContract()">ابدأ بسم الله</button>
   </div>
 
-  <div class="alert">
-    ⚠️ بموجب <strong>المادة الثانية</strong> من نظام التعاملات الإلكترونية، يعتبر هذا التوقيع الإلكتروني ملزمًا شرعًا وقانونًا.
-  </div>
-
-  <footer id="footerInfo">
-    <!-- سيتم تعبئته تلقائيًا بالتاريخ والموقع -->
-    <p>جارٍ تحميل بياناتك...</p>
+  <footer>
+    ⚠️ وفقًا للمادة التاسعة من نظام التعاملات الإلكترونية، فإن تعبئة هذا العقد تعتبر موافقة إلكترونية رسمية.
+    <div class="gray-info" id="datetime"></div>
+    <div class="gray-info" id="location">📍 موقعك الحالي: جارٍ التحديد...</div>
   </footer>
 
   <script>
-    function loadDateTimeAndLocation() {
-      const footer = document.getElementById("footerInfo");
+    function startContract() {
+      window.location.href = "step1.html";
+    }
 
-      // التاريخ والوقت بالثواني
+    // عرض التاريخ والوقت
+    function updateDateTime() {
       const now = new Date();
-      const dateTimeStr = now.toLocaleString('ar-SA', {
-        year: 'numeric', month: '2-digit', day: '2-digit',
-        hour: '2-digit', minute: '2-digit', second: '2-digit'
-      });
+      const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      }).format(now);
+      const miladi = now.toLocaleString('ar-EG');
+      document.getElementById("datetime").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
+    }
 
-      // الموقع الجغرافي
+    // الموقع (Placeholder)
+    function updateLocation() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const lat = position.coords.latitude.toFixed(6);
-            const lng = position.coords.longitude.toFixed(6);
-            footer.innerHTML = `
-              شركة سرعة تملك العقار © 2025<br>
-              www.hlooleqrr.com | الرياض<br>
-              التاريخ والوقت: ${dateTimeStr}<br>
-              موقعك الحالي: خط العرض ${lat} ، خط الطول ${lng}
-            `;
-          },
-          error => {
-            footer.innerHTML = `
-              شركة سرعة تملك العقار © 2025<br>
-              www.hlooleqrr.com | الرياض<br>
-              التاريخ والوقت: ${dateTimeStr}<br>
-              ⚠️ لم يتم السماح بموقعك الجغرافي.
-            `;
-          }
-        );
-      } else {
-        footer.innerHTML = `
-          شركة سرعة تملك العقار © 2025<br>
-          www.hlooleqrr.com | الرياض<br>
-          التاريخ والوقت: ${dateTimeStr}<br>
-          ⚠️ موقعك غير مدعوم في هذا المتصفح.
-        `;
+        navigator.geolocation.getCurrentPosition(pos => {
+          const lat = pos.coords.latitude.toFixed(5);
+          const lon = pos.coords.longitude.toFixed(5);
+          document.getElementById("location").innerText = `📍 موقعك الحالي: خط العرض ${lat}، خط الطول ${lon}`;
+        });
       }
     }
-  </script>
 
+    updateDateTime();
+    updateLocation();
+  </script>
 </body>
 </html>

@@ -1,111 +1,90 @@
+<!-- step1.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>الخطوة 1 - الاسم الكريم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
       margin: 0;
+      font-family: 'Tajawal', sans-serif;
       background: #f9f9f9;
       color: #004d40;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       min-height: 100vh;
     }
-    header {
-      background-color: #004d40;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      font-size: 24px;
-      font-weight: bold;
+    .container {
+      flex: 1;
+      max-width: 700px;
+      margin: auto;
+      padding: 40px;
+      background: white;
+      border: 3px solid #004d40;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
-    main {
-      padding: 30px;
+    h1 {
+      font-size: 26px;
       text-align: center;
+      color: #002920;
+      margin-bottom: 30px;
     }
     label {
-      font-size: 20px;
       display: block;
       margin-bottom: 10px;
+      font-size: 18px;
     }
     input[type="text"] {
-      width: 80%;
-      padding: 10px;
-      font-size: 18px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
       border: 2px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin-bottom: 20px;
     }
     button {
-      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
       background-color: #00796b;
       color: white;
-      padding: 12px 25px;
       border: none;
-      font-size: 18px;
       border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #004d40;
-    }
-    .warning {
-      color: red;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 20px;
+      background-color: #005a4f;
     }
     footer {
-      background-color: #f1f1f1;
-      padding: 15px;
-      text-align: center;
+      margin-top: 40px;
       font-size: 14px;
-      color: #333;
+      color: #666;
       border-top: 1px solid #ccc;
+      padding-top: 15px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
-    سرعة تملك العقار والحلول التمويلية المتكاملة
-  </header>
+  <div class="container">
+    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
 
-  <main>
-    <label for="clientName">اسمك الكريم:</label>
-    <input type="text" id="clientName" placeholder="اكتب اسمك هنا" required />
-    <br />
-    <button onclick="saveName()">التالي</button>
-    <div class="warning">تنبيه: جميع المعلومات يتم حفظها بسرية تامة داخل النظام.</div>
-  </main>
+    <form action="step2.html">
+      <label for="fullName">الاسم الكريم:</label>
+      <input type="text" id="fullName" name="fullName" required>
 
-  <footer>
-    <div id="datetime"></div>
-  </footer>
+      <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 16px; color: #856404; margin-top: 20px;">
+        ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+      </div>
 
-  <script>
-    function saveName() {
-      const name = document.getElementById('clientName').value.trim();
-      if (name === '') {
-        alert('الرجاء كتابة الاسم الكريم');
-        return;
-      }
-      localStorage.setItem('clientName', name);
-      window.location.href = "step2.html";
-    }
+      <button type="submit">التالي</button>
+    </form>
 
-    // عرض الوقت والتاريخ
-    const now = new Date();
-    const datetimeString = now.toLocaleString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
-    document.getElementById('datetime').textContent = `التاريخ والوقت الآن: ${datetimeString}`;
-  </script>
+    <footer>
+      &copy; 2025 سرعة تملك العقار | التاريخ: 1446/01/09 هـ - 2025/07/14 م
+    </footer>
+  </div>
 </body>
 </html>

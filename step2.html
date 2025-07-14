@@ -3,73 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <title>الخطوة 2 - رقم الهوية</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f9fafb;
+      background: #f9f9f9;
       color: #004d40;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      justify-content: space-between;
+      min-height: 100vh;
     }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    header {
+      background-color: #004d40;
+      color: white;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
     }
-    h2 {
-      margin-bottom: 20px;
-      color: #004d40;
+    main {
+      padding: 30px;
+      text-align: center;
+    }
+    label {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 10px;
     }
     input[type="text"] {
-      padding: 12px;
-      width: 100%;
+      width: 80%;
+      padding: 10px;
       font-size: 18px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
     }
     button {
-      background: #00796b;
+      margin-top: 20px;
+      background-color: #00796b;
       color: white;
-      padding: 12px 24px;
+      padding: 12px 25px;
       border: none;
-      border-radius: 8px;
       font-size: 18px;
+      border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
-      background: #004d40;
+      background-color: #004d40;
+    }
+    .warning {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+    footer {
+      background-color: #f1f1f1;
+      padding: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+      border-top: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>رقم الهوية الوطنية</h2>
-    <input type="text" id="nationalId" placeholder="أدخل رقم الهوية" maxlength="10" required />
-    <button onclick="saveAndNext()">التالي</button>
-  </div>
+  <header>
+    سرعة تملك العقار والحلول التمويلية المتكاملة
+  </header>
+
+  <main>
+    <label for="clientId">رقم الهوية الوطنية:</label>
+    <input type="text" id="clientId" placeholder="أدخل رقم الهوية" required />
+    <br />
+    <button onclick="saveId()">التالي</button>
+    <div class="warning">تنبيه: جميع المعلومات يتم حفظها بسرية تامة داخل النظام.</div>
+  </main>
+
+  <footer>
+    <div id="datetime"></div>
+  </footer>
 
   <script>
-    function saveAndNext() {
-      const id = document.getElementById("nationalId").value.trim();
-      if (id === "" || id.length !== 10 || isNaN(id)) {
-        alert("الرجاء إدخال رقم هوية صحيح مكون من 10 أرقام.");
+    function saveId() {
+      const id = document.getElementById('clientId').value.trim();
+      if (id === '' || id.length !== 10 || isNaN(id)) {
+        alert('الرجاء إدخال رقم هوية صحيح مكون من 10 أرقام');
         return;
       }
-      localStorage.setItem("client_id", id);
+      localStorage.setItem('clientId', id);
       window.location.href = "step3.html";
     }
+
+    // عرض التاريخ والوقت
+    const now = new Date();
+    const datetimeString = now.toLocaleString('ar-SA', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    document.getElementById('datetime').textContent = `التاريخ والوقت الآن: ${datetimeString}`;
   </script>
 </body>
 </html>

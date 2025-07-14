@@ -1,122 +1,88 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>سرعة تملك العقار</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
       margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f1f1f1;
+      background: linear-gradient(to bottom, #ffffff, #f1f1f1);
       color: #004d40;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .container {
-      flex: 1;
-      max-width: 700px;
-      margin: 50px auto;
-      padding: 30px;
-      background: white;
-      border: 2px solid #004d40;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      justify-content: space-between;
+      height: 100vh;
       text-align: center;
     }
-
-    .company-name {
-      background: #e0f2f1;
-      border: 2px solid #00796b;
-      padding: 15px;
-      font-size: 22px;
+    header {
+      background: #004d40;
+      padding: 30px 10px;
+      color: white;
+      font-size: 24px;
       font-weight: bold;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      border-bottom: 5px solid #00796b;
     }
-
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     h1 {
       font-size: 28px;
-      color: #004d40;
+      margin-bottom: 20px;
     }
-
-    .welcome {
-      font-size: 20px;
-      color: #00796b;
-      margin: 25px 0;
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #444;
     }
-
-    .start-button {
-      font-size: 20px;
-      padding: 12px 25px;
-      background: #00796b;
+    button {
+      padding: 15px 35px;
+      font-size: 18px;
+      background-color: #00796b;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
     }
-
-    .start-button:hover {
-      background: #004d40;
+    button:hover {
+      background-color: #005f56;
     }
-
-    .warning {
-      margin-top: 35px;
-      background: #ffeaea;
-      border: 1px solid #d32f2f;
-      padding: 15px;
-      border-radius: 8px;
-      color: #b71c1c;
-      font-size: 14px;
-    }
-
     footer {
-      margin-top: 40px;
       padding: 15px;
-      font-size: 13px;
-      background: #f9f9f9;
-      border-top: 1px solid #ccc;
-      text-align: center;
-    }
-
-    .gray-info {
-      color: gray;
-      font-size: 12px;
-      margin-top: 5px;
+      background-color: #e0e0e0;
+      font-size: 14px;
+      color: #c62828;
+      border-top: 2px solid #ccc;
     }
   </style>
 </head>
 <body>
+  <header>
+    شركة سرعة تملك العقار<br>
+    <div style="font-size: 16px; margin-top: 5px;">الحلول التمويلية المتكاملة</div>
+  </header>
 
-  <div class="container">
-    <div class="company-name">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
-    <h1>مرحبًا بك عميلنا الكريم</h1>
-    <div class="welcome">نبرم معك هذا العقد بعد الإجابة على الأسئلة التالية</div>
-    <button class="start-button" onclick="location.href='step1.html'">ابدأ بسم الله</button>
-
-    <div class="warning">
-      ⚠️ حسب المادة (9) من نظام التعاملات الإلكترونية، يُعد الدخول إلى الموقع موافقة ضمنية على التعامل الإلكتروني، ويحق للموقع حفظ البيانات وتحليلها قانونيًا.
-    </div>
+  <div class="main">
+    <h1>نرحب بك عميلنا العزيز</h1>
+    <p>نبرم معك هذا العقد بعد الإجابة على الأسئلة التالية</p>
+    <button onclick="goNext()">ابدأ بسم الله</button>
   </div>
 
   <footer>
-    شركة سرعة تملك العقار © جميع الحقوق محفوظة
-    <div class="gray-info" id="footerDate"></div>
+    ⚠️ نؤكد أن جميع البيانات تحفظ بسرية تامة | يتم استخدام الموقع لأغراض التعاقد الرسمية فقط
   </footer>
 
   <script>
-    const now = new Date();
-    const miladi = now.toLocaleDateString('ar-EG');
-    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-      year: 'numeric', month: 'long', day: 'numeric'
-    }).format(now);
-    const time = now.toLocaleTimeString('ar-EG');
-    document.getElementById("footerDate").innerText =
-      `📅 هجري: ${hijri} / ميلادي: ${miladi} - 🕒 ${time}`;
+    function goNext() {
+      window.location.href = "client_login.html";
+    }
   </script>
-
 </body>
 </html>

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title>سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f4f4f4;
+      background: #f1f1f1;
       color: #004d40;
       display: flex;
       flex-direction: column;
@@ -17,111 +16,106 @@
     }
 
     .container {
+      flex: 1;
       max-width: 700px;
-      margin: auto;
+      margin: 50px auto;
       padding: 30px;
       background: white;
-      border-radius: 16px;
       border: 2px solid #004d40;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       text-align: center;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
-    .company-box {
+    .company-name {
       background: #e0f2f1;
+      border: 2px solid #00796b;
       padding: 15px;
       font-size: 22px;
       font-weight: bold;
       border-radius: 10px;
-      border: 2px solid #00796b;
-      margin-bottom: 25px;
-    }
-
-    .title {
-      font-size: 20px;
       margin-bottom: 20px;
     }
 
+    h1 {
+      font-size: 28px;
+      color: #004d40;
+    }
+
     .welcome {
-      font-size: 18px;
-      color: #00695c;
-      margin-bottom: 30px;
+      font-size: 20px;
+      color: #00796b;
+      margin: 25px 0;
     }
 
     .start-button {
-      padding: 15px 30px;
       font-size: 20px;
-      background-color: #00796b;
+      padding: 12px 25px;
+      background: #00796b;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.3s;
     }
 
     .start-button:hover {
-      background-color: #004d40;
+      background: #004d40;
     }
 
     .warning {
-      margin-top: 30px;
-      color: red;
-      font-weight: bold;
-      font-size: 15px;
+      margin-top: 35px;
+      background: #ffeaea;
+      border: 1px solid #d32f2f;
+      padding: 15px;
+      border-radius: 8px;
+      color: #b71c1c;
+      font-size: 14px;
     }
 
     footer {
-      font-size: 13px;
-      text-align: center;
+      margin-top: 40px;
       padding: 15px;
+      font-size: 13px;
+      background: #f9f9f9;
       border-top: 1px solid #ccc;
-      background-color: #fafafa;
+      text-align: center;
+    }
+
+    .gray-info {
+      color: gray;
+      font-size: 12px;
+      margin-top: 5px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-box">شركة سرعة تملك العقار</div>
-    <div class="title">الحلول التمويلية العقارية المتكاملة</div>
-    <div class="welcome">نرحب بك عميلنا العزيز</div>
-    <div>نبرم معك هذا العقد حسب التفاصيل التالية:</div>
-    <br>
-    <button class="start-button" onclick="startForm()">ابدأ بسم الله</button>
+    <div class="company-name">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <h1>مرحبًا بك عميلنا الكريم</h1>
+    <div class="welcome">نبرم معك هذا العقد بعد الإجابة على الأسئلة التالية</div>
+    <button class="start-button" onclick="location.href='step1.html'">ابدأ بسم الله</button>
 
     <div class="warning">
-      ⚠️ تنبيه: جميع الإجراءات تتم وفقًا لنظام المعاملات الإلكترونية، المادة التاسعة.
+      ⚠️ حسب المادة (9) من نظام التعاملات الإلكترونية، يُعد الدخول إلى الموقع موافقة ضمنية على التعامل الإلكتروني، ويحق للموقع حفظ البيانات وتحليلها قانونيًا.
     </div>
   </div>
 
-  <footer id="footerInfo">
-    <!-- يتم تحديث التاريخ والموقع تلقائيًا -->
+  <footer>
+    شركة سرعة تملك العقار © جميع الحقوق محفوظة
+    <div class="gray-info" id="footerDate"></div>
   </footer>
 
   <script>
-    function startForm() {
-      window.location.href = "step1.html";
-    }
-
-    // التاريخ والوقت والموقع في الفوتر
-    function updateFooter() {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('ar-SA');
-      const timeStr = now.toLocaleTimeString('ar-SA');
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const location = `📍 ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
-          document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${location}`;
-        },
-        () => {
-          document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | 📍 الموقع غير متاح`;
-        }
-      );
-    }
-
-    updateFooter();
+    const now = new Date();
+    const miladi = now.toLocaleDateString('ar-EG');
+    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    }).format(now);
+    const time = now.toLocaleTimeString('ar-EG');
+    document.getElementById("footerDate").innerText =
+      `📅 هجري: ${hijri} / ميلادي: ${miladi} - 🕒 ${time}`;
   </script>
 
 </body>

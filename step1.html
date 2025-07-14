@@ -2,187 +2,138 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>بيانات العميل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الاسم الكريم</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f5f5f5;
-      color: #004d40;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
-      background: white;
+      background: #fff;
       padding: 30px;
-      margin-top: 30px;
-      border: 2px solid #004d40;
       border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      flex: 1;
     }
 
     .company-box {
-      border: 2px solid #004d40;
-      padding: 10px;
-      font-size: 20px;
+      background: #e0f2f1;
+      padding: 15px;
+      font-size: 22px;
       font-weight: bold;
-      background: #e0f7fa;
       border-radius: 10px;
-      margin-bottom: 20px;
+      border: 2px solid #00796b;
       text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      margin: 20px 0;
+      font-size: 20px;
+      text-align: center;
+      color: #004d40;
     }
 
     label {
       display: block;
-      margin: 15px 0 5px;
-      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #004d40;
     }
 
-    input, select {
+    input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
+      font-size: 17px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 16px;
     }
 
-    .button {
-      margin-top: 30px;
-      background: #004d40;
+    button {
+      background-color: #00796b;
       color: white;
-      padding: 14px;
+      padding: 12px 25px;
       border: none;
-      border-radius: 8px;
       font-size: 18px;
-      width: 100%;
+      border-radius: 8px;
       cursor: pointer;
+      width: 100%;
     }
 
-    footer {
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 13px;
-      background: #fff3f3;
-      border-top: 1px solid #ccc;
-      color: #b30000;
+    .footer {
       text-align: center;
+      font-size: 14px;
+      padding: 20px 10px;
+      background: #eee;
+      color: #333;
     }
 
-    .gray-info {
-      color: gray;
-      font-size: 12px;
-      margin-top: 5px;
+    .alert {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border: 1px solid #c62828;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <div class="company-box">💼 شركة سرعة تملك العقار</div>
 
-    <form id="clientForm">
-      <label for="name">الاسم الكريم</label>
-      <input type="text" id="name" required />
+    <h2>الرجاء إدخال اسمك الكريم</h2>
 
-      <label for="id">رقم الهوية</label>
-      <input type="text" id="id" pattern="\d{10}" maxlength="10" required />
+    <form onsubmit="saveName(); return false;">
+      <label for="clientName">الاسم الكريم:</label>
+      <input type="text" id="clientName" required placeholder="أدخل اسمك الكامل" />
 
-      <label for="mobile">رقم الجوال</label>
-      <input type="tel" id="mobile" pattern="05\d{8}" maxlength="10" required />
-
-      <label for="hijri">تاريخ الميلاد بالهجري</label>
-      <div style="display: flex; gap: 10px;">
-        <select id="day" required></select>
-        <select id="month" required></select>
-        <select id="year" required></select>
-      </div>
-
-      <button type="submit" class="button">التالي</button>
+      <button type="submit">التالي</button>
     </form>
+
+    <div class="alert">
+      ⚠️ هذا الموقع يخضع لنظام المعاملات الإلكترونية - المادة التاسعة: يُعد هذا الإدخال ملزمًا إلكترونيًا.
+    </div>
   </div>
 
-  <footer>
-    ⚠️ وفقًا للمادة التاسعة من نظام التعاملات الإلكترونية، فإن تعبئة هذا العقد تعتبر موافقة إلكترونية رسمية.
-    <div class="gray-info" id="datetime"></div>
-    <div class="gray-info" id="location">📍 موقعك الحالي: جارٍ التحديد...</div>
-  </footer>
+  <div class="footer" id="footerInfo">
+    📅 التاريخ والوقت يتم تحميلهما...
+  </div>
 
   <script>
-    // تعبئة أيام/أشهر/سنوات هجريًا
-    const daySelect = document.getElementById("day");
-    const monthSelect = document.getElementById("month");
-    const yearSelect = document.getElementById("year");
-
-    for (let i = 1; i <= 30; i++) {
-      const opt = document.createElement("option");
-      opt.value = i;
-      opt.text = i;
-      daySelect.appendChild(opt);
-    }
-
-    const hijriMonths = [
-      "محرم", "صفر", "ربيع الأول", "ربيع الآخر",
-      "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان",
-      "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
-    ];
-
-    hijriMonths.forEach((m, i) => {
-      const opt = document.createElement("option");
-      opt.value = i + 1;
-      opt.text = m;
-      monthSelect.appendChild(opt);
-    });
-
-    for (let y = 1370; y <= 1445; y++) {
-      const opt = document.createElement("option");
-      opt.value = y;
-      opt.text = y;
-      yearSelect.appendChild(opt);
-    }
-
-    // حفظ البيانات والانتقال
-    document.getElementById("clientForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const id = document.getElementById("id").value;
-      const mobile = document.getElementById("mobile").value;
-      const day = daySelect.value;
-      const month = monthSelect.value;
-      const year = yearSelect.value;
-
-      const birthHijri = `${day}/${month}/${year}`;
-      localStorage.setItem("client_name", name);
-      localStorage.setItem("client_id", id);
-      localStorage.setItem("client_mobile", mobile);
-      localStorage.setItem("client_birth", birthHijri);
-
+    function saveName() {
+      const name = document.getElementById("clientName").value;
+      if (name.trim().length === 0) return;
+      localStorage.setItem("clientName", name);
       window.location.href = "step2.html";
-    });
-
-    // التاريخ والموقع
-    function updateDateTime() {
-      const now = new Date();
-      const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      }).format(now);
-      const miladi = now.toLocaleString('ar-EG');
-      document.getElementById("datetime").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
     }
 
-    function updateLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const lat = pos.coords.latitude.toFixed(5);
-          const lon = pos.coords.longitude.toFixed(5);
-          document.getElementById("location").innerText = `📍 موقعك الحالي: خط العرض ${lat}، خط الطول ${lon}`;
-        });
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateStr = now.toLocaleDateString('ar-EG', options);
+    const timeStr = now.toLocaleTimeString('ar-EG');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const loc = `📍 ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${loc}`;
+      },
+      () => {
+        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | 📍 الموقع غير متاح`;
       }
-    }
-
-    updateDateTime();
-    updateLocation();
+    );
   </script>
+
 </body>
 </html>

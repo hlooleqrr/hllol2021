@@ -2,138 +2,74 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الاسم الكريم</title>
+  <title>الخطوة 1 - الاسم الكريم</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
+      color: #004d40;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
-
     .container {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
+      background: white;
       padding: 30px;
       border-radius: 12px;
-      border: 2px solid #004d40;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      flex: 1;
-    }
-
-    .company-box {
-      background: #e0f2f1;
-      padding: 15px;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 10px;
-      border: 2px solid #00796b;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
-      margin-bottom: 25px;
+      width: 90%;
+      max-width: 400px;
     }
-
     h2 {
-      margin: 20px 0;
-      font-size: 20px;
-      text-align: center;
+      margin-bottom: 20px;
       color: #004d40;
     }
-
-    label {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #004d40;
-    }
-
-    input {
-      width: 100%;
+    input[type="text"] {
       padding: 12px;
-      font-size: 17px;
+      width: 100%;
+      font-size: 18px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 8px;
     }
-
     button {
-      background-color: #00796b;
+      background: #00796b;
       color: white;
-      padding: 12px 25px;
+      padding: 12px 24px;
       border: none;
+      border-radius: 8px;
       font-size: 18px;
-      border-radius: 8px;
       cursor: pointer;
-      width: 100%;
     }
-
-    .footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 20px 10px;
-      background: #eee;
-      color: #333;
-    }
-
-    .alert {
-      background-color: #ffebee;
-      color: #c62828;
-      padding: 10px;
-      border: 1px solid #c62828;
-      border-radius: 8px;
-      text-align: center;
-      margin-top: 20px;
+    button:hover {
+      background: #004d40;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <div class="company-box">💼 شركة سرعة تملك العقار</div>
-
-    <h2>الرجاء إدخال اسمك الكريم</h2>
-
-    <form onsubmit="saveName(); return false;">
-      <label for="clientName">الاسم الكريم:</label>
-      <input type="text" id="clientName" required placeholder="أدخل اسمك الكامل" />
-
-      <button type="submit">التالي</button>
-    </form>
-
-    <div class="alert">
-      ⚠️ هذا الموقع يخضع لنظام المعاملات الإلكترونية - المادة التاسعة: يُعد هذا الإدخال ملزمًا إلكترونيًا.
-    </div>
-  </div>
-
-  <div class="footer" id="footerInfo">
-    📅 التاريخ والوقت يتم تحميلهما...
+    <h2>الاسم الكريم</h2>
+    <input type="text" id="clientName" placeholder="اكتب اسمك الكامل" required />
+    <button onclick="saveAndNext()">التالي</button>
   </div>
 
   <script>
-    function saveName() {
-      const name = document.getElementById("clientName").value;
-      if (name.trim().length === 0) return;
-      localStorage.setItem("clientName", name);
+    function saveAndNext() {
+      const name = document.getElementById("clientName").value.trim();
+      if (name === "") {
+        alert("الرجاء كتابة الاسم الكريم.");
+        return;
+      }
+      localStorage.setItem("client_name", name);
       window.location.href = "step2.html";
     }
-
-    const now = new Date();
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    const dateStr = now.toLocaleDateString('ar-EG', options);
-    const timeStr = now.toLocaleTimeString('ar-EG');
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const loc = `📍 ${position.coords.latitude.toFixed(5)}, ${position.coords.longitude.toFixed(5)}`;
-        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | ${loc}`;
-      },
-      () => {
-        document.getElementById("footerInfo").innerText = `📅 ${dateStr} - ${timeStr} | 📍 الموقع غير متاح`;
-      }
-    );
   </script>
-
 </body>
 </html>

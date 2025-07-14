@@ -1,83 +1,147 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تم رفض العقد</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تأكيد الموافقة النهائية</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #fff5f5;
+      background: #f2f2f2;
       margin: 0;
       padding: 0;
-      text-align: center;
-      color: #c62828;
-    }
-    .box {
-      max-width: 700px;
-      margin: 100px auto;
-      background: white;
-      border: 3px solid #c62828;
-      border-radius: 15px;
-      padding: 40px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #b71c1c;
-    }
-    .info {
-      font-size: 18px;
-      margin-top: 30px;
-      line-height: 2;
-    }
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px;
       color: #004d40;
     }
-    .btn {
-      margin-top: 30px;
-      padding: 12px 24px;
-      background-color: #b71c1c;
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 14px;
+      border: 2px solid #004d40;
+      text-align: center;
+    }
+
+    .company-box {
+      border: 2px solid #004d40;
+      padding: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      background: #e0f7fa;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 80%;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #004d40;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 15px;
+      font-size: 13px;
+      background: #fff3f3;
+      border-top: 1px solid #ccc;
+      color: #b30000;
+      text-align: center;
+    }
+
+    .gray-info {
+      color: gray;
+      font-size: 12px;
+      margin-top: 5px;
     }
   </style>
 </head>
-<body onload="fillInfo()">
+<body>
 
-  <div class="box">
-    <div class="logo">شركة سرعة تملك العقار</div>
-    <h1>❌ تم رفض العقد</h1>
-    <p class="info">
-      لقد قمت برفض العقد، ولن يتم استكمال الإجراءات.<br>
-      نرجو التواصل مع ممثلنا القانوني لمزيد من التفاصيل.<br>
-      <span id="datetime"></span><br>
-      <span id="location"></span>
-    </p>
+  <div class="container">
+    <div class="company-box">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+    <h2>يرجى تأكيد الموافقة بكتابة رقم الهوية وكلمة "موافق"</h2>
 
-    <button class="btn" onclick="window.location.href='index.html'">العودة للرئيسية</button>
+    <input type="text" id="nationalId" maxlength="10" placeholder="رقم الهوية (10 أرقام)" oninput="enforceMaxLength(this)">
+    <br>
+    <input type="text" id="approvalWord" placeholder='اكتب "موافق"' />
+    <br>
+    <button onclick="confirmAgreement()">تأكيد</button>
+
+    <div id="errorMsg" class="error"></div>
   </div>
 
-  <script>
-    function fillInfo() {
-      const now = new Date();
-      document.getElementById("datetime").innerText = `التاريخ والوقت: ${now.toLocaleString('ar-EG')}`;
+  <footer>
+    ⚠️ وفقًا للمادة التاسعة من نظام التعاملات الإلكترونية، فإن الموافقة الإلكترونية هنا تُعد ملزمة قانونيًا.
+    <div class="gray-info" id="datetime"></div>
+    <div class="gray-info" id="locationInfo">📍 موقعك الحالي: جارٍ التحديد...</div>
+  </footer>
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const lat = pos.coords.latitude.toFixed(5);
-          const long = pos.coords.longitude.toFixed(5);
-          document.getElementById("location").innerText = `الموقع: خط العرض ${lat} - خط الطول ${long}`;
-        });
-      } else {
-        document.getElementById("location").innerText = "الموقع غير متوفر";
+  <script>
+    function enforceMaxLength(el) {
+      if (el.value.length > 10) {
+        el.value = el.value.slice(0, 10);
       }
+    }
+
+    function confirmAgreement() {
+      const id = document.getElementById("nationalId").value;
+      const word = document.getElementById("approvalWord").value.trim();
+      const error = document.getElementById("errorMsg");
+
+      if (id.length !== 10 || isNaN(id)) {
+        error.textContent = "رقم الهوية يجب أن يكون 10 أرقام صحيحة.";
+        return;
+      }
+
+      if (word !== "موافق") {
+        error.textContent = 'يرجى كتابة كلمة "موافق" بشكل صحيح.';
+        return;
+      }
+
+      window.location.href = "done.html";
+    }
+
+    // عرض التاريخ
+    const now = new Date();
+    const miladi = now.toLocaleDateString('ar-EG');
+    const hijri = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    }).format(now);
+    document.getElementById("datetime").innerText = `📆 التاريخ الميلادي: ${miladi} | الهجري: ${hijri}`;
+
+    // عرض الموقع
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude.toFixed(5);
+        const lon = pos.coords.longitude.toFixed(5);
+        document.getElementById("locationInfo").innerText = `📍 موقعك الحالي: خط العرض ${lat}، خط الطول ${lon}`;
+      });
     }
   </script>
 

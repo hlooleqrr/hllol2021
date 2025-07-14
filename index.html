@@ -1,66 +1,144 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>سرعة تملك العقار - العقد الإلكتروني</title>
+  <meta charset="UTF-8" />
+  <title>شركة سرعة تملك العقار</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Tajawal', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f7f9f9;
+      background: linear-gradient(to bottom, #ffffff, #f2f2f2);
       color: #004d40;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      text-align: center;
+      justify-content: space-between;
+      padding: 20px;
     }
     header {
-      background-color: #004d40;
-      color: white;
-      padding: 25px 10px;
-      font-size: 26px;
+      text-align: center;
+      margin-top: 30px;
+    }
+    header h1 {
+      font-size: 28px;
       font-weight: bold;
+      color: #00352c;
     }
-    .title {
-      font-size: 20px;
-      margin-top: 10px;
+    header h2 {
+      font-size: 18px;
       color: #00796b;
+      margin-top: 8px;
     }
-    .content {
-      flex: 1;
-      padding: 30px;
+    .welcome {
+      text-align: center;
+      margin: 40px 0;
     }
-    button {
+    .welcome p {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    .btn-start {
+      display: inline-block;
+      padding: 14px 28px;
       background-color: #00796b;
       color: white;
-      padding: 15px 35px;
       font-size: 18px;
       border: none;
       border-radius: 8px;
+      text-decoration: none;
       cursor: pointer;
-      margin-top: 40px;
+      margin-top: 10px;
+      transition: background 0.3s ease;
     }
-    button:hover {
-      background-color: #005b50;
+    .btn-start:hover {
+      background-color: #004d40;
     }
-    .footer {
-      padding: 20px;
+    .alert {
+      background: #ffebee;
+      border-right: 6px solid red;
+      padding: 12px 16px;
+      font-size: 15px;
+      color: #c62828;
+      margin: 30px 0 10px;
+      text-align: right;
+    }
+    footer {
       font-size: 14px;
-      background: #eee;
-      border-top: 2px solid #ccc;
-      margin-top: 30px;
-    }
-    .warning {
-      color: red;
-      font-weight: bold;
-      margin-top: 15px;
+      color: #333;
+      text-align: center;
+      border-top: 1px dashed #ccc;
+      padding-top: 12px;
+      margin-top: auto;
     }
   </style>
 </head>
-<body onload="loadInfo()">
+<body onload="loadDateTimeAndLocation()">
 
-  <header>شركة سرعة تملك العقار</header>
-  <div class="title">الحلول التمويلية المتكاملة</div>
+  <header>
+    <h1>شركة سرعة تملك العقار</h1>
+    <h2>الحلول التمويلية المتكاملة</h2>
+  </header>
 
- 
+  <div class="welcome">
+    <p>نرحب بك عميلنا العزيز</p>
+    <p>نبرم معك هذا العقد...</p>
+    <a href="2.html" class="btn-start">ابدأ بسم الله</a>
+  </div>
+
+  <div class="alert">
+    ⚠️ بموجب <strong>المادة الثانية</strong> من نظام التعاملات الإلكترونية، يعتبر هذا التوقيع الإلكتروني ملزمًا شرعًا وقانونًا.
+  </div>
+
+  <footer id="footerInfo">
+    <!-- سيتم تعبئته تلقائيًا بالتاريخ والموقع -->
+    <p>جارٍ تحميل بياناتك...</p>
+  </footer>
+
+  <script>
+    function loadDateTimeAndLocation() {
+      const footer = document.getElementById("footerInfo");
+
+      // التاريخ والوقت بالثواني
+      const now = new Date();
+      const dateTimeStr = now.toLocaleString('ar-SA', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+
+      // الموقع الجغرافي
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const lat = position.coords.latitude.toFixed(6);
+            const lng = position.coords.longitude.toFixed(6);
+            footer.innerHTML = `
+              شركة سرعة تملك العقار © 2025<br>
+              www.hlooleqrr.com | الرياض<br>
+              التاريخ والوقت: ${dateTimeStr}<br>
+              موقعك الحالي: خط العرض ${lat} ، خط الطول ${lng}
+            `;
+          },
+          error => {
+            footer.innerHTML = `
+              شركة سرعة تملك العقار © 2025<br>
+              www.hlooleqrr.com | الرياض<br>
+              التاريخ والوقت: ${dateTimeStr}<br>
+              ⚠️ لم يتم السماح بموقعك الجغرافي.
+            `;
+          }
+        );
+      } else {
+        footer.innerHTML = `
+          شركة سرعة تملك العقار © 2025<br>
+          www.hlooleqrr.com | الرياض<br>
+          التاريخ والوقت: ${dateTimeStr}<br>
+          ⚠️ موقعك غير مدعوم في هذا المتصفح.
+        `;
+      }
+    }
+  </script>
+
+</body>
+</html>

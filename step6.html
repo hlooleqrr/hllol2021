@@ -1,84 +1,149 @@
-<!-- step6.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>تأكيد العقد</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f5f5f5;
       margin: 0;
-      padding: 30px;
-      text-align: center;
+      padding: 0;
+      background: #f9f9f9;
       color: #004d40;
     }
     .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
       border: 2px solid #004d40;
-      max-width: 700px;
-      margin: auto;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
-    h2 {
+    .company-box {
+      background: #e0f2f1;
+      padding: 15px;
+      font-size: 22px;
+      font-weight: bold;
+      border-radius: 10px;
+      border: 2px solid #00796b;
+      text-align: center;
       margin-bottom: 20px;
     }
-    input {
-      width: 80%;
-      padding: 12px;
-      font-size: 16px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+    .contract {
+      line-height: 2.2;
+      padding: 10px;
+      border-radius: 10px;
     }
-    button {
-      padding: 12px 30px;
-      font-size: 16px;
-      background-color: #00796b;
-      color: white;
+    .actions {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .actions button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 12px 25px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+    }
+    .accept { background-color: #00796b; color: white; }
+    .reject { background-color: #c62828; color: white; }
+
+    .alert {
+      background-color: #ffebee;
+      color: #c62828;
+      padding: 10px;
+      border: 1px solid #c62828;
+      border-radius: 8px;
+      text-align: center;
       margin-top: 20px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      padding: 20px 10px;
+      background: #eee;
+      color: #333;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>تأكيد إبرام العقد</h2>
-    <p>الرجاء كتابة رقم الهوية ثم كتابة كلمة "موافق" لتأكيد العقد.</p>
+    <div class="company-box">💼 شركة سرعة تملك العقار</div>
 
-    <input type="text" id="nidConfirm" placeholder="رقم الهوية (10 أرقام)" maxlength="10" oninput="validateNumber(this)">
-    <br>
-    <input type="text" id="approvalText" placeholder="اكتب كلمة موافق">
+    <div class="contract" id="contractContent">
+      <h2 style="text-align:center;">عقد إنهاء إجراءات تمويل عقاري</h2>
 
-    <br>
-    <button onclick="confirmContract()">تأكيد</button>
+      <p>تم بعون الله وتوفيقه في هذا اليوم: <span id="fullDate"></span></p>
+
+      <p>الطرف الأول: شركة سرعة تملك العقار ويمثلها الأستاذ نايف المطيري.</p>
+
+      <p>الطرف الثاني:</p>
+      <ul>
+        <li>الاسم: <span id="clientName"></span></li>
+        <li>رقم الهوية: <span id="clientId"></span></li>
+        <li>رقم الجوال: <span id="clientPhone"></span></li>
+        <li>تاريخ الميلاد (هجري): <span id="clientDOB"></span></li>
+        <li>الموقع/العنوان: <span id="clientLocation"></span></li>
+      </ul>
+
+      <h3>بنود العقد:</h3>
+      <ol>
+        <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
+        <li>يدفع الطرف الثاني للطرف الأول نسبة 2.5% من قيمة العقار.</li>
+        <li>الرسوم الإدارية تشمل مبلغ 500 ريال شاملة ضريبة القيمة المضافة.</li>
+        <li>يلتزم الطرف الأول بتوفير العقار المناسب حسب طلب الطرف الثاني.</li>
+        <li>في حال إلغاء الطلب بعد بدء الإجراءات، لا يحق للطرف الثاني استرداد الرسوم.</li>
+        <li>مدة هذا العقد هي 30 يومًا قابلة للتمديد باتفاق الطرفين.</li>
+        <li>يلتزم الطرف الثاني بتزويد الطرف الأول بكافة المستندات المطلوبة.</li>
+        <li>الطرف الأول لا يضمن الموافقة من جهة التمويل، وإنما يسعى لذلك فقط.</li>
+        <li>أي تلاعب في المعلومات يعفي الطرف الأول من المسؤولية.</li>
+        <li>في حال اختلاف، يتم الرجوع للجهات الرسمية لحل النزاع.</li>
+        <li>هذا العقد ملزم إلكترونيًا ويُعد ساريًا بمجرد الموافقة عليه.</li>
+        <li>يقر الطرف الثاني بالموافقة على جميع ما ورد أعلاه.</li>
+      </ol>
+
+      <div class="alert">
+        ⚠️ المادة التاسعة من نظام التعاملات الإلكترونية: هذا العقد الإلكتروني ملزم قانونيًا بمجرد الموافقة عليه.
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="accept" onclick="acceptContract()">✅ موافق</button>
+      <button class="reject" onclick="rejectContract()">❌ رفض</button>
+    </div>
   </div>
 
+  <div class="footer" id="footerInfo">📅 التاريخ والوقت: ...</div>
+
   <script>
-    function validateNumber(input) {
-      input.value = input.value.replace(/[^0-9]/g, '');
+    const name = localStorage.getItem("name") || "غير معروف";
+    const id = localStorage.getItem("id") || "غير مدخل";
+    const phone = localStorage.getItem("phone") || "غير مدخل";
+    const dob = localStorage.getItem("dob") || "غير مدخل";
+    const loc = localStorage.getItem("locationNote") || "غير مدخل";
+
+    document.getElementById("clientName").innerText = name;
+    document.getElementById("clientId").innerText = id;
+    document.getElementById("clientPhone").innerText = phone;
+    document.getElementById("clientDOB").innerText = dob;
+    document.getElementById("clientLocation").innerText = loc;
+
+    const now = new Date();
+    document.getElementById("fullDate").innerText = now.toLocaleString('ar-EG');
+    document.getElementById("footerInfo").innerText = `📅 ${now.toLocaleDateString('ar-EG')} - ${now.toLocaleTimeString('ar-EG')} | ${loc}`;
+
+    function acceptContract() {
+      window.location.href = "step7.html";
     }
 
-    function confirmContract() {
-      const nid = document.getElementById("nidConfirm").value.trim();
-      const approval = document.getElementById("approvalText").value.trim();
-
-      if (nid.length !== 10) {
-        alert("❌ رقم الهوية يجب أن يكون 10 أرقام.");
-        return;
-      }
-
-      if (approval !== "موافق") {
-        alert("❌ يجب كتابة كلمة (موافق) فقط.");
-        return;
-      }
-
-      window.location.href = "step7.html";
+    function rejectContract() {
+      window.location.href = "rejected.html";
     }
   </script>
 

@@ -1,76 +1,89 @@
-<!-- step8.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>تم إبرام العقد</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>نتيجة العقد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet"/>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #e0f2f1);
       margin: 0;
-      background-color: #f9f9f9;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
       color: #004d40;
     }
     .container {
-      max-width: 700px;
-      margin: 50px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      border: 3px solid #004d40;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      text-align: center;
+      padding: 50px 20px;
     }
     h1 {
       font-size: 28px;
       margin-bottom: 20px;
-      color: #00796b;
     }
-    .success {
-      font-size: 24px;
-      color: green;
-      margin-top: 20px;
-      margin-bottom: 20px;
+    .message {
+      font-size: 22px;
+      margin: 30px 0;
+      color: #00695c;
     }
-    .info {
-      background-color: #e0f7f1;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: right;
-      line-height: 2;
+    .message.rejected {
+      color: red;
     }
-    .footer {
-      margin-top: 30px;
+    .done-btn {
+      padding: 14px 30px;
+      font-size: 18px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .done-btn:hover {
+      background-color: #004d40;
+    }
+    footer {
       font-size: 14px;
-      color: #888;
-      text-align: center;
+      background: #e0f2f1;
+      padding: 10px 0;
+      margin-top: auto;
+      border-top: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>تم إبرام العقد بنجاح ✅</h1>
-    <div class="success">شكراً لتعاونك معنا</div>
-    <div class="info">
-      <strong>الاسم:</strong> <span id="client_name"></span><br>
-      <strong>رقم الهوية:</strong> <span id="client_id"></span><br>
-      <strong>رقم الجوال:</strong> <span id="client_mobile"></span><br>
-      <strong>العنوان:</strong> <span id="client_address"></span>
-    </div>
-
-    <div class="footer">
-      التاريخ: <span id="today"></span>
-    </div>
+    <h1>شركة سرعة تملك العقار</h1>
+    <div id="resultMessage" class="message"></div>
+    <button class="done-btn" onclick="goHome()">تم الانتهاء</button>
   </div>
 
+  <footer>
+    جميع الحقوق محفوظة © سرعة تملك العقار<br/>
+    www.hlooleqrr.com
+  </footer>
+
   <script>
-    document.getElementById("client_name").textContent = localStorage.getItem("client_name") || '—';
-    document.getElementById("client_id").textContent = localStorage.getItem("client_id") || '—';
-    document.getElementById("client_mobile").textContent = localStorage.getItem("client_mobile") || '—';
-    document.getElementById("client_address").textContent = localStorage.getItem("client_address") || '—';
-    document.getElementById("today").textContent = new Date().toLocaleString('ar-SA');
+    const status = localStorage.getItem("contractStatus");
+
+    const msgBox = document.getElementById("resultMessage");
+
+    if (status === "approved") {
+      msgBox.innerText = "✅ تم إبرام العقد بنجاح";
+      msgBox.classList.remove("rejected");
+    } else {
+      msgBox.innerText = "❌ تم رفض العقد";
+      msgBox.classList.add("rejected");
+    }
+
+    function goHome() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
   </script>
 </body>
 </html>

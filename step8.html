@@ -118,6 +118,27 @@
     }
 
     function confirmSubmission() {
+      const name = localStorage.getItem("clientName") || "";
+      const id = localStorage.getItem("nationalID") || "";
+      const birth = localStorage.getItem("birthHijri") || "";
+      const mobile = localStorage.getItem("mobile") || "";
+      const location = localStorage.getItem("location") || "لم يتم تحديد الموقع";
+      const now = new Date();
+      const time = now.toLocaleString("ar-EG");
+
+      const clientData = {
+        name,
+        id,
+        birth,
+        mobile,
+        location,
+        time
+      };
+
+      let clients = JSON.parse(localStorage.getItem("clients") || "[]");
+      clients.push(clientData);
+      localStorage.setItem("clients", JSON.stringify(clients));
+
       window.location.href = "success.html";
     }
 

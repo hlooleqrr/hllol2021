@@ -1,142 +1,161 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>العقد الإلكتروني</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>عرض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #f9f9f9;
+      color: #004d40;
       margin: 0;
       padding: 0;
-      color: #004d40;
     }
-    .header {
-      background-color: #004d40;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 20px;
-    }
-    .contract-box {
-      margin: 20px auto;
-      padding: 25px;
-      background-color: white;
-      border: 2px solid #004d40;
-      border-radius: 10px;
+    .container {
       max-width: 800px;
-      line-height: 2;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .footer {
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
       text-align: center;
-      font-size: 14px;
-      color: gray;
-      margin: 40px auto 10px;
-    }
-    .warning {
-      color: red;
+      font-size: 24px;
       font-weight: bold;
+      color: #006400;
       margin-bottom: 20px;
-      text-align: center;
-      font-size: 16px;
     }
-    .actions {
-      text-align: center;
+    .contract {
+      white-space: pre-line;
+      line-height: 2;
+      font-size: 17px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
       margin-top: 30px;
     }
-    .btn {
-      padding: 12px 24px;
-      font-size: 18px;
-      border-radius: 6px;
-      border: none;
-      margin: 10px;
-      cursor: pointer;
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 25px;
     }
-    .accept {
-      background-color: #2e7d32;
-      color: white;
-    }
-    .reject {
-      background-color: #c62828;
-      color: white;
+    footer {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-  <div class="header">شركة سرعة تملك العقار</div>
-
-  <div class="contract-box" id="contract">
-    <div class="warning">بناءً على المادة (9) من نظام التعاملات الإلكترونية السعودي، فإن قبولك للعقد يُعد توقيعًا إلكترونيًا ملزمًا.</div>
-    
-    <h2 style="text-align: center;">عقد اتفاقية إنهاء إجراءات تمويل عقاري</h2>
-
-    <p>تم بعون الله وتوفيقه بتاريخ <span id="todayDate"></span> بين كل من:</p>
-
-    <p><strong>الطرف الأول:</strong> شركة سرعة تملك العقار، ويمثلها الأستاذ نايف المطيري بصفته مدير الإدارة.</p>
-
-    <p><strong>الطرف الثاني:</strong><br>
-    الاسم: <span id="client_name"></span><br>
-    رقم الهوية: <span id="client_id"></span><br>
-    رقم الجوال: <span id="client_phone"></span><br>
-    تاريخ الميلاد: <span id="client_birth"></span><br>
-    الموقع / العنوان: <span id="client_location"></span>
-    </p>
-
-    <p>تم الاتفاق على قيام الطرف الأول بإنهاء إجراءات التمويل العقاري من جهة تمويلية وفقًا للشروط والأحكام التالية:</p>
-
-    <ol>
-      <li>يقوم الطرف الأول بالتواصل مع الجهات التمويلية المعتمدة.</li>
-      <li>يقوم الطرف الثاني بتوفير جميع المستندات المطلوبة.</li>
-      <li>يتم دفع رسوم قدرها 2.5٪ من قيمة العقار + 500 ريال رسوم عقد.</li>
-      <li>في حال رفض التمويل من البنك، لا يترتب على الطرف الثاني أي التزامات مالية.</li>
-      <li>يقر الطرف الثاني بصحة المعلومات المدخلة، وأنها تحت مسؤوليته الكاملة.</li>
-      <li>يتم إبرام هذا العقد إلكترونيًا ويُعد ملزمًا للطرفين.</li>
-      <li>يحق للطرف الأول التواصل مع أي جهة حكومية أو تمويلية نيابة عن الطرف الثاني.</li>
-      <li>يتم إرسال نسخة إلكترونية من العقد للطرف الثاني بعد الموافقة.</li>
-      <li>أي تزوير أو تحايل يعرّض الطرف الثاني للمساءلة القانونية.</li>
-      <li>مدة سريان هذا العقد 60 يومًا من تاريخ الإبرام.</li>
-      <li>يتم حفظ نسخة إلكترونية من العقد في أرشيف الطرف الأول.</li>
-      <li>يُطبق نظام التعاملات الإلكترونية السعودي على هذا العقد.</li>
-    </ol>
-
-    <div class="actions">
-      <button class="btn accept" onclick="agreeContract()">موافق</button>
-      <button class="btn reject" onclick="rejectContract()">رفض</button>
+    <div class="contract" id="contractText">
+      <!-- سيتم تعبئة النص تلقائيًا من JavaScript -->
     </div>
-  </div>
 
-  <div class="footer">
-    <div id="footer_info"></div>
+    <button onclick="goNext()">التالي</button>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
   <script>
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const time = today.toLocaleTimeString('ar-SA');
-    document.getElementById("todayDate").innerText = `${yyyy}/${mm}/${dd} - ${time}`;
-    document.getElementById("footer_info").innerText = `تاريخ: ${yyyy}/${mm}/${dd} - الساعة: ${time}`;
-
-    document.getElementById("client_name").innerText = localStorage.getItem("client_name");
-    document.getElementById("client_id").innerText = localStorage.getItem("client_id");
-    document.getElementById("client_phone").innerText = localStorage.getItem("client_phone");
-    document.getElementById("client_birth").innerText = localStorage.getItem("client_birth");
-    document.getElementById("client_location").innerText = localStorage.getItem("client_location");
-
-    function agreeContract() {
-      localStorage.setItem("client_decision", "موافق");
+    function goNext() {
       window.location.href = "step7.html";
     }
 
-    function rejectContract() {
-      localStorage.setItem("client_decision", "رافض");
-      window.location.href = "step7.html";
+    function fillContract() {
+      const name = localStorage.getItem("clientName") || "..................";
+      const id = localStorage.getItem("nationalID") || "..................";
+      const birth = localStorage.getItem("birthHijri") || "..................";
+      const mobile = localStorage.getItem("mobile") || "..................";
+
+      const contract = `
+بسم الله الرحمن الرحيم
+
+المملكة العربية السعودية
+شركة الوساطة العقارية والتسويق
+ترخيص: 1100042624
+الرياض
+
+عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
+
+تم بعون الله وتوفيقه في هذا اليوم، الاتفاق بين كل من:
+
+الطرف الأول:
+شركة الوساطة العقارية والتسويق
+ويمثلها الأستاذ: نايف المطيري
+بصفته: مدير الإدارة
+ويُشار إليه في هذا العقد بـ (الطرف الأول)
+
+الطرف الثاني:
+الاسم: ${name}
+رقم الهوية: ${id}
+تاريخ الميلاد: ${birth}
+رقم الجوال: ${mobile}
+ويُشار إليه في هذا العقد بـ (الطرف الثاني)
+
+⸻
+التمهيد:
+حيث أن الطرف الأول جهة مرخصة تعمل في مجال الوساطة العقارية وتقوم بتسهيل التمويل العقاري من الجهات المعتمدة، ويرغب الطرف الثاني في تملّك عقار عبر إحدى جهات التمويل، فقد تم التعاقد وفق البنود التالية:
+
+1. التمهيد أعلاه جزء لا يتجزأ من هذا العقد.
+2. يقوم الطرف الأول بجميع إجراءات إنهاء التمويل للطرف الثاني.
+3. يدفع الطرف الثاني نسبة 2.5٪ من قيمة العقار + 500 ريال رسوم عقد.
+4. إذا فشل التمويل لأسباب خارج إرادة الطرف الثاني يُعاد المبلغ.
+5. إذا انسحب الطرف الثاني لأي سبب يُعتبر المبلغ مستحقًا للطرف الأول.
+6. في حال التأخير أو المماطلة يتحمل الطرف الثاني المسؤولية.
+7. يقر الطرف الثاني بعدم إخفاء معلومات تؤثر على المعاملة.
+8. يلتزم بتحويل راتبه للبنك المحدد إن لزم الأمر.
+9. تنتهي علاقة الطرفين بعد توقيع العقد التمويلي.
+10. العناوين المذكورة تُعتبر معتمدة.
+11. النزاعات تُحال للمحكمة المختصة بالرياض.
+12. حُرّر العقد من نسختين وتم الاتفاق عليه.
+
+توقيع الطرف الأول: تم التوقيع آليًا باسم نايف المطيري.
+توقيع الطرف الثاني: يوقّع لاحقًا عند الموافقة إلكترونيًا.
+
+      `;
+
+      document.getElementById("contractText").innerText = contract;
     }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    fillContract();
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
-
 </body>
 </html>

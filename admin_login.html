@@ -1,51 +1,47 @@
-<!-- client_login.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الرقم المخصص</title>
+  <meta charset="UTF-8">
+  <title>دخول المشرف</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal&display=swap');
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+      background-color: #f9f9f9;
       color: #004d40;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 500px;
+      margin: 100px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
       text-align: center;
     }
-    header {
-      background: #004d40;
-      padding: 25px;
-      color: white;
-      font-size: 22px;
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
+      font-size: 24px;
       font-weight: bold;
-      border-bottom: 4px solid #00796b;
-    }
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    input {
-      padding: 12px;
-      font-size: 18px;
-      width: 260px;
-      border: 2px solid #00796b;
-      border-radius: 8px;
-      text-align: center;
+      color: #006400;
       margin-bottom: 20px;
     }
-    button {
-      padding: 12px 30px;
+    input {
+      width: 100%;
+      padding: 14px;
       font-size: 18px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      margin-top: 20px;
       background-color: #00796b;
       color: white;
       border: none;
@@ -53,42 +49,43 @@
       cursor: pointer;
     }
     button:hover {
-      background-color: #005f56;
+      background-color: #004d40;
+    }
+    .error {
+      color: #d32f2f;
+      margin-top: 15px;
+      font-size: 16px;
+      display: none;
     }
     footer {
-      padding: 15px;
-      background-color: #e0e0e0;
-      font-size: 14px;
-      color: #c62828;
-      border-top: 2px solid #ccc;
+      margin-top: 30px;
+      font-size: 13px;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <header>
-    شركة سرعة تملك العقار<br>
-    <div style="font-size: 16px;">الحلول التمويلية المتكاملة</div>
-  </header>
+  <div class="container">
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-  <div class="main">
-    <h2>يرجى إدخال الرقم المخصص</h2>
-    <input type="text" id="accessCode" placeholder="مثال: 123456 أو admin789" />
-    <button onclick="validateCode()">التالي</button>
+    <h3>رمز دخول المشرف</h3>
+    <input type="password" id="adminCode" placeholder="أدخل الرقم السري">
+    <button onclick="verifyAdmin()">دخول</button>
+
+    <div class="error" id="errorMsg">⚠️ الرقم غير صحيح</div>
+
+    <footer>
+      جميع الحقوق محفوظة لشركة سرعة تملك العقار
+    </footer>
   </div>
 
-  <footer>
-    ⚠️ نؤكد أن جميع البيانات تحفظ بسرية تامة | يتم استخدام الموقع لأغراض التعاقد الرسمية فقط
-  </footer>
-
   <script>
-    function validateCode() {
-      const code = document.getElementById("accessCode").value.trim();
-      if (code === "admin789") {
-        window.location.href = "admin_dashboard.html";
-      } else if (code === "123456") {
-        window.location.href = "client_form_1.html"; // أول صفحة للعميل
+    function verifyAdmin() {
+      const code = document.getElementById("adminCode").value.trim();
+      if (code === "4321q") {
+        window.location.href = "admin_panel.html";
       } else {
-        alert("⚠️ الرقم المخصص غير صحيح، حاول مرة أخرى.");
+        document.getElementById("errorMsg").style.display = "block";
       }
     }
   </script>

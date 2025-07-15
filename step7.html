@@ -1,78 +1,114 @@
-      <p>عقد إنهاء إجراءات تمويل عقاري من جهة تمويلية</p>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>موافقة أو رفض العقد</title>
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f9f9f9;
+      color: #004d40;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
+      margin-bottom: 20px;
+    }
+    .question {
+      font-size: 20px;
+      margin: 30px 0 20px;
+    }
+    .btn {
+      width: 45%;
+      padding: 15px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      margin: 10px;
+    }
+    .accept {
+      background-color: #00796b;
+      color: white;
+    }
+    .reject {
+      background-color: #c62828;
+      color: white;
+    }
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 25px;
+    }
+    footer {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+
+    <div class="question">
+      هل توافق على كامل بنود العقد أعلاه؟
     </div>
 
-    <div class="contract-content" id="contractText">
-      <p>تم بعون الله وتوفيقه في يوم <span id="todayDate"></span>، إبرام هذا العقد بين كل من:</p>
-
-      <p><strong>الطرف الأول:</strong> شركة سرعة تملك العقار، ويمثلها الأستاذ: نايف المطيري، بصفته مدير الإدارة.</p>
-
-      <p><strong>الطرف الثاني:</strong></p>
-      <p>الاسم: <span id="clientName"></span></p>
-      <p>رقم الهوية: <span id="clientID"></span></p>
-      <p>رقم الجوال: <span id="clientPhone"></span></p>
-      <p>تاريخ الميلاد (هجري): <span id="clientBirth"></span></p>
-      <p>العنوان / الموقع: <span id="clientLocation"></span></p>
-
-      <hr>
-
-      <p><strong>بنود العقد:</strong></p>
-      <ol>
-        <li>يقوم الطرف الأول بإنهاء إجراءات التمويل العقاري للطرف الثاني.</li>
-        <li>تكون جميع المعاملات عبر الموقع الإلكتروني الرسمي للطرف الأول.</li>
-        <li>يدفع الطرف الثاني للطرف الأول نسبة ٢.٥٪ من قيمة العقار + ٥٠٠ ريال رسوم إدارية.</li>
-        <li>تعتبر المبالغ مستحقة فور توقيع العقد أو تحويل الدفعة الأولى.</li>
-        <li>في حال عدم اكتمال التمويل من قبل الجهات، لا يُلزم الطرف الأول بأي تعويض.</li>
-        <li>تكون جميع البيانات المقدمة صحيحة وتحت مسؤولية الطرف الثاني.</li>
-        <li>يتعهد الطرف الأول بالمحافظة على سرية المعلومات.</li>
-        <li>في حال حدوث خلاف، يتم حله وديًا وفي حال التعذر يتم اللجوء للجهات المختصة.</li>
-        <li>مدة العقد تسري من تاريخ توقيعه وحتى اكتمال التمويل.</li>
-        <li>يحق للطرف الأول إنهاء العقد في حال الإخلال بالشروط.</li>
-        <li>لا يحق للطرف الثاني المطالبة بإلغاء العقد بعد بدء التنفيذ.</li>
-        <li>يعتبر هذا العقد ملزمًا للطرفين عند توقيعه إلكترونيًا.</li>
-      </ol>
-
-      <p>وبهذا تم الاتفاق بين الطرفين حسب الشروط أعلاه.</p>
-    </div>
+    <button class="btn accept" onclick="acceptContract()">أوافق ✅</button>
+    <button class="btn reject" onclick="rejectContract()">لا أوافق ❌</button>
 
     <div class="alert">
-      تنبيه: بناءً على المادة 9 من نظام المعاملات الإلكترونية، فإن هذا العقد ملزم نظامًا ومعتبر شرعًا بمجرد الموافقة الإلكترونية من الطرف الثاني.
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
     </div>
 
-    <div class="buttons">
-      <button class="approve" onclick="goToStep8('approved')">موافق</button>
-      <button class="reject" onclick="goToStep8('rejected')">رفض</button>
-    </div>
-
-    <div class="footer">
-      <p>📍 <span id="locationStatus"></span></p>
-      <p>🕒 التاريخ: <span id="fullDate"></span></p>
-    </div>
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
   <script>
-    const name = localStorage.getItem("clientName") || "";
-    const id = localStorage.getItem("clientID") || "";
-    const phone = localStorage.getItem("clientPhone") || "";
-    const birth = localStorage.getItem("clientBirth") || "";
-    const loc = localStorage.getItem("clientLocation") || "لم يتم مشاركة الموقع";
-
-    document.getElementById("clientName").innerText = name;
-    document.getElementById("clientID").innerText = id;
-    document.getElementById("clientPhone").innerText = phone;
-    document.getElementById("clientBirth").innerText = birth;
-    document.getElementById("clientLocation").innerText = loc;
-    document.getElementById("locationStatus").innerText = loc;
-
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const fullDate = today.toLocaleDateString('ar-EG', options) + ' - ' + today.toLocaleTimeString('ar-EG');
-    document.getElementById("todayDate").innerText = today.toLocaleDateString('ar-EG', options);
-    document.getElementById("fullDate").innerText = fullDate;
-
-    function goToStep8(status) {
-      localStorage.setItem("contractStatus", status);
+    function acceptContract() {
       window.location.href = "step8.html";
     }
+
+    function rejectContract() {
+      window.location.href = "unauthorized.html";
+    }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

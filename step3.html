@@ -2,74 +2,121 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>الخطوة 3 - رقم الجوال</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet" />
+  <title>الاسم الكريم</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
+      background-color: #f9f9f9;
+      color: #004d40;
       margin: 0;
       padding: 0;
-      background: #f9fafb;
-      color: #004d40;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
     .container {
-      background: white;
+      max-width: 650px;
+      margin: 40px auto;
+      background-color: #fff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #004d40;
+    }
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
       text-align: center;
-      width: 90%;
-      max-width: 400px;
-    }
-    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
       margin-bottom: 20px;
-      color: #004d40;
     }
-    input[type="text"] {
-      padding: 12px;
-      width: 100%;
+    label {
+      display: block;
       font-size: 18px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
       border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
     }
     button {
-      background: #00796b;
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #00796b;
       color: white;
-      padding: 12px 24px;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
     }
-    button:hover {
-      background: #004d40;
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 20px;
+    }
+    footer {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>رقم الجوال</h2>
-    <input type="text" id="mobile" placeholder="05XXXXXXXX" maxlength="10" required />
-    <button onclick="saveAndNext()">التالي</button>
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+
+    <label for="fullName">الاسم الكريم (ثلاثي على الأقل):</label>
+    <input type="text" id="fullName" placeholder="مثال: محمد عبد الله القحطاني" oninput="checkName()" />
+
+    <button id="nextBtn" onclick="saveAndNext()" disabled>اكمل</button>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
   <script>
+    function checkName() {
+      const name = document.getElementById("fullName").value.trim();
+      const wordCount = name.split(/\s+/).filter(w => w).length;
+      document.getElementById("nextBtn").disabled = !(wordCount >= 3 && /^[\u0600-\u06FF\s]+$/.test(name));
+    }
+
     function saveAndNext() {
-      const mobile = document.getElementById("mobile").value.trim();
-      if (!/^05\d{8}$/.test(mobile)) {
-        alert("الرجاء إدخال رقم جوال صحيح يبدأ بـ 05 ومكون من 10 أرقام.");
-        return;
-      }
-      localStorage.setItem("client_mobile", mobile);
+      const name = document.getElementById("fullName").value.trim();
+      localStorage.setItem("clientName", name);
       window.location.href = "step4.html";
     }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

@@ -1,126 +1,104 @@
+<!-- step1.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>التحقق من الرقم المخصص</title>
   <style>
     body {
+      padding: 20px;
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f5f5f5;
       color: #004d40;
-      margin: 0;
-      padding: 0;
     }
-    .container {
-      max-width: 650px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border: 2px solid #004d40;
-    }
-    .company-name {
-      background-color: #e6f9ec;
-      padding: 10px;
-      text-align: center;
-      font-size: 24px;
+    .header {
+      background-color: #d0f0d0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 22px;
       font-weight: bold;
-      color: #006400;
-      margin-bottom: 20px;
+      text-align: center;
     }
-    label {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 10px;
+    .input-box {
+      margin-top: 40px;
+      text-align: center;
     }
     input {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-      direction: ltr;
+      padding: 10px;
+      font-size: 18px;
+      width: 80%;
+      border: 2px solid #004d40;
+      border-radius: 6px;
+      text-align: center;
     }
     button {
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      background-color: #00796b;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #004d40;
       color: white;
+      font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
+      display: none;
     }
-    button:hover {
-      background-color: #005f56;
-    }
-    .alert {
+    .warning {
       background-color: #fff3cd;
       border: 1px solid #ffeeba;
-      padding: 15px;
+      padding: 12px;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       color: #856404;
-      margin-top: 20px;
+      margin-top: 25px;
     }
-    footer {
-      margin-top: 30px;
-      padding-top: 10px;
-      border-top: 1px solid #ccc;
-      font-size: 14px;
+    .footer {
       text-align: center;
-      color: #777;
+      font-size: 14px;
+      margin-top: 50px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+  <div class="header">شركة سرعة تملك العقار</div>
 
-    <label for="accessCode">أدخل الرقم المخصص:</label>
-    <input type="text" id="accessCode" placeholder="مثال: 1234q أو 4321q" oninput="checkCode()" />
-
-    <button id="nextBtn" onclick="validateCode()" disabled>التالي</button>
-
-    <div class="alert">
-      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-    </div>
-
-    <footer>
-      <p id="dateTime"></p>
-      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
-    </footer>
+  <div class="input-box">
+    <label>ادخل الرقم المخصص</label><br><br>
+    <input type="text" id="code" oninput="checkCode()" placeholder="•••••" />
+    <br>
+    <button id="next" onclick="goNext()">التالي</button>
   </div>
+
+  <div class="warning">
+    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+  </div>
+
+  <div class="footer" id="footer"></div>
 
   <script>
     function checkCode() {
-      const code = document.getElementById("accessCode").value.trim();
-      document.getElementById("nextBtn").disabled = !(code.length >= 5);
+      const code = document.getElementById("code").value;
+      const nextBtn = document.getElementById("next");
+      if (code === "1234q" || code === "4321q") {
+        nextBtn.style.display = "inline-block";
+      } else {
+        nextBtn.style.display = "none";
+      }
     }
 
-    function validateCode() {
-      const code = document.getElementById("accessCode").value.trim();
+    function goNext() {
+      const code = document.getElementById("code").value;
       if (code === "1234q") {
         window.location.href = "step2.html";
       } else if (code === "4321q") {
         window.location.href = "admin_login.html";
-      } else {
-        alert("الرقم غير صحيح، حاول مرة أخرى.");
       }
     }
 
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString('ar-EG');
-      const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
-    }
-
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

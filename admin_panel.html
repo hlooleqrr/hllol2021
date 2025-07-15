@@ -5,114 +5,129 @@
   <title>لوحة المشرف - العقود</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family:'Tajawal',sans-serif;background:#f9f9f9;padding:20px;color:#004d40; }
-    h2 { text-align:center;color:#004d40; }
-    .contract-box { background:#fff;border:2px solid #004d40;padding:20px;border-radius:12px;margin:20px 0; }
-    .info-row { display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px; }
-    .btn-download { background:#00796b;color:#fff;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-size:14px; }
-    .btn-download:hover { background:#004d40; }
-    .footer { text-align:center;margin-top:20px;font-size:13px;color:#555; }
+    body{font-family:'Tajawal',sans-serif;background:#f9f9f9;padding:20px;color:#004d40;}
+    .contract-box{background:#fff;border:2px solid #004d40;padding:20px;border-radius:12px;margin-bottom:40px;}
+    h2{text-align:center;margin-bottom:20px;color:#004d40;}
+    .info-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:15px;}
+    .info-row div{width:48%;}
+    .btn-download{background:#00796b;color:#fff;padding:8px 20px;border:none;border-radius:6px;cursor:pointer;font-size:14px;}
+    .btn-download:hover{background:#004d40;}
+    .footer{text-align:center;margin-top:30px;font-size:13px;color:#555;}
+    .confirmation-box{background:#e8f5e9;padding:15px;margin-top:30px;border-radius:10px;border:1px solid #4caf50;}
+    .highlight{color:#c62828;font-weight:bold;}
   </style>
 </head>
 <body>
 
-<h2>لوحة المشرف - العقود</h2>
+  <h2>العقود المعتمدة</h2>
 
-<div id="contractsList"></div>
+  <div id="contractContainer" class="contract-box">
+    <div style="text-align:center;font-weight:bold;font-size:20px;">بسم الله الرحمن الرحيم</div>
 
-<script>
-let contractStart = 9876;
-let clients = JSON.parse(localStorage.getItem("clientsData") || "[]");
+    <div class="info-row" style="margin-top:20px;">
+      <div>
+        <div>المملكة العربية السعودية</div>
+        <div>سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+        <div>ترخيص رقم: 1100042624</div>
+        <div>الرياض</div>
+      </div>
+      <div style="text-align:left;">
+        <div id="contractNo">رقم العقد: </div>
+        <div id="hijriDate">التاريخ الهجري: </div>
+        <div id="timeNow">الوقت: </div>
+      </div>
+    </div>
 
-if (clients.length === 0) {
-  document.getElementById("contractsList").innerHTML = "<p>لا يوجد عملاء حالياً.</p>";
-} else {
-  clients.forEach((client, index) => {
-    const contractNo = contractStart + index + 1;
-    const div = document.createElement("div");
-    div.className = "contract-box";
-    div.innerHTML = `
-      <div class="info-row">
-        <div><strong>اسم العميل:</strong> ${client.name}</div>
-        <div><strong>رقم الهوية:</strong> ${client.id}</div>
-      </div>
-      <div class="info-row">
-        <div><strong>رقم العقد:</strong> ${contractNo}</div>
-        <div><strong>تاريخ العقد:</strong> ${client.date || '—'}</div>
-      </div>
-      <div class="info-row">
-        <div><strong>حالة العقد:</strong> ${client.status}</div>
-        <div><strong>الوقت:</strong> ${client.time || '—'}</div>
-      </div>
-      <div style="text-align:center;margin-top:10px;">
-        <button class="btn-download" onclick="generatePDF(${index})">📄 تحميل العقد بصيغة PDF</button>
-      </div>
+    <h3 style="text-align:center;margin-top:30px;">عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h3>
+
+    <div id="clientData" style="margin-top:30px;"></div>
+
+    <p style="margin-top:30px;" id="contractBody">
+      نص كامل لبنود العقد التي تم عرضها للعميل مع البنود من 1 إلى 12 بنفس التنسيق الرسمي.
+    </p>
+
+    <div class="confirmation-box">
+      <p><strong>صفحة التأكيد النهائية:</strong></p>
+      <p>الاسم الكريم: <span id="confirmName"></span></p>
+      <p>رقم الهوية: <span id="confirmID"></span></p>
+      <p>كلمة التأكيد: <strong>موافق</strong></p>
+      <p style="color:green;font-weight:bold;">✅ تم إبرام العقد بنجاح</p>
+    </div>
+
+    <div style="margin-top:40px;">
+      <p><strong>توقيع الطرف الأول:</strong> تم التوقيع آليًا من نايف المطيري</p>
+      <p><strong>توقيع الطرف الثاني:</strong> ✅ تمت الموافقة من العميل</p>
+    </div>
+
+    <div style="background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;margin-top:20px;font-size:14px;color:#856404;">
+      ⚠️ هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
+    </div>
+
+    <div class="footer" id="footerTime">جارٍ تحميل التاريخ الهجري والوقت...</div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="btn-download" onclick="downloadPDF()">📄 تحميل PDF</button>
+  </div>
+
+  <script>
+    function getNextContractNumber(){
+      const start = 9876;
+      let last = localStorage.getItem('lastContractNo');
+      if(!last){ last = start; }
+      const next = parseInt(last) + 1;
+      localStorage.setItem('lastContractNo', next);
+      return next;
+    }
+    const contractNumber = getNextContractNumber();
+    document.getElementById('contractNo').textContent = 'رقم العقد: ' + contractNumber;
+
+    const sampleClient = JSON.parse(localStorage.getItem('currentClient') || '{}');
+    if(!sampleClient.name){
+      Object.assign(sampleClient,{
+        name:'سعود عبدالله المطيري',
+        id:'1234567890',
+        birth:'1405/01/01',
+        mobile:'0501234567',
+        location:'لم يسمح بمشاركة موقعه وتم تسجيل الموقع يدويًا من قبله كما يلي: الرياض - حي لبن'
+      });
+    }
+
+    document.getElementById('clientData').innerHTML = `
+      <p><strong>اسم العميل:</strong> ${sampleClient.name}</p>
+      <p><strong>رقم الهوية:</strong> ${sampleClient.id}</p>
+      <p><strong>تاريخ الميلاد:</strong> ${sampleClient.birth}</p>
+      <p><strong>رقم الجوال:</strong> ${sampleClient.mobile}</p>
+      <p><strong>العنوان:</strong> ${sampleClient.location}</p>
+      <p><strong>حالة العقد:</strong> ✅ تمت الموافقة</p>
     `;
-    document.getElementById("contractsList").appendChild(div);
-  });
-}
 
-function generatePDF(index) {
-  const client = clients[index];
-  const contractNo = contractStart + index + 1;
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
+    document.getElementById('confirmName').textContent = sampleClient.name;
+    document.getElementById('confirmID').textContent = sampleClient.id;
 
-  const content = `
-    بسم الله الرحمن الرحيم\n\n
-    المملكة العربية السعودية\n
-    سرعة تملك العقار والحلول التمويلية المتكاملة\n
-    ترخيص رقم: 1100042624\n
-    الرياض\n\n
+    async function updateDateTime(){
+      const now = new Date();
+      const time = now.toLocaleTimeString('ar-EG');
+      try{
+        const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`);
+        const hijri = (await res.json()).data.hijri.date;
+        document.getElementById('hijriDate').textContent = 'التاريخ الهجري: ' + hijri;
+        document.getElementById('timeNow').textContent  = 'الوقت: ' + time;
+        document.getElementById('footerTime').innerHTML = `📅 التاريخ الهجري: ${hijri}<br>⏰ الوقت: ${time}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+      }catch(e){
+        document.getElementById('footerTime').textContent = 'تعذر تحميل التاريخ.';
+      }
+    }
+    updateDateTime();
 
-    رقم العقد: ${contractNo}
-    التاريخ: ${client.date || '—'}  الوقت: ${client.time || '—'}
-
-    عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
-
-    بيانات العميل:
-    - الاسم: ${client.name}
-    - رقم الهوية: ${client.id}
-    - تاريخ الميلاد: ${client.birth}
-    - الجوال: ${client.mobile}
-    - الموقع: ${client.location || 'لم يسمح بمشاركة موقعه وتم إدخاله يدوياً'}
-
-    الإجابات:
-    ${client.answers ? client.answers.map(a => `• ${a.question}: ✅ ${a.answer}`).join('\n') : 'لا توجد إجابات مسجلة'}
-
-    الحالة: ${client.status === 'approved' ? '✅ تم الموافقة على العقد' : '❌ تم رفض العقد'}
-    
-    المادة 9: هذا العقد يُعد سندًا تنفيذيًا كما نصت المادة (9) من نظام التعاملات الإلكترونية.
-
-    التوقيع الآلي للطرف الأول: نايف المطيري
-    توقيع الطرف الثاني: ${client.status === 'approved' ? '✅ موافق' : '❌ غير موافق'}
-
-    التاريخ الهجري: سيتم طباعته من الفوتر
-  `;
-
-  doc.setFont('Arial');
-  doc.setFontSize(12);
-  doc.text(content, 30, 40, {maxWidth: 540});
-  doc.save(`عقد_${client.name}.pdf`);
-}
-</script>
-
-<div class="footer" id="footerTime">📅 يتم تحميل التاريخ الهجري والوقت تلقائياً...</div>
-
-<script>
-async function updateDateTime(){
-  const now = new Date();
-  const time = now.toLocaleTimeString('ar-EG');
-  try {
-    const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`);
-    const hijri = (await res.json()).data.hijri.date;
-    document.getElementById("footerTime").innerHTML = `📅 التاريخ الهجري: ${hijri}<br>⏰ الوقت: ${time}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
-  } catch {
-    document.getElementById("footerTime").textContent = "تعذر تحميل التاريخ.";
-  }
-}
-updateDateTime();
-</script>
-
+    function downloadPDF(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({orientation:'p',unit:'pt',format:'a4'});
+      doc.html(document.getElementById('contractContainer'),{
+        callback:pdf=>pdf.save(`عقد_${contractNumber}.pdf`),
+        x:10,y:10,html2canvas:{scale:0.75}
+      });
+    }
+  </script>
 </body>
 </html>

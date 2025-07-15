@@ -1,68 +1,74 @@
-<!-- admin_panel.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لوحة المشرف - العقود</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة المشرف</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
+      background-color: #f9f9f9;
       padding: 20px;
       color: #004d40;
     }
-    .admin-box {
-      background: #fff;
-      border: 2px solid #004d40;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 750px;
-      margin: auto;
-    }
-    h2 {
+
+    .company-header {
+      background-color: #d0f0d0;
+      color: #004d40;
+      font-size: 24px;
+      font-weight: bold;
       text-align: center;
+      padding: 15px;
+      border-radius: 10px;
       margin-bottom: 20px;
-      color: #004d40;
     }
-    .input-group {
+
+    .form-group {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 30px 0;
     }
+
     input {
       padding: 10px;
-      font-size: 16px;
-      width: 60%;
+      font-size: 18px;
+      width: 70%;
       border: 2px solid #004d40;
       border-radius: 6px;
       text-align: center;
     }
+
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #004d40;
+      margin-top: 15px;
+      padding: 10px 25px;
+      background-color: #004d40;
       color: white;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-    .contract-item {
-      background: #e0f2f1;
+
+    .contracts {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .contract-box {
+      background-color: #e0f2f1;
       border: 1px solid #004d40;
       border-radius: 10px;
       padding: 15px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
-    .status {
-      font-weight: bold;
-    }
+
     .footer {
       text-align: center;
-      margin-top: 40px;
       font-size: 14px;
+      margin-top: 30px;
       color: #555;
     }
+
     .note {
       font-size: 13px;
       margin-top: 10px;
@@ -71,62 +77,81 @@
   </style>
 </head>
 <body>
-  <div class="admin-box">
-    <h2>لوحة المشرف - العقود</h2>
-    <div class="input-group">
-      <label>أدخل رمز المشرف:</label><br><br>
-      <input type="password" id="adminCode" placeholder="رمز الدخول" oninput="checkAccess()" />
-    </div>
+  <div class="company-header">شركة سرعة تملك العقار</div>
 
-    <div id="contracts" style="display:none;">
-      <div class="contract-item">
-        <p>الاسم: <strong>محمد أحمد الغامدي</strong></p>
-        <p>رقم الهوية: 1098765432</p>
-        <p>الحالة: <span class="status" style="color:green;">تمت الموافقة</span></p>
-        <p class="note">تمت الموافقة من قبل العميل بتاريخ 2025/07/15 الساعة 13:41:25</p>
-        <button onclick="generatePDF('محمد أحمد الغامدي', '1098765432', 'تمت الموافقة', '2025/07/15 13:41:25')">تحميل نسخة PDF</button>
-      </div>
-
-      <div class="contract-item">
-        <p>الاسم: <strong>سالم عبدالله الشمري</strong></p>
-        <p>رقم الهوية: 1076543210</p>
-        <p>الحالة: <span class="status" style="color:red;">تم الرفض</span></p>
-        <p class="note">تم الرفض من قبل العميل بتاريخ 2025/07/15 الساعة 14:02:58</p>
-        <button onclick="generatePDF('سالم عبدالله الشمري', '1076543210', 'تم الرفض', '2025/07/15 14:02:58')">تحميل نسخة PDF</button>
-      </div>
-    </div>
-
-    <div class="footer" id="footer"></div>
+  <div class="form-group">
+    <label>أدخل رمز المشرف:</label><br><br>
+    <input type="password" id="adminCode" placeholder="رمز الدخول" oninput="checkCode()" />
   </div>
 
+  <div class="contracts" id="contracts">
+    <div class="contract-box">
+      <p>الاسم: <strong id="cName"></strong></p>
+      <p>رقم الهوية: <span id="cID"></span></p>
+      <p>الحالة: <span id="cStatus" style="font-weight:bold;"></span></p>
+      <p>الموقع: <span id="cLocation"></span></p>
+      <p>الوقت: <span id="cTime"></span></p>
+      <p class="note" id="cNote"></p>
+      <button onclick="generatePDF()">تحميل نسخة PDF</button>
+    </div>
+  </div>
+
+  <div class="footer" id="footer"></div>
+
   <script>
-    function checkAccess() {
-      const code = document.getElementById("adminCode").value;
+    let data = {};
+
+    function checkCode() {
+      const code = document.getElementById("adminCode").value.trim();
       if (code === "4321q") {
-        document.getElementById("contracts").style.display = "block";
+        showContract();
       } else {
         document.getElementById("contracts").style.display = "none";
       }
     }
 
-    async function generatePDF(name, id, status, datetime) {
+    function showContract() {
+      data = {
+        name: localStorage.getItem("clientName") || "غير معروف",
+        id: localStorage.getItem("clientID") || "—",
+        location: localStorage.getItem("clientLocation") || "—",
+        mobile: localStorage.getItem("clientMobile") || "—",
+        birth: localStorage.getItem("clientBirthHijri") || "—",
+        time: localStorage.getItem("clientConfirmedAt") || "—",
+        status: localStorage.getItem("clientConfirmedAt") ? "تمت الموافقة" : "تم الرفض"
+      };
+
+      document.getElementById("cName").innerText = data.name;
+      document.getElementById("cID").innerText = data.id;
+      document.getElementById("cLocation").innerText = data.location;
+      document.getElementById("cTime").innerText = data.time;
+      document.getElementById("cStatus").innerText = data.status;
+      document.getElementById("cStatus").style.color = data.status === "تمت الموافقة" ? "green" : "red";
+      document.getElementById("cNote").innerText = `تم ${data.status} من قبل العميل في التاريخ والوقت أعلاه.`;
+
+      document.getElementById("contracts").style.display = "block";
+    }
+
+    async function generatePDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
       doc.setFont("helvetica");
       doc.setFontSize(14);
-      doc.text(`شركة سرعة تملك العقار`, 105, 20, { align: "center" });
-      doc.text(`عقد تمويل عقاري`, 105, 30, { align: "center" });
+      doc.text("شركة سرعة تملك العقار", 105, 20, { align: "center" });
+      doc.text("نسخة العقد المعتمد للمشرف", 105, 30, { align: "center" });
 
-      doc.text(`الطرف الثاني: ${name}`, 20, 50);
-      doc.text(`رقم الهوية: ${id}`, 20, 60);
-      doc.text(`الحالة: ${status}`, 20, 70);
-      doc.text(`تمت المعاملة بتاريخ: ${datetime}`, 20, 80);
+      doc.text(`الطرف الثاني: ${data.name}`, 20, 50);
+      doc.text(`رقم الهوية: ${data.id}`, 20, 60);
+      doc.text(`رقم الجوال: ${data.mobile}`, 20, 70);
+      doc.text(`تاريخ الميلاد: ${data.birth}`, 20, 80);
+      doc.text(`الموقع: ${data.location}`, 20, 90);
+      doc.text(`الحالة: ${data.status}`, 20, 100);
+      doc.text(`وقت التأكيد/الرفض: ${data.time}`, 20, 110);
+      doc.text(``, 20, 120);
+      doc.text(`ملاحظة: هذه النسخة تشمل إجابة العميل موقعة إلكترونيًا ويُحتج بها نظامًا.`, 20, 140, { maxWidth: 170 });
 
-      doc.text(``, 20, 100);
-      doc.text(`ملاحظة: هذه النسخة تم توليدها إلكترونيًا وتحتوي على تفاصيل العميل كما وردت عند توقيع العقد.`, 20, 120, { maxWidth: 170 });
-
-      doc.save(`${name.replace(/\s/g, '_')}_contract.pdf`);
+      doc.save(`عقد_${data.name.replace(/\s/g, '_')}.pdf`);
     }
 
     const now = new Date();

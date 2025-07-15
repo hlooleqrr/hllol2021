@@ -5,122 +5,114 @@
   <title>لوحة المشرف - العقود</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: 'Tajawal', sans-serif; background: #f5f5f5; padding: 30px; color: #004d40; }
-    h1 { text-align: center; margin-bottom: 40px; }
-    .client-box { background: white; border: 2px solid #004d40; border-radius: 12px; padding: 20px; margin-bottom: 30px; }
-    .client-box h3 { margin-top: 0; color: #00796b; }
-    .btn-pdf { background-color: #004d40; color: white; padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; }
-    .btn-pdf:hover { background-color: #00796b; }
-    .info-row { display: flex; justify-content: space-between; margin: 5px 0; }
-    .label { font-weight: bold; }
+    body { font-family:'Tajawal',sans-serif;background:#f9f9f9;padding:20px;color:#004d40; }
+    h2 { text-align:center;color:#004d40; }
+    .contract-box { background:#fff;border:2px solid #004d40;padding:20px;border-radius:12px;margin:20px 0; }
+    .info-row { display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px; }
+    .btn-download { background:#00796b;color:#fff;padding:8px 18px;border:none;border-radius:6px;cursor:pointer;font-size:14px; }
+    .btn-download:hover { background:#004d40; }
+    .footer { text-align:center;margin-top:20px;font-size:13px;color:#555; }
   </style>
 </head>
 <body>
 
-<h1>لوحة المشرف - جميع العقود</h1>
+<h2>لوحة المشرف - العقود</h2>
 
-<div id="clientsContainer"></div>
+<div id="contractsList"></div>
 
 <script>
-const clients = JSON.parse(localStorage.getItem('clientsList') || '[]');
-const container = document.getElementById("clientsContainer");
+let contractStart = 9876;
+let clients = JSON.parse(localStorage.getItem("clientsData") || "[]");
 
-clients.forEach((client, index) => {
-  const box = document.createElement("div");
-  box.className = "client-box";
+if (clients.length === 0) {
+  document.getElementById("contractsList").innerHTML = "<p>لا يوجد عملاء حالياً.</p>";
+} else {
+  clients.forEach((client, index) => {
+    const contractNo = contractStart + index + 1;
+    const div = document.createElement("div");
+    div.className = "contract-box";
+    div.innerHTML = `
+      <div class="info-row">
+        <div><strong>اسم العميل:</strong> ${client.name}</div>
+        <div><strong>رقم الهوية:</strong> ${client.id}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>رقم العقد:</strong> ${contractNo}</div>
+        <div><strong>تاريخ العقد:</strong> ${client.date || '—'}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>حالة العقد:</strong> ${client.status}</div>
+        <div><strong>الوقت:</strong> ${client.time || '—'}</div>
+      </div>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="btn-download" onclick="generatePDF(${index})">📄 تحميل العقد بصيغة PDF</button>
+      </div>
+    `;
+    document.getElementById("contractsList").appendChild(div);
+  });
+}
 
-  const contractNumber = 9876 + index + 1;
-  const statusText = client.status === 'approved' ? '✅ تمّت الموافقة' : '❌ تمّ الرفض';
+function generatePDF(index) {
+  const client = clients[index];
+  const contractNo = contractStart + index + 1;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'p', unit:'pt', format:'a4'});
 
-  box.innerHTML = `
-    <h3>العميل: ${client.name}</h3>
-    <div class="info-row"><span class="label">رقم الهوية:</span> <span>${client.id}</span></div>
-    <div class="info-row"><span class="label">رقم العقد:</span> <span>${contractNumber}</span></div>
-    <div class="info-row"><span class="label">الوقت:</span> <span>${client.time}</span></div>
-    <div class="info-row"><span class="label">الحالة:</span> <span>${statusText}</span></div>
-    <button class="btn-pdf" onclick="generatePDF(${index})">📄 تحميل العقد PDF</button>
+  const content = `
+    بسم الله الرحمن الرحيم\n\n
+    المملكة العربية السعودية\n
+    سرعة تملك العقار والحلول التمويلية المتكاملة\n
+    ترخيص رقم: 1100042624\n
+    الرياض\n\n
+
+    رقم العقد: ${contractNo}
+    التاريخ: ${client.date || '—'}  الوقت: ${client.time || '—'}
+
+    عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
+
+    بيانات العميل:
+    - الاسم: ${client.name}
+    - رقم الهوية: ${client.id}
+    - تاريخ الميلاد: ${client.birth}
+    - الجوال: ${client.mobile}
+    - الموقع: ${client.location || 'لم يسمح بمشاركة موقعه وتم إدخاله يدوياً'}
+
+    الإجابات:
+    ${client.answers ? client.answers.map(a => `• ${a.question}: ✅ ${a.answer}`).join('\n') : 'لا توجد إجابات مسجلة'}
+
+    الحالة: ${client.status === 'approved' ? '✅ تم الموافقة على العقد' : '❌ تم رفض العقد'}
+    
+    المادة 9: هذا العقد يُعد سندًا تنفيذيًا كما نصت المادة (9) من نظام التعاملات الإلكترونية.
+
+    التوقيع الآلي للطرف الأول: نايف المطيري
+    توقيع الطرف الثاني: ${client.status === 'approved' ? '✅ موافق' : '❌ غير موافق'}
+
+    التاريخ الهجري: سيتم طباعته من الفوتر
   `;
 
-  container.appendChild(box);
-});
-</script><script>
-async function generatePDF(index) {
-  const { jsPDF } = window.jspdf;
-  const client = clients[index];
-  const contractNumber = 9876 + index + 1;
-
-  const now = new Date();
-  const time = now.toLocaleTimeString('ar-EG');
-  let hijriDate = '---';
-
-  try {
-    const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`);
-    hijriDate = (await res.json()).data.hijri.date;
-  } catch (e) {
-    hijriDate = 'تعذر التحويل للهجري';
-  }
-
-  const doc = new jsPDF({orientation: 'p', unit: 'pt', format: 'a4'});
-  const lineHeight = 20;
-  let y = 40;
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(16);
-  doc.text("بسم الله الرحمن الرحيم", 300, y, {align: "center"});
-
-  y += 30;
+  doc.setFont('Arial');
   doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.text("المملكة العربية السعودية", 40, y);
-  doc.text("رقم العقد: " + contractNumber, 400, y);
-  y += lineHeight;
-  doc.text("سرعة تملك العقار والحلول التمويلية المتكاملة", 40, y);
-  doc.text("التاريخ الهجري: " + hijriDate, 400, y);
-  y += lineHeight;
-  doc.text("ترخيص رقم: 1100042624", 40, y);
-  doc.text("الوقت: " + time, 400, y);
-  y += lineHeight;
-  doc.text("الرياض", 40, y);
-
-  y += 40;
-  doc.setFontSize(14);
-  doc.text("عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية", 300, y, {align: "center"});
-
-  y += 30;
-  doc.setFontSize(12);
-  doc.text(`العميل: ${client.name}`, 40, y); y += lineHeight;
-  doc.text(`رقم الهوية: ${client.id}`, 40, y); y += lineHeight;
-  doc.text(`العنوان: ${client.location || "لم يسمح بمشاركة موقعه وتم تسجيله يدويًا"}`, 40, y); y += lineHeight;
-  doc.text(`الحالة: ${client.status === "approved" ? "✅ تمت الموافقة" : "❌ تم الرفض"}`, 40, y); y += lineHeight;
-
-  y += 20;
-  doc.setFont('helvetica', 'bold');
-  doc.text("بنود العقد:", 40, y);
-  y += 20;
-  doc.setFont('helvetica', 'normal');
-  const terms = client.terms || [];
-  terms.forEach((term, i) => {
-    if (y > 750) { doc.addPage(); y = 40; }
-    doc.text(`${i + 1}. ${term.text}`, 40, y); y += lineHeight;
-    doc.text(`إجابة العميل: ${term.answer}`, 60, y); y += lineHeight;
-  });
-
-  y += 20;
-  doc.text("تم توقيع العقد من الطرف الأول آليًا - نايف المطيري", 40, y); y += lineHeight;
-  doc.text(`توقيع الطرف الثاني: ${client.status === "approved" ? "✅ تمت الموافقة" : "❌ تم الرفض"}`, 40, y);
-
-  y += 30;
-  doc.setTextColor(133, 100, 4);
-  doc.setFontSize(11);
-  doc.text("⚠️ هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية", 40, y);
-  y += 30;
-
-  doc.setTextColor(85, 85, 85);
-  doc.setFontSize(10);
-  doc.text(`📅 التاريخ الهجري: ${hijriDate}`, 40, y); y += lineHeight;
-  doc.text(`⏰ الوقت: ${time}`, 40, y);
-  doc.text("جميع الحقوق محفوظة لشركة سرعة تملك العقار", 300, 820, {align: "center"});
-
-  doc.save(`عقد_${contractNumber}_${client.name}.pdf`);
+  doc.text(content, 30, 40, {maxWidth: 540});
+  doc.save(`عقد_${client.name}.pdf`);
 }
 </script>
+
+<div class="footer" id="footerTime">📅 يتم تحميل التاريخ الهجري والوقت تلقائياً...</div>
+
+<script>
+async function updateDateTime(){
+  const now = new Date();
+  const time = now.toLocaleTimeString('ar-EG');
+  try {
+    const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}`);
+    const hijri = (await res.json()).data.hijri.date;
+    document.getElementById("footerTime").innerHTML = `📅 التاريخ الهجري: ${hijri}<br>⏰ الوقت: ${time}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+  } catch {
+    document.getElementById("footerTime").textContent = "تعذر تحميل التاريخ.";
+  }
+}
+updateDateTime();
+</script>
+
+</body>
+</html>

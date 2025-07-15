@@ -1,3 +1,4 @@
+<!-- step7.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,152 +7,103 @@
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
+      padding: 20px;
+      background-color: #ffffff;
       color: #004d40;
-      margin: 0;
-      padding: 0;
     }
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      border: 2px solid #004d40;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .company-name {
-      background-color: #e6f9ec;
-      padding: 10px;
-      font-size: 24px;
+    .header {
+      background-color: #d0f0d0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 22px;
       font-weight: bold;
-      color: #006400;
       text-align: center;
-      margin-bottom: 20px;
     }
-    label {
-      font-size: 18px;
-      display: block;
-      margin-top: 15px;
+    .form-group {
+      margin: 20px 0;
+      text-align: center;
     }
     input {
-      width: 100%;
-      padding: 12px;
+      width: 80%;
+      padding: 10px;
       font-size: 16px;
+      border: 2px solid #004d40;
+      border-radius: 6px;
       margin-top: 5px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
     }
     button {
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      margin-top: 30px;
-      border: none;
-      border-radius: 8px;
-      background-color: #00796b;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #006400;
       color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
+      display: none;
     }
-    button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
-    }
-    .alert {
+    .warning {
       background-color: #fff3cd;
       border: 1px solid #ffeeba;
-      padding: 15px;
+      padding: 12px;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       color: #856404;
       margin-top: 25px;
     }
-    footer {
-      margin-top: 30px;
-      padding-top: 10px;
-      border-top: 1px solid #ccc;
-      font-size: 14px;
+    .footer {
       text-align: center;
-      color: #777;
+      font-size: 14px;
+      margin-top: 40px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+  <div class="header">شركة سرعة تملك العقار</div>
 
-    <label for="nameConfirm">اكتب اسمك كما أدخلته سابقًا:</label>
-    <input type="text" id="nameConfirm" placeholder="الاسم الكامل" oninput="validate()" />
-
-    <label for="idConfirm">رقم الهوية:</label>
-    <input type="text" id="idConfirm" placeholder="رقم السجل المدني" maxlength="10" oninput="validate()" />
-
-    <label for="approvalWord">اكتب كلمة (موافق):</label>
-    <input type="text" id="approvalWord" placeholder="موافق" oninput="validate()" />
-
-    <button id="confirmBtn" onclick="confirmSubmission()" disabled>تأكيد نهائي</button>
-
-    <div class="alert">
-      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-    </div>
-
-    <footer>
-      <p id="dateTime"></p>
-      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
-    </footer>
+  <div class="form-group">
+    <label>أعد كتابة اسمك:</label><br>
+    <input type="text" id="name" oninput="validateForm()" placeholder="مثال: محمد أحمد الغامدي" />
   </div>
 
+  <div class="form-group">
+    <label>رقم الهوية:</label><br>
+    <input type="text" id="id" maxlength="10" oninput="validateForm()" placeholder="10 أرقام" />
+  </div>
+
+  <div class="form-group">
+    <label>اكتب كلمة <strong>موافق</strong> لتأكيد العقد:</label><br>
+    <input type="text" id="confirm" oninput="validateForm()" placeholder="موافق" />
+  </div>
+
+  <div class="form-group">
+    <button id="confirmBtn" onclick="goNext()">تأكيد الإبرام</button>
+  </div>
+
+  <div class="warning">
+    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+  </div>
+
+  <div class="footer" id="footer"></div>
+
   <script>
-    function validate() {
-      const nameInput = document.getElementById("nameConfirm").value.trim();
-      const idInput = document.getElementById("idConfirm").value.trim();
-      const approval = document.getElementById("approvalWord").value.trim();
-
-      const savedName = localStorage.getItem("clientName") || "";
-      const savedID = localStorage.getItem("nationalID") || "";
-
-      const isValidName = nameInput === savedName;
-      const isValidID = idInput === savedID;
-      const isApproved = approval === "موافق";
-
-      document.getElementById("confirmBtn").disabled = !(isValidName && isValidID && isApproved);
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const id = document.getElementById("id").value.trim();
+      const confirm = document.getElementById("confirm").value.trim();
+      const valid = name.length >= 3 && /^\d{10}$/.test(id) && confirm === "موافق";
+      document.getElementById("confirmBtn").style.display = valid ? "inline-block" : "none";
     }
 
-    function confirmSubmission() {
-      const name = localStorage.getItem("clientName") || "";
-      const id = localStorage.getItem("nationalID") || "";
-      const birth = localStorage.getItem("birthHijri") || "";
-      const mobile = localStorage.getItem("mobile") || "";
-      const location = localStorage.getItem("location") || "لم يتم تحديد الموقع";
-      const now = new Date();
-      const time = now.toLocaleString("ar-EG");
-
-      const clientData = {
-        name,
-        id,
-        birth,
-        mobile,
-        location,
-        time
-      };
-
-      let clients = JSON.parse(localStorage.getItem("clients") || "[]");
-      clients.push(clientData);
-      localStorage.setItem("clients", JSON.stringify(clients));
-
+    function goNext() {
       window.location.href = "success.html";
     }
 
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString('ar-EG');
-      const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
-    }
-
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

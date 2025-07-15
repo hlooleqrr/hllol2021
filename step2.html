@@ -2,110 +2,150 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>الخطوة 2 - رقم الهوية</title>
+  <title>مشاركة الموقع</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      margin: 0;
-      background: #f9f9f9;
+      background-color: #f9f9f9;
       color: #004d40;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100vh;
+      margin: 0;
+      padding: 0;
     }
-    header {
-      background-color: #004d40;
-      color: white;
+    .container {
+      max-width: 650px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #004d40;
+    }
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
       text-align: center;
-      padding: 20px;
       font-size: 24px;
       font-weight: bold;
+      color: #006400;
+      margin-bottom: 20px;
     }
-    main {
-      padding: 30px;
-      text-align: center;
-    }
-    label {
-      font-size: 20px;
-      display: block;
-      margin-bottom: 10px;
-    }
-    input[type="text"] {
-      width: 80%;
-      padding: 10px;
-      font-size: 18px;
-      border: 2px solid #ccc;
-      border-radius: 6px;
+    button, input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
     button {
-      margin-top: 20px;
       background-color: #00796b;
       color: white;
-      padding: 12px 25px;
       border: none;
-      font-size: 18px;
-      border-radius: 8px;
       cursor: pointer;
     }
     button:hover {
-      background-color: #004d40;
+      background-color: #005f56;
     }
-    .warning {
-      color: red;
-      font-weight: bold;
-      text-align: center;
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
       margin-top: 20px;
     }
     footer {
-      background-color: #f1f1f1;
-      padding: 15px;
-      text-align: center;
-      font-size: 14px;
-      color: #333;
+      margin-top: 30px;
+      padding-top: 10px;
       border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
+    }
+    #manualInput {
+      display: none;
+    }
+    .note {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #a00;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
-    سرعة تملك العقار والحلول التمويلية المتكاملة
-  </header>
+  <div class="container">
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-  <main>
-    <label for="clientId">رقم الهوية الوطنية:</label>
-    <input type="text" id="clientId" placeholder="أدخل رقم الهوية" required />
-    <br />
-    <button onclick="saveId()">التالي</button>
-    <div class="warning">تنبيه: جميع المعلومات يتم حفظها بسرية تامة داخل النظام.</div>
-  </main>
+    <button onclick="getLocation()">مشاركة الموقع الحالي</button>
 
-  <footer>
-    <div id="datetime"></div>
-  </footer>
+    <div id="manualInput">
+      <label for="manualLocation">لم يتم قبول المشاركة، يرجى إدخال الموقع يدويًا:</label>
+      <input type="text" id="manualLocation" placeholder="مثال: الرياض، مدينة الرياض، حي لبن" oninput="checkInput()" />
+    </div>
+
+    <button id="nextBtn" onclick="goNext()" disabled>اكمل</button>
+
+    <div id="locationStatus" class="note"></div>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p id="locationFooter">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
+  </div>
 
   <script>
-    function saveId() {
-      const id = document.getElementById('clientId').value.trim();
-      if (id === '' || id.length !== 10 || isNaN(id)) {
-        alert('الرجاء إدخال رقم هوية صحيح مكون من 10 أرقام');
-        return;
+    let locationText = "";
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showManualInput);
+      } else {
+        showManualInput();
       }
-      localStorage.setItem('clientId', id);
+    }
+
+    function showPosition(position) {
+      locationText = `الموقع الحالي: خط العرض ${position.coords.latitude.toFixed(5)}, خط الطول ${position.coords.longitude.toFixed(5)}`;
+      document.getElementById("locationStatus").textContent = locationText;
+      document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
+      document.getElementById("nextBtn").disabled = false;
+    }
+
+    function showManualInput() {
+      document.getElementById("manualInput").style.display = "block";
+    }
+
+    function checkInput() {
+      const input = document.getElementById("manualLocation").value.trim();
+      if (input.length >= 8) {
+        document.getElementById("nextBtn").disabled = false;
+        document.getElementById("locationStatus").textContent = `تم رفض مشاركة الموقع، والموقع المعتمد هو: ${input}`;
+        document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>الموقع المعتمد: ${input}`;
+      } else {
+        document.getElementById("nextBtn").disabled = true;
+      }
+    }
+
+    function goNext() {
       window.location.href = "step3.html";
     }
 
-    // عرض التاريخ والوقت
-    const now = new Date();
-    const datetimeString = now.toLocaleString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
-    document.getElementById('datetime').textContent = `التاريخ والوقت الآن: ${datetimeString}`;
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

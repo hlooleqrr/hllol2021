@@ -1,143 +1,188 @@
-<!-- step6.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عرض العقد</title>
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
+      margin: 0;
       padding: 20px;
+      font-family: 'Tajawal', sans-serif;
       background-color: #ffffff;
       color: #004d40;
     }
-    .header {
+
+    .company-header {
       background-color: #d0f0d0;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 22px;
+      color: #004d40;
+      font-size: 24px;
       font-weight: bold;
       text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
     }
+
     .contract {
-      margin-top: 25px;
       line-height: 2;
       font-size: 16px;
+      white-space: pre-line;
     }
-    .warning {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
+
+    .alert-box {
+      background-color: #fdecea;
+      color: #c62828;
+      border: 1px solid #f5c6cb;
       padding: 12px;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 15px;
-      color: #856404;
-      margin-top: 25px;
+      margin-top: 30px;
+      text-align: center;
     }
+
     .footer {
       text-align: center;
       font-size: 14px;
-      margin-top: 40px;
+      margin-top: 30px;
       color: #555;
     }
-    .actions {
-      text-align: center;
+
+    .buttons {
       margin-top: 30px;
+      text-align: center;
     }
+
     .approve {
       background-color: #006400;
       color: white;
       padding: 10px 30px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
       margin: 5px;
+      cursor: pointer;
     }
+
     .reject {
       background-color: #b00020;
       color: white;
       padding: 10px 30px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
       margin: 5px;
+      cursor: pointer;
     }
   </style>
 </head>
-<body>
-  <div class="header">شركة سرعة تملك العقار</div>
+<body onload="insertData()">
+  <div class="company-header">شركة سرعة تملك العقار</div>
 
-  <div class="contract">
-    <h3 style="text-align: center;">عقد اتفاقية إنهاء إجراءات تمويل عقاري</h3>
-    <p>بسم الله الرحمن الرحيم</p>
-    <p>المملكة العربية السعودية<br>الوساطة العقارية والتسويق<br>ترخيص: 1100042624<br>الرياض</p>
-    <hr>
-    <p><strong>تم بعون الله وتوفيقه في يوم ........ الموافق ........ هـ، الموافق ........ م، الاتفاق بين كلٍ من:</strong></p>
-    <hr>
-    <p><strong>الطرف الأول:</strong><br>
-    شركة الوساطة العقارية والتسويق<br>
-    ويمثلها الأستاذ: نايف المطيري<br>
-    بصفته: مدير الإدارة<br>
-    ويُشار إليه بـ (الطرف الأول)</p>
-    <hr>
-    <p><strong>الطرف الثاني:</strong><br>
-    الاسم: …………………………………………<br>
-    رقم الهوية: …………………………………<br>
-    العنوان: (الموقع أو الوصف)<br>
-    تاريخ الميلاد: ………………………………<br>
-    رقم الجوال: …………………………………<br>
-    ويُشار إليه بـ (الطرف الثاني)</p>
-    <hr>
-    <p><strong>التمهيد:</strong><br>
-    حيث أن الطرف الأول مرخص له بالوساطة العقارية... (تمهيد كامل كما وصفته).<br>
-    <br>وعليه فقد اتفق الطرفان – بكامل الأهلية الشرعية والنظامية – على ما يلي:</p>
-
-    <p><strong>البنود:</strong></p>
-    <ol>
-      <li>التمهيد أعلاه جزء لا يتجزأ من هذا العقد.</li>
-      <li>يقوم الطرف الأول بإتمام جميع الإجراءات لصالح الطرف الثاني.</li>
-      <li>يلتزم الطرف الثاني بدفع 2.5% من قيمة العقار + 500 ريال.</li>
-      <li>إذا لم تتم الصفقة بسبب المالك أو البنك، يُعاد المبلغ للطرف الثاني.</li>
-      <li>إذا انسحب الطرف الثاني، يُعتبر المبلغ مستحقًا للطرف الأول.</li>
-      <li>في حال تأخر الطرف الثاني، يُعتبر العقد مستوفى القيمة.</li>
-      <li>يلتزم الطرف الثاني بعدم إخفاء أي معلومات.</li>
-      <li>قد يُطلب من الطرف الثاني تحويل الراتب لبنك محدد.</li>
-      <li>تنتهي علاقة الطرفين بعد إتمام البيع.</li>
-      <li>العناوين تعتبر رسمية للمراسلات.</li>
-      <li>أي نزاع يُحال لمحكمة الرياض بعد 10 أيام.</li>
-      <li>حُرر العقد من نسختين أصليتين لكل طرف.</li>
-    </ol>
-
-    <hr>
-    <p><strong>توقيع الطرفين:</strong></p>
-    <p>الطرف الأول: شركة الوساطة العقارية والتسويق<br>
-    الاسم: نايف المطيري<br>
-    التوقيع: ✅ تمت الموافقة آليًا<br>
-    التاريخ: ............</p>
-
-    <p>الطرف الثاني:<br>
-    الاسم: …………………………………<br>
-    التوقيع: سيتم التوقيع بعد الموافقة</p>
+  <div class="contract" id="contractContent">
+    <!-- سيتم إدراج العقد مدموجًا بالبيانات عبر JavaScript -->
   </div>
 
-  <div class="actions">
-    <button class="approve" onclick="window.location.href='step7.html'">موافقة ✅</button>
-    <button class="reject" onclick="window.location.href='rejected.html'">رفض ❌</button>
+  <div class="buttons">
+    <button class="approve" onclick="goNext()">موافقة ✅</button>
+    <button class="reject" onclick="goReject()">رفض ❌</button>
   </div>
 
-  <div class="warning">
-    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+  <div class="alert-box">
+    ⚠️ <strong>تنبيه:</strong> هذا العقد محمي بموجب <strong>المادة التاسعة</strong> من نظام التعاملات الإلكترونية، ويُعتبر نافذًا قانونيًا.
   </div>
 
   <div class="footer" id="footer"></div>
 
   <script>
-    const now = new Date();
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
-                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    document.getElementById("footer").innerHTML =
-      `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+    function insertData() {
+      const name = localStorage.getItem("clientName") || "__________";
+      const id = localStorage.getItem("clientID") || "__________";
+      const birth = localStorage.getItem("clientBirthHijri") || "__________";
+      const mobile = localStorage.getItem("clientMobile") || "__________";
+      const location = localStorage.getItem("clientLocation") || "__________";
+
+      const contractText = `
+بسم الله الرحمن الرحيم
+
+المملكة العربية السعودية
+شركة الوساطة العقارية والتسويق
+ترخيص: 1100042624
+الرياض
+
+⸻
+
+عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية
+
+تم بعون الله وتوفيقه في يوم … الموافق … هـ، الموافق … م، الاتفاق بين كلٍ من:
+
+⸻
+
+الطرف الأول:
+شركة الوساطة العقارية والتسويق
+ويمثلها الأستاذ: نايف المطيري
+بصفته: مدير الإدارة
+ويُشار إليه بـ (الطرف الأول)
+
+⸻
+
+الطرف الثاني:
+الاسم: ${name}
+رقم الهوية: ${id}
+تاريخ الميلاد: ${birth}
+رقم الجوال: ${mobile}
+العنوان: ${location}
+ويُشار إليه بـ (الطرف الثاني)
+
+⸻
+
+التمهيد:
+حيث أن الطرف الأول مرخص له بالوساطة العقارية، والطرف الثاني يرغب في تملك العقار، فقد أوكل للطرف الأول إنهاء الإجراءات، وتم الاتفاق على البنود التالية:
+
+1. التمهيد جزء من العقد.
+2. الطرف الأول يُنهي الإجراءات لصالح الطرف الثاني.
+3. الطرف الثاني يدفع 2.5٪ من قيمة العقار + 500 ريال.
+4. في حال عدم إتمام الصفقة بسبب المالك أو البنك، يُعاد المبلغ للطرف الثاني.
+5. في حال تراجع الطرف الثاني، يُعد المبلغ مستحقًا للطرف الأول.
+6. التأخير أو المماطلة من الطرف الثاني تُلغي استحقاقه للرد.
+7. يلتزم الطرف الثاني بالإفصاح عن كل الالتزامات.
+8. قد يُطلب تحويل الراتب.
+9. تنتهي العلاقة بعد البيع.
+10. العناوين المدونة رسمية.
+11. في حال النزاع، يتم الرجوع لمحكمة الرياض.
+12. نُسختان من العقد بيد كل طرف.
+
+⸻
+
+توقيع الطرف الأول:
+شركة الوساطة العقارية والتسويق
+الاسم: نايف المطيري
+التوقيع: تمت الموافقة آليًا ✅
+
+⸻
+
+توقيع الطرف الثاني:
+الاسم: ${name}
+التوقيع: سيتم عند الموافقة لاحقًا
+`;
+
+      document.getElementById("contractContent").innerText = contractText;
+
+      // التاريخ والفوتر
+      const now = new Date();
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                        hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      document.getElementById("footer").innerHTML =
+        `الموقع: ${location}<br>التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+    }
+
+    function goNext() {
+      window.location.href = "step7.html";
+    }
+
+    function goReject() {
+      window.location.href = "rejected.html";
+    }
   </script>
 </body>
 </html>

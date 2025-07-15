@@ -1,38 +1,63 @@
-<!-- step2.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تحديد الموقع</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
-      color: #004d40;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
     }
-    .header {
+
+    .container {
+      padding: 20px;
+    }
+
+    .company-header {
       background-color: #d0f0d0;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 22px;
+      color: #004d40;
+      font-size: 24px;
       font-weight: bold;
       text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
     }
-    .box {
-      margin-top: 30px;
+
+    .alert-box {
+      background-color: #fdecea;
+      color: #c62828;
+      border: 1px solid #f5c6cb;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-top: 20px;
       text-align: center;
     }
+
+    .form-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+
     textarea, input {
-      width: 80%;
-      font-size: 16px;
+      width: 85%;
       padding: 10px;
-      border-radius: 6px;
+      font-size: 16px;
       border: 2px solid #004d40;
+      border-radius: 6px;
       margin-top: 10px;
     }
-    button {
-      margin-top: 20px;
+
+    .btn-main {
+      margin-top: 25px;
       padding: 12px 25px;
       background-color: #004d40;
       color: white;
@@ -42,56 +67,69 @@
       cursor: pointer;
       display: none;
     }
-    .warning {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 15px;
-      color: #856404;
-      margin-top: 25px;
-    }
+
     .footer {
       text-align: center;
       font-size: 14px;
-      margin-top: 50px;
+      margin: 20px;
       color: #555;
+    }
+
+    .location-status {
+      font-size: 15px;
+      color: #333;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="header">شركة سرعة تملك العقار</div>
+  <div class="container">
+    <div class="company-header">شركة سرعة تملك العقار</div>
 
-  <div class="box">
-    <p>يرجى تحديد موقعك الحالي:</p>
-    <button onclick="getLocation()">مشاركة الموقع</button>
-    <p>أو أدخل موقعك يدويًا:</p>
-    <textarea id="manualLocation" rows="3" placeholder="مثال: الرياض - حي لبن" oninput="enableNext()"></textarea>
-    <br>
-    <button id="nextBtn" onclick="goNext()">أكمل</button>
-  </div>
+    <div class="form-group">
+      <p>يرجى تحديد موقعك الحالي:</p>
+      <button onclick="getLocation()" style="padding: 10px 20px;">مشاركة الموقع</button>
+      <p class="location-status" id="locationStatus"></p>
 
-  <div class="warning">
-    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+      <p>أو اكتب الموقع يدويًا:</p>
+      <textarea id="manualLocation" rows="3" placeholder="مثال: الرياض - حي لبن" oninput="checkManual()"></textarea>
+
+      <button class="btn-main" id="nextBtn" onclick="goNext()">أكمل</button>
+    </div>
+
+    <div class="alert-box">
+      ⚠️ <strong>تنبيه:</strong> هذا العقد محمي بموجب <strong>المادة التاسعة</strong> من نظام التعاملات الإلكترونية، ويُعتبر نافذًا قانونيًا.
+    </div>
   </div>
 
   <div class="footer" id="footer"></div>
 
   <script>
     function getLocation() {
+      if (!navigator.geolocation) {
+        document.getElementById("locationStatus").innerText = "المتصفح لا يدعم تحديد الموقع.";
+        return;
+      }
+
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
+          const lat = position.coords.latitude.toFixed(5);
+          const lon = position.coords.longitude.toFixed(5);
+          const loc = `إحداثيات: ${lat}, ${lon}`;
+          localStorage.setItem("clientLocation", loc);
+          document.getElementById("locationStatus").innerText = "✅ تم تحديد الموقع تلقائيًا";
           document.getElementById("nextBtn").style.display = "inline-block";
         },
-        function(error) {
-          alert("تم رفض مشاركة الموقع، يرجى إدخاله يدويًا.");
+        function () {
+          document.getElementById("locationStatus").innerText = "❌ تم رفض مشاركة الموقع. الرجاء إدخال العنوان يدويًا.";
         }
       );
     }
 
-    function enableNext() {
+    function checkManual() {
       const val = document.getElementById("manualLocation").value.trim();
       if (val.length > 5) {
+        localStorage.setItem("clientLocation", val);
         document.getElementById("nextBtn").style.display = "inline-block";
       }
     }
@@ -103,7 +141,9 @@
     const now = new Date();
     const options = { year: 'numeric', month: '2-digit', day: '2-digit',
                       hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+    const locationSaved = localStorage.getItem("clientLocation") || "—";
+    document.getElementById("footer").innerHTML =
+      `الموقع: ${locationSaved}<br>التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

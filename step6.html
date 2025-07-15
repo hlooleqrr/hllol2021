@@ -19,7 +19,6 @@
 <body>
 
 <div class="contract-box">
-
   <h1>بسم الله الرحمن الرحيم</h1>
   <h2>عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h2>
 
@@ -43,67 +42,4 @@
     <ol>
       <li>يقوم الطرف الأول بتمثيل الطرف الثاني أمام الجهات التمويلية لإتمام طلب التمويل العقاري.</li>
       <li>يقوم الطرف الأول بتقديم استشارات تمويلية للطرف الثاني.</li>
-      <li>يتم احتساب نسبة 2.5٪ من قيمة العقار كأجر للطرف الأول.</li>
-      <li>يتعهد الطرف الثاني بدفع مبلغ 500 ريال رسوم إدارية للعقد.</li>
-      <li>يلتزم الطرف الثاني بتقديم جميع المستندات المطلوبة لإتمام التمويل.</li>
-      <li>يقر الطرف الثاني أنه اطلع على كامل تفاصيل العقار.</li>
-      <li>في حال عدم إتمام التمويل بسبب تقصير من الطرف الثاني لا يحق له استرجاع أي رسوم.</li>
-      <li>يلتزم الطرف الأول بالسرية التامة لمعلومات الطرف الثاني.</li>
-      <li>في حال وجود خطأ في البيانات يتحمل الطرف الثاني مسؤوليته.</li>
-      <li>هذا العقد يعتبر ملزمًا للطرفين من تاريخ التوقيع.</li>
-      <li>أي نزاع يتم حله وفقًا للأنظمة المعمول بها في المملكة العربية السعودية.</li>
-      <li>يُعتبر هذا العقد سندًا تنفيذيًا بحسب المادة 9 من نظام التعاملات الإلكترونية.</li>
-    </ol>
-  </div>
-
-  <div class="section">
-    <p><strong>توقيع الطرف الأول:</strong> تم التوقيع آليًا من نايف المطيري</p>
-    <p><strong>توقيع الطرف الثاني:</strong> ✅ يتم بناءً على الزر التالي</p>
-  </div>
-
-  <div class="alert-box">
-    ⚠️ هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية، ويُعتبر حجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-  </div>
-
-  <button class="btn" onclick="submitContract('موافق')">✅ أوافق على هذا العقد</button>
-  <button class="btn btn-danger" onclick="submitContract('مرفوض')">❌ أرفض هذا العقد</button>
-
-</div>
-
-<script>
-  function submitContract(status) {
-    const client = {
-      name: 'سعود عبد الله المطيري',
-      id: '1234567890',
-      birth: '1405/01/01',
-      mobile: '0501234567',
-      location: 'الرياض - حي لبن'
-    };
-
-    let contractNo = localStorage.getItem('lastContractNo') || 9876;
-    contractNo = parseInt(contractNo);
-
-    const contractData = {
-      contractNo: contractNo,
-      ...client,
-      time: new Date().toISOString(),
-      status: status
-    };
-
-    const all = JSON.parse(localStorage.getItem('approvedContracts') || '[]');
-    all.push(contractData);
-    localStorage.setItem('approvedContracts', JSON.stringify(all));
-    localStorage.setItem('lastContractNo', contractNo + 1);
-
-    alert(`تم حفظ العقد كـ "${status}" بنجاح`);
-
-    if (status === 'موافق') {
-      window.location.href = 'confirm.html';
-    } else {
-      window.location.href = 'rejected.html';
-    }
-  }
-</script>
-
-</body>
-</html>
+      <li>ي

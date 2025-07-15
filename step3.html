@@ -1,36 +1,61 @@
-<!-- step3.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>الاسم الكريم</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Tajawal', sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
-      color: #004d40;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
     }
-    .header {
+
+    .container {
+      padding: 20px;
+    }
+
+    .company-header {
       background-color: #d0f0d0;
-      padding: 15px;
-      border-radius: 10px;
-      font-size: 22px;
+      color: #004d40;
+      font-size: 24px;
       font-weight: bold;
       text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
     }
-    .box {
-      margin-top: 30px;
+
+    .alert-box {
+      background-color: #fdecea;
+      color: #c62828;
+      border: 1px solid #f5c6cb;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      margin-top: 20px;
       text-align: center;
     }
+
+    .form-group {
+      text-align: center;
+      margin-top: 40px;
+    }
+
     input {
-      width: 80%;
-      font-size: 16px;
       padding: 10px;
-      border-radius: 6px;
+      font-size: 18px;
+      width: 80%;
       border: 2px solid #004d40;
+      border-radius: 6px;
       text-align: center;
     }
+
     button {
       margin-top: 20px;
       padding: 12px 25px;
@@ -42,45 +67,41 @@
       cursor: pointer;
       display: none;
     }
-    .warning {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 15px;
-      color: #856404;
-      margin-top: 25px;
-    }
+
     .footer {
       text-align: center;
       font-size: 14px;
-      margin-top: 50px;
+      margin: 20px;
       color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="header">شركة سرعة تملك العقار</div>
+  <div class="container">
+    <div class="company-header">شركة سرعة تملك العقار</div>
 
-  <div class="box">
-    <p>الاسم الكريم:</p>
-    <input type="text" id="name" oninput="validateName()" placeholder="مثال: محمد أحمد الغامدي" />
-    <br>
-    <button id="nextBtn" onclick="goNext()">أكمل</button>
-  </div>
+    <div class="form-group">
+      <label>الاسم الكريم (بالعربية وثلاثي على الأقل):</label><br><br>
+      <input type="text" id="fullname" oninput="validateName()" placeholder="مثال: محمد أحمد الغامدي" />
+      <br>
+      <button id="nextBtn" onclick="goNext()">أكمل</button>
+    </div>
 
-  <div class="warning">
-    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+    <div class="alert-box">
+      ⚠️ <strong>تنبيه:</strong> هذا العقد محمي بموجب <strong>المادة التاسعة</strong> من نظام التعاملات الإلكترونية، ويُعتبر نافذًا قانونيًا.
+    </div>
   </div>
 
   <div class="footer" id="footer"></div>
 
   <script>
     function validateName() {
-      const val = document.getElementById("name").value.trim();
-      const arabicOnly = /^[\u0600-\u06FF\s]+$/;
-      const words = val.split(" ");
-      if (arabicOnly.test(val) && words.length >= 3) {
+      const name = document.getElementById("fullname").value.trim();
+      const arabic = /^[\u0600-\u06FF\s]+$/;
+      const wordCount = name.split(/\s+/).filter(Boolean).length;
+
+      if (arabic.test(name) && wordCount >= 3) {
+        localStorage.setItem("clientName", name);
         document.getElementById("nextBtn").style.display = "inline-block";
       } else {
         document.getElementById("nextBtn").style.display = "none";
@@ -94,7 +115,9 @@
     const now = new Date();
     const options = { year: 'numeric', month: '2-digit', day: '2-digit',
                       hour: '2-digit', minute: '2-digit', second: '2-digit' };
-    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+    const locationSaved = localStorage.getItem("clientLocation") || "—";
+    document.getElementById("footer").innerHTML =
+      `الموقع: ${locationSaved}<br>التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

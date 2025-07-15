@@ -5,14 +5,14 @@
   <title>لوحة المشرف - العقود</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body{font-family:'Tajawal',sans-serif;background:#f9f9f9;padding:30px;color:#004d40;}
-    h2{text-align:center;margin-bottom:30px;}
-    table{width:100%;border-collapse:collapse;margin-bottom:30px;}
-    th,td{border:1px solid #ccc;padding:10px;text-align:center;}
-    th{background:#00796b;color:#fff;}
-    button{background:#00796b;color:#fff;border:none;padding:6px 15px;border-radius:5px;cursor:pointer;}
-    button:hover{background:#004d40;}
-    .footer{text-align:center;font-size:13px;color:#777;margin-top:30px;}
+    body {font-family: 'Tajawal', sans-serif; background: #f9f9f9; padding: 30px; color: #004d40;}
+    h2 {text-align: center; margin-bottom: 30px;}
+    table {width: 100%; border-collapse: collapse; margin-bottom: 30px;}
+    th, td {border: 1px solid #ccc; padding: 10px; text-align: center;}
+    th {background: #00796b; color: #fff;}
+    button {background: #00796b; color: #fff; border: none; padding: 6px 15px; border-radius: 5px; cursor: pointer;}
+    button:hover {background: #004d40;}
+    .footer {text-align: center; font-size: 13px; color: #777; margin-top: 30px;}
   </style>
 </head>
 <body>
@@ -32,7 +32,7 @@
     </tr>
   </thead>
   <tbody id="contractsBody">
-    <!-- يتم توليده تلقائيًا -->
+    <!-- البيانات تولد تلقائياً -->
   </tbody>
 </table>
 
@@ -43,7 +43,6 @@
 <script>
   const { jsPDF } = window.jspdf;
 
-  // دالة لتحويل تاريخ ميلادي إلى هجري باستخدام API خارجي
   async function getHijriDate(dateObj) {
     try {
       const d = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
@@ -55,41 +54,38 @@
     }
   }
 
-  // قراءة جميع العقود من localStorage (كمثال)
   const allContracts = JSON.parse(localStorage.getItem('approvedContracts') || '[]');
-
-  // ترتيب العقود حسب الوقت من الأحدث
-  allContracts.sort((a,b) => new Date(b.time) - new Date(a.time));
+  allContracts.sort((a, b) => new Date(b.time) - new Date(a.time));
 
   const tbody = document.getElementById('contractsBody');
-
   let counter = 1;
+
   allContracts.forEach(async contract => {
     const tr = document.createElement('tr');
     const hijri = await getHijriDate(new Date(contract.time));
-    
+    const time = new Date(contract.time).toLocaleTimeString('ar-EG');
+
     tr.innerHTML = `
       <td>${counter++}</td>
       <td>${contract.name}</td>
       <td>${contract.id}</td>
       <td>${contract.contractNo}</td>
-      <td>${new Date(contract.time).toLocaleTimeString('ar-EG')}</td>
+      <td>${time}</td>
       <td>${hijri}</td>
-      <td><button onclick="downloadPDF(${JSON.stringify(contract).replace(/"/g, '&quot;')})">📄 تحميل</button></td>
+      <td><button onclick='downloadPDF(${JSON.stringify(contract).replace(/"/g, '&quot;')})'>📄 تحميل</button></td>
     `;
     tbody.appendChild(tr);
   });
 
-  function downloadPDF(contract){
-    const doc = new jsPDF({orientation:'p',unit:'pt',format:'a4'});
-    const now = new Date(contract.time);
-    const time = now.toLocaleTimeString('ar-EG');
+  function downloadPDF(contract) {
+    const doc = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
+    const time = new Date(contract.time).toLocaleTimeString('ar-EG');
+
     const html = `
       <div dir="rtl" style="font-family:'Tajawal';color:#004d40;padding:30px;">
         <h2 style="text-align:center;">بسم الله الرحمن الرحيم</h2>
         <p><strong>المملكة العربية السعودية</strong><br>سرعة تملك العقار والحلول التمويلية المتكاملة<br>ترخيص: 1100042624 - الرياض</p>
         <p><strong>رقم العقد:</strong> ${contract.contractNo}</p>
-        <p><strong>التاريخ الهجري:</strong> سيتم تعبئته لاحقًا</p>
         <p><strong>الوقت:</strong> ${time}</p>
         <hr>
         <p><strong>اسم العميل:</strong> ${contract.name}</p>

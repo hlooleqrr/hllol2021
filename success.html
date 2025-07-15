@@ -1,57 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>تم إبرام العقد بنجاح</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #e0f2f1;
+      background-color: #e8f5e9;
       color: #004d40;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
-    .box {
-      background: #ffffff;
-      padding: 40px;
-      border: 2px solid #004d40;
+    .container {
+      max-width: 700px;
+      margin: 80px auto;
+      background-color: #ffffff;
+      padding: 40px 30px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 90%;
-    }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-      color: #00796b;
-    }
-    p {
-      font-size: 18px;
-      line-height: 1.8;
-    }
-    .footer-warning {
-      margin-top: 20px;
-      color: red;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #666;
+      border: 2px solid #00796b;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
     }
     .company-name {
-      background: #c8e6c9;
+      background-color: #e6f9ec;
       padding: 10px;
+      font-size: 24px;
       font-weight: bold;
-      color: #1b5e20;
-      border-radius: 8px;
+      color: #006400;
       margin-bottom: 20px;
     }
     .success-icon {
@@ -59,31 +34,60 @@
       color: green;
       margin-bottom: 20px;
     }
+    .message {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #00796b;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d40;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+    }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-  <div class="box">
-    <div class="company-name">شركة سرعة تملك العقار والحلول التمويلية المتكاملة</div>
     <div class="success-icon">✅</div>
-    <h1>تم إبرام العقد بنجاح</h1>
-    <p>نشكر لك ثقتك بنا، ونأمل أن نكون عند حسن ظنك دائمًا.<br>تم حفظ جميع بياناتك بشكل آمن.</p>
 
-    <div class="footer-warning">
-      لا يُمكن التراجع بعد إتمام هذه الخطوة.
-    </div>
+    <div class="message">تم إبرام العقد بنجاح</div>
+
+    <p id="dateTime"></p>
+
+    <button onclick="goHome()">خروج ↩</button>
 
     <footer>
-      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار ©</p>
-      <p id="dateTime"></p>
+      جميع الحقوق محفوظة لشركة سرعة تملك العقار
     </footer>
   </div>
 
   <script>
-    const now = new Date();
-    document.getElementById("dateTime").innerText = "التاريخ والوقت: " + now.toLocaleString('ar-EG');
-  </script>
+    function goHome() {
+      window.location.href = "index.html";
+    }
 
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+  </script>
 </body>
-</html><h2 style="color: green;">تم الانتهاء ✅ مع السلامة</h2>
-<button onclick="window.location.href='index.html'">🔁 العودة للصفحة الأولى</button>
+</html>

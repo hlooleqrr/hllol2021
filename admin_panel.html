@@ -1,3 +1,4 @@
+<!-- admin_panel.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,115 +6,134 @@
   <title>لوحة المشرف - العقود</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body {font-family: 'Tajawal', sans-serif; background: #f9f9f9; padding: 30px; color: #004d40;}
-    h2 {text-align: center; margin-bottom: 30px;}
-    table {width: 100%; border-collapse: collapse; margin-bottom: 30px;}
-    th, td {border: 1px solid #ccc; padding: 10px; text-align: center;}
-    th {background: #00796b; color: #fff;}
-    button {background: #00796b; color: #fff; border: none; padding: 6px 15px; border-radius: 5px; cursor: pointer;}
-    button:hover {background: #004d40;}
-    .footer {text-align: center; font-size: 13px; color: #777; margin-top: 30px;}
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      color: #004d40;
+    }
+    .admin-box {
+      background: #fff;
+      border: 2px solid #004d40;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 750px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #004d40;
+    }
+    .input-group {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 60%;
+      border: 2px solid #004d40;
+      border-radius: 6px;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #004d40;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .contract-item {
+      background: #e0f2f1;
+      border: 1px solid #004d40;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .status {
+      font-weight: bold;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #555;
+    }
+    .note {
+      font-size: 13px;
+      margin-top: 10px;
+      color: #333;
+    }
   </style>
 </head>
 <body>
+  <div class="admin-box">
+    <h2>لوحة المشرف - العقود</h2>
+    <div class="input-group">
+      <label>أدخل رمز المشرف:</label><br><br>
+      <input type="password" id="adminCode" placeholder="رمز الدخول" oninput="checkAccess()" />
+    </div>
 
-<h2>📋 العقود المعتمدة - سرعة تملك العقار</h2>
-
-<table id="contractsTable">
-  <thead>
-    <tr>
-      <th>رقم</th>
-      <th>اسم العميل</th>
-      <th>رقم الهوية</th>
-      <th>رقم العقد</th>
-      <th>الوقت</th>
-      <th>التاريخ الهجري</th>
-      <th>تحميل العقد</th>
-    </tr>
-  </thead>
-  <tbody id="contractsBody">
-    <!-- البيانات تولد تلقائياً -->
-  </tbody>
-</table>
-
-<div class="footer">
-  جميع الحقوق محفوظة لشركة سرعة تملك العقار © 2025
-</div>
-
-<script>
-  const { jsPDF } = window.jspdf;
-
-  async function getHijriDate(dateObj) {
-    try {
-      const d = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}`;
-      const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${d}`);
-      const data = await res.json();
-      return data.data.hijri.date;
-    } catch {
-      return 'تعذر';
-    }
-  }
-
-  const allContracts = JSON.parse(localStorage.getItem('approvedContracts') || '[]');
-  allContracts.sort((a, b) => new Date(b.time) - new Date(a.time));
-
-  const tbody = document.getElementById('contractsBody');
-  let counter = 1;
-
-  allContracts.forEach(async contract => {
-    const tr = document.createElement('tr');
-    const hijri = await getHijriDate(new Date(contract.time));
-    const time = new Date(contract.time).toLocaleTimeString('ar-EG');
-
-    tr.innerHTML = `
-      <td>${counter++}</td>
-      <td>${contract.name}</td>
-      <td>${contract.id}</td>
-      <td>${contract.contractNo}</td>
-      <td>${time}</td>
-      <td>${hijri}</td>
-      <td><button onclick='downloadPDF(${JSON.stringify(contract).replace(/"/g, '&quot;')})'>📄 تحميل</button></td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  function downloadPDF(contract) {
-    const doc = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
-    const time = new Date(contract.time).toLocaleTimeString('ar-EG');
-
-    const html = `
-      <div dir="rtl" style="font-family:'Tajawal';color:#004d40;padding:30px;">
-        <h2 style="text-align:center;">بسم الله الرحمن الرحيم</h2>
-        <p><strong>المملكة العربية السعودية</strong><br>سرعة تملك العقار والحلول التمويلية المتكاملة<br>ترخيص: 1100042624 - الرياض</p>
-        <p><strong>رقم العقد:</strong> ${contract.contractNo}</p>
-        <p><strong>الوقت:</strong> ${time}</p>
-        <hr>
-        <p><strong>اسم العميل:</strong> ${contract.name}</p>
-        <p><strong>رقم الهوية:</strong> ${contract.id}</p>
-        <p><strong>تاريخ الميلاد:</strong> ${contract.birth}</p>
-        <p><strong>رقم الجوال:</strong> ${contract.mobile}</p>
-        <p><strong>العنوان:</strong> ${contract.location}</p>
-        <br>
-        <p>تمت الموافقة على جميع البنود من الطرف الثاني.</p>
-        <br><br>
-        <p><strong>توقيع الطرف الأول:</strong> تم التوقيع آليًا من نايف المطيري</p>
-        <p><strong>توقيع الطرف الثاني:</strong> ✅ تمت الموافقة</p>
-        <br>
-        <div style="background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;font-size:14px;color:#856404;">
-          ⚠️ هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
-        </div>
+    <div id="contracts" style="display:none;">
+      <div class="contract-item">
+        <p>الاسم: <strong>محمد أحمد الغامدي</strong></p>
+        <p>رقم الهوية: 1098765432</p>
+        <p>الحالة: <span class="status" style="color:green;">تمت الموافقة</span></p>
+        <p class="note">تمت الموافقة من قبل العميل بتاريخ 2025/07/15 الساعة 13:41:25</p>
+        <button onclick="generatePDF('محمد أحمد الغامدي', '1098765432', 'تمت الموافقة', '2025/07/15 13:41:25')">تحميل نسخة PDF</button>
       </div>
-    `;
-    doc.html(html, {
-      callback: function (pdf) {
-        pdf.save(`عقد_${contract.contractNo}.pdf`);
-      },
-      x: 10,
-      y: 10,
-      html2canvas: { scale: 0.8 }
-    });
-  }
-</script>
 
+      <div class="contract-item">
+        <p>الاسم: <strong>سالم عبدالله الشمري</strong></p>
+        <p>رقم الهوية: 1076543210</p>
+        <p>الحالة: <span class="status" style="color:red;">تم الرفض</span></p>
+        <p class="note">تم الرفض من قبل العميل بتاريخ 2025/07/15 الساعة 14:02:58</p>
+        <button onclick="generatePDF('سالم عبدالله الشمري', '1076543210', 'تم الرفض', '2025/07/15 14:02:58')">تحميل نسخة PDF</button>
+      </div>
+    </div>
+
+    <div class="footer" id="footer"></div>
+  </div>
+
+  <script>
+    function checkAccess() {
+      const code = document.getElementById("adminCode").value;
+      if (code === "4321q") {
+        document.getElementById("contracts").style.display = "block";
+      } else {
+        document.getElementById("contracts").style.display = "none";
+      }
+    }
+
+    async function generatePDF(name, id, status, datetime) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica");
+      doc.setFontSize(14);
+      doc.text(`شركة سرعة تملك العقار`, 105, 20, { align: "center" });
+      doc.text(`عقد تمويل عقاري`, 105, 30, { align: "center" });
+
+      doc.text(`الطرف الثاني: ${name}`, 20, 50);
+      doc.text(`رقم الهوية: ${id}`, 20, 60);
+      doc.text(`الحالة: ${status}`, 20, 70);
+      doc.text(`تمت المعاملة بتاريخ: ${datetime}`, 20, 80);
+
+      doc.text(``, 20, 100);
+      doc.text(`ملاحظة: هذه النسخة تم توليدها إلكترونيًا وتحتوي على تفاصيل العميل كما وردت عند توقيع العقد.`, 20, 120, { maxWidth: 170 });
+
+      doc.save(`${name.replace(/\s/g, '_')}_contract.pdf`);
+    }
+
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("footer").innerHTML =
+      `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
+  </script>
 </body>
 </html>

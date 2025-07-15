@@ -1,52 +1,51 @@
-<!-- step1.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الخطوة 1 - الاسم الكريم</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>التحقق من الرقم المخصص</title>
   <style>
     body {
-      margin: 0;
       font-family: 'Tajawal', sans-serif;
-      background: #f9f9f9;
+      background-color: #f9f9f9;
       color: #004d40;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      margin: 0;
+      padding: 0;
     }
     .container {
-      flex: 1;
-      max-width: 700px;
-      margin: auto;
-      padding: 40px;
-      background: white;
-      border: 3px solid #004d40;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-width: 650px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border: 2px solid #004d40;
     }
-    h1 {
-      font-size: 26px;
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
       text-align: center;
-      color: #002920;
-      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
+      margin-bottom: 20px;
     }
     label {
       display: block;
-      margin-bottom: 10px;
       font-size: 18px;
+      margin-bottom: 10px;
     }
-    input[type="text"] {
+    input {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      border: 2px solid #ccc;
       border-radius: 8px;
+      border: 1px solid #ccc;
       margin-bottom: 20px;
+      direction: ltr;
     }
     button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       font-size: 18px;
       background-color: #00796b;
       color: white;
@@ -55,36 +54,73 @@
       cursor: pointer;
     }
     button:hover {
-      background-color: #005a4f;
+      background-color: #005f56;
+    }
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 20px;
     }
     footer {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #666;
+      margin-top: 30px;
+      padding-top: 10px;
       border-top: 1px solid #ccc;
-      padding-top: 15px;
+      font-size: 14px;
       text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>سرعة تملك العقار والحلول التمويلية المتكاملة</h1>
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <form action="step2.html">
-      <label for="fullName">الاسم الكريم:</label>
-      <input type="text" id="fullName" name="fullName" required>
+    <label for="accessCode">أدخل الرقم المخصص:</label>
+    <input type="text" id="accessCode" placeholder="مثال: 1234q أو 4321q" oninput="checkCode()" />
 
-      <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; font-size: 16px; color: #856404; margin-top: 20px;">
-        ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-      </div>
+    <button id="nextBtn" onclick="validateCode()" disabled>التالي</button>
 
-      <button type="submit">التالي</button>
-    </form>
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
 
     <footer>
-      &copy; 2025 سرعة تملك العقار | التاريخ: 1446/01/09 هـ - 2025/07/14 م
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
     </footer>
   </div>
+
+  <script>
+    function checkCode() {
+      const code = document.getElementById("accessCode").value.trim();
+      document.getElementById("nextBtn").disabled = !(code.length >= 5);
+    }
+
+    function validateCode() {
+      const code = document.getElementById("accessCode").value.trim();
+      if (code === "1234q") {
+        window.location.href = "step2.html";
+      } else if (code === "4321q") {
+        window.location.href = "admin_login.html";
+      } else {
+        alert("الرقم غير صحيح، حاول مرة أخرى.");
+      }
+    }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
 </body>
 </html>

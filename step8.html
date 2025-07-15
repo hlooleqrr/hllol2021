@@ -2,88 +2,135 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>نتيجة العقد</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet"/>
+  <title>تأكيد العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background: linear-gradient(to bottom, #ffffff, #e0f2f1);
+      background-color: #f9f9f9;
+      color: #004d40;
       margin: 0;
       padding: 0;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 100vh;
-      color: #004d40;
     }
     .container {
-      padding: 50px 20px;
+      max-width: 700px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #004d40;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h1 {
-      font-size: 28px;
+    .company-name {
+      background-color: #e6f9ec;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
+      text-align: center;
       margin-bottom: 20px;
     }
-    .message {
-      font-size: 22px;
-      margin: 30px 0;
-      color: #00695c;
-    }
-    .message.rejected {
-      color: red;
-    }
-    .done-btn {
-      padding: 14px 30px;
+    label {
       font-size: 18px;
-      background-color: #00796b;
-      color: white;
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      margin-top: 30px;
       border: none;
       border-radius: 8px;
+      background-color: #00796b;
+      color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-    .done-btn:hover {
-      background-color: #004d40;
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
+      margin-top: 25px;
     }
     footer {
-      font-size: 14px;
-      background: #e0f2f1;
-      padding: 10px 0;
-      margin-top: auto;
+      margin-top: 30px;
+      padding-top: 10px;
       border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>شركة سرعة تملك العقار</h1>
-    <div id="resultMessage" class="message"></div>
-    <button class="done-btn" onclick="goHome()">تم الانتهاء</button>
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+
+    <label for="nameConfirm">اكتب اسمك كما أدخلته سابقًا:</label>
+    <input type="text" id="nameConfirm" placeholder="الاسم الكامل" oninput="validate()" />
+
+    <label for="idConfirm">رقم الهوية:</label>
+    <input type="text" id="idConfirm" placeholder="رقم السجل المدني" maxlength="10" oninput="validate()" />
+
+    <label for="approvalWord">اكتب كلمة (موافق):</label>
+    <input type="text" id="approvalWord" placeholder="موافق" oninput="validate()" />
+
+    <button id="confirmBtn" onclick="confirmSubmission()" disabled>تأكيد نهائي</button>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
-  <footer>
-    جميع الحقوق محفوظة © سرعة تملك العقار<br/>
-    www.hlooleqrr.com
-  </footer>
-
   <script>
-    const status = localStorage.getItem("contractStatus");
+    function validate() {
+      const nameInput = document.getElementById("nameConfirm").value.trim();
+      const idInput = document.getElementById("idConfirm").value.trim();
+      const approval = document.getElementById("approvalWord").value.trim();
 
-    const msgBox = document.getElementById("resultMessage");
+      const savedName = localStorage.getItem("clientName") || "";
+      const savedID = localStorage.getItem("nationalID") || "";
 
-    if (status === "approved") {
-      msgBox.innerText = "✅ تم إبرام العقد بنجاح";
-      msgBox.classList.remove("rejected");
-    } else {
-      msgBox.innerText = "❌ تم رفض العقد";
-      msgBox.classList.add("rejected");
+      const isValidName = nameInput === savedName;
+      const isValidID = idInput === savedID;
+      const isApproved = approval === "موافق";
+
+      document.getElementById("confirmBtn").disabled = !(isValidName && isValidID && isApproved);
     }
 
-    function goHome() {
-      localStorage.clear();
-      window.location.href = "index.html";
+    function confirmSubmission() {
+      window.location.href = "success.html";
     }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
-</html><button onclick="window.location.href='success.html'">إنهاء وإرسال ✅</button>
+</html>

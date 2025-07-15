@@ -78,7 +78,7 @@
   <div class="container">
     <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <button onclick="getLocation()">مشاركة الموقع الحالي</button>
+    <button onclick="getLocation()">📍 مشاركة الموقع الحالي</button>
 
     <div id="manualInput">
       <label for="manualLocation">لم يتم قبول المشاركة، يرجى إدخال الموقع يدويًا:</label>
@@ -111,9 +111,10 @@
     }
 
     function showPosition(position) {
-      locationText = `الموقع الحالي: خط العرض ${position.coords.latitude.toFixed(5)}, خط الطول ${position.coords.longitude.toFixed(5)}`;
-      document.getElementById("locationStatus").textContent = locationText;
-      document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
+      locationText = `خط العرض ${position.coords.latitude.toFixed(5)}, خط الطول ${position.coords.longitude.toFixed(5)}`;
+      document.getElementById("locationStatus").textContent = `📍 الموقع الحالي: ${locationText}`;
+      document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>الموقع: ${locationText}`;
+      localStorage.setItem("location", locationText);
       document.getElementById("nextBtn").disabled = false;
     }
 
@@ -124,9 +125,11 @@
     function checkInput() {
       const input = document.getElementById("manualLocation").value.trim();
       if (input.length >= 8) {
+        const manualLocation = `لم يسمح بمشاركة موقعه، وتم تسجيل الموقع التالي: ${input}`;
         document.getElementById("nextBtn").disabled = false;
-        document.getElementById("locationStatus").textContent = `تم رفض مشاركة الموقع، والموقع المعتمد هو: ${input}`;
-        document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>الموقع المعتمد: ${input}`;
+        document.getElementById("locationStatus").textContent = manualLocation;
+        document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${manualLocation}`;
+        localStorage.setItem("location", manualLocation);
       } else {
         document.getElementById("nextBtn").disabled = true;
       }
@@ -141,7 +144,7 @@
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const time = now.toLocaleTimeString('ar-EG');
       const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+      document.getElementById("dateTime").textContent = `🗓️ التاريخ: ${date} - ⏰ الوقت: ${time}`;
     }
 
     updateDateTime();

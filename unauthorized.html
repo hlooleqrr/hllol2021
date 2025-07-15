@@ -1,75 +1,38 @@
+<!-- rejected.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>تم رفض العقد</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #fff5f5;
-      color: #b71c1c;
-      margin: 0;
-      padding: 0;
+      background-color: #ffebee;
       text-align: center;
+      padding: 60px 20px;
+      color: #b00020;
     }
-    .container {
-      max-width: 700px;
-      margin: 80px auto;
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      border: 2px solid #e53935;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    h1 {
+      font-size: 26px;
     }
-    .company-name {
-      background-color: #fbe9e7;
-      padding: 10px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #d32f2f;
-      margin-bottom: 20px;
-    }
-    .error-icon {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-    .message {
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-    footer {
+    .footer {
       margin-top: 40px;
       font-size: 14px;
-      color: #777;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+  <h1>❌ تم رفض العقد بنجاح</h1>
+  <p>يرجى التواصل مع الممثل القانوني للشركة</p>
 
-    <div class="error-icon">❌</div>
-
-    <div class="message">تم رفض العقد بنجاح</div>
-
-    <p id="dateTime"></p>
-
-    <footer>
-      جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>
-      نرجو التواصل مع الممثل القانوني للشركة في حال وجود استفسار
-    </footer>
-  </div>
+  <div class="footer" id="footer"></div>
 
   <script>
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString('ar-EG');
-      const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
-    }
-
-    updateDateTime();
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

@@ -1,137 +1,98 @@
+<!-- step2.html -->
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>مشاركة الموقع</title>
+  <title>تحديد الموقع</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
+      padding: 20px;
+      background-color: #f5f5f5;
       color: #004d40;
-      margin: 0;
-      padding: 0;
     }
-    .container {
-      max-width: 650px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border: 2px solid #004d40;
-    }
-    .company-name {
-      background-color: #e6f9ec;
-      padding: 10px;
-      text-align: center;
-      font-size: 24px;
+    .header {
+      background-color: #d0f0d0;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 22px;
       font-weight: bold;
-      color: #006400;
-      margin-bottom: 20px;
+      text-align: center;
     }
-    button, input {
-      width: 100%;
-      padding: 12px;
+    .box {
+      margin-top: 30px;
+      text-align: center;
+    }
+    textarea, input {
+      width: 80%;
       font-size: 16px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 6px;
+      border: 2px solid #004d40;
+      margin-top: 10px;
     }
     button {
-      background-color: #00796b;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #005f56;
-    }
-    .alert {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      color: #856404;
       margin-top: 20px;
-    }
-    footer {
-      margin-top: 30px;
-      padding-top: 10px;
-      border-top: 1px solid #ccc;
-      font-size: 14px;
-      text-align: center;
-      color: #777;
-    }
-    #manualInput {
+      padding: 12px 25px;
+      background-color: #004d40;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
       display: none;
     }
-    .note {
-      font-size: 14px;
-      margin-top: 5px;
-      color: #a00;
+    .warning {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #856404;
+      margin-top: 25px;
+    }
+    .footer {
       text-align: center;
+      font-size: 14px;
+      margin-top: 50px;
+      color: #555;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+  <div class="header">شركة سرعة تملك العقار</div>
 
-    <button onclick="getLocation()">📍 مشاركة الموقع الحالي</button>
-
-    <div id="manualInput">
-      <label for="manualLocation">لم يتم قبول المشاركة، يرجى إدخال الموقع يدويًا:</label>
-      <input type="text" id="manualLocation" placeholder="مثال: الرياض، مدينة الرياض، حي لبن" oninput="checkInput()" />
-    </div>
-
-    <button id="nextBtn" onclick="goNext()" disabled>اكمل</button>
-
-    <div id="locationStatus" class="note"></div>
-
-    <div class="alert">
-      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-    </div>
-
-    <footer>
-      <p id="dateTime"></p>
-      <p id="locationFooter">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
-    </footer>
+  <div class="box">
+    <p>يرجى تحديد موقعك الحالي:</p>
+    <button onclick="getLocation()">مشاركة الموقع</button>
+    <p>أو أدخل موقعك يدويًا:</p>
+    <textarea id="manualLocation" rows="3" placeholder="مثال: الرياض - حي لبن" oninput="enableNext()"></textarea>
+    <br>
+    <button id="nextBtn" onclick="goNext()">أكمل</button>
   </div>
 
+  <div class="warning">
+    ⚠️ تنبيه: هذا العقد محمي بموجب <strong>المادة التاسعة من نظام التعاملات الإلكترونية</strong>.
+  </div>
+
+  <div class="footer" id="footer"></div>
+
   <script>
-    let locationText = "";
-
     function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showManualInput);
-      } else {
-        showManualInput();
-      }
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          document.getElementById("nextBtn").style.display = "inline-block";
+        },
+        function(error) {
+          alert("تم رفض مشاركة الموقع، يرجى إدخاله يدويًا.");
+        }
+      );
     }
 
-    function showPosition(position) {
-      locationText = `خط العرض ${position.coords.latitude.toFixed(5)}, خط الطول ${position.coords.longitude.toFixed(5)}`;
-      document.getElementById("locationStatus").textContent = `📍 الموقع الحالي: ${locationText}`;
-      document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>الموقع: ${locationText}`;
-      localStorage.setItem("location", locationText);
-      document.getElementById("nextBtn").disabled = false;
-    }
-
-    function showManualInput() {
-      document.getElementById("manualInput").style.display = "block";
-    }
-
-    function checkInput() {
-      const input = document.getElementById("manualLocation").value.trim();
-      if (input.length >= 8) {
-        const manualLocation = `لم يسمح بمشاركة موقعه، وتم تسجيل الموقع التالي: ${input}`;
-        document.getElementById("nextBtn").disabled = false;
-        document.getElementById("locationStatus").textContent = manualLocation;
-        document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${manualLocation}`;
-        localStorage.setItem("location", manualLocation);
-      } else {
-        document.getElementById("nextBtn").disabled = true;
+    function enableNext() {
+      const val = document.getElementById("manualLocation").value.trim();
+      if (val.length > 5) {
+        document.getElementById("nextBtn").style.display = "inline-block";
       }
     }
 
@@ -139,16 +100,10 @@
       window.location.href = "step3.html";
     }
 
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString('ar-EG');
-      const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `🗓️ التاريخ: ${date} - ⏰ الوقت: ${time}`;
-    }
-
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
+    const now = new Date();
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit',
+                      hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById("footer").innerHTML = `التاريخ: ${now.toLocaleString('ar-EG', options)}<br>جميع الحقوق محفوظة لشركة سرعة تملك العقار`;
   </script>
 </body>
 </html>

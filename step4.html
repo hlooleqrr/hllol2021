@@ -1,100 +1,123 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الخطوة 4 - تاريخ الميلاد الهجري</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <title>رقم السجل المدني</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      background-color: #f9fafb;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background-color: #f9f9f9;
       color: #004d40;
+      margin: 0;
+      padding: 0;
     }
     .container {
-      background: white;
+      max-width: 650px;
+      margin: 40px auto;
+      background-color: #fff;
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
+      border: 2px solid #004d40;
     }
-    select {
-      width: 30%;
+    .company-name {
+      background-color: #e6f9ec;
       padding: 10px;
-      margin: 10px 5px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #006400;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
       font-size: 16px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      margin-bottom: 20px;
+      direction: ltr;
     }
     button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
       background-color: #00796b;
       color: white;
-      padding: 12px 24px;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .alert {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #856404;
       margin-top: 20px;
     }
-    button:hover {
-      background-color: #004d40;
+    footer {
+      margin-top: 30px;
+      padding-top: 10px;
+      border-top: 1px solid #ccc;
+      font-size: 14px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>تاريخ الميلاد الهجري</h2>
-    <div>
-      <select id="day"></select>
-      <select id="month">
-        <option value="01">محرم</option>
-        <option value="02">صفر</option>
-        <option value="03">ربيع أول</option>
-        <option value="04">ربيع ثاني</option>
-        <option value="05">جمادى الأولى</option>
-        <option value="06">جمادى الآخرة</option>
-        <option value="07">رجب</option>
-        <option value="08">شعبان</option>
-        <option value="09">رمضان</option>
-        <option value="10">شوال</option>
-        <option value="11">ذو القعدة</option>
-        <option value="12">ذو الحجة</option>
-      </select>
-      <select id="year"></select>
+    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+
+    <label for="nationalID">رقم السجل المدني:</label>
+    <input type="text" id="nationalID" placeholder="أدخل 10 أرقام" maxlength="10" oninput="validateID()" />
+
+    <button id="nextBtn" onclick="saveAndNext()" disabled>اكمل</button>
+
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
     </div>
-    <button onclick="saveAndNext()">التالي</button>
+
+    <footer>
+      <p id="dateTime"></p>
+      <p>جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    </footer>
   </div>
 
   <script>
-    const daySelect = document.getElementById("day");
-    const yearSelect = document.getElementById("year");
-
-    // تعبئة الأيام
-    for (let i = 1; i <= 30; i++) {
-      const value = i.toString().padStart(2, '0');
-      daySelect.innerHTML += `<option value="${value}">${value}</option>`;
-    }
-
-    // تعبئة السنوات من 1370 إلى 1445
-    for (let y = 1445; y >= 1370; y--) {
-      yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+    function validateID() {
+      const id = document.getElementById("nationalID").value.trim();
+      const isValid = /^\d{10}$/.test(id);
+      document.getElementById("nextBtn").disabled = !isValid;
     }
 
     function saveAndNext() {
-      const day = document.getElementById("day").value;
-      const month = document.getElementById("month").value;
-      const year = document.getElementById("year").value;
-      const fullDate = `${year}/${month}/${day}`;
-      localStorage.setItem("client_birth", fullDate);
+      const id = document.getElementById("nationalID").value.trim();
+      localStorage.setItem("nationalID", id);
       window.location.href = "step5.html";
     }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', options);
+      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

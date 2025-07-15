@@ -2,131 +2,119 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>عقد العميل - المشرف</title>
+  <title>لوحة المشرف - العقود</title>
   <style>
     body {
       font-family: 'Tajawal', sans-serif;
-      padding: 40px;
-      background-color: #fff;
-      color: #000;
-      line-height: 2;
+      background: #f9f9f9;
+      padding: 20px;
+      color: #004d40;
     }
-    .header {
+    .contract-box {
+      background: #fff;
+      border: 2px solid #004d40;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+    }
+    h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: #004d40;
     }
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .info-top {
+    .info-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
+      font-size: 15px;
     }
-    .info-top div {
+    .info-row div {
       width: 48%;
     }
-    .section {
-      margin-bottom: 20px;
+    .btn-download {
+      background: #00796b;
+      color: #fff;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
     }
-    .section strong {
-      display: inline-block;
-      width: 130px;
+    .btn-download:hover {
+      background: #004d40;
     }
     .footer {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 15px;
-      border-radius: 8px;
-      font-size: 16px;
-      color: #856404;
-      margin-top: 30px;
       text-align: center;
-    }
-    #contractNumber {
-      font-weight: bold;
-      font-size: 18px;
-      text-align: left;
-      margin-bottom: 10px;
-      direction: rtl;
+      margin-top: 30px;
+      font-size: 13px;
+      color: #555;
     }
   </style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>بسم الله الرحمن الرحيم</h1>
-  </div>
+<h2>العقود المعتمدة</h2>
 
-  <div class="info-top">
+<div id="contractContainer" class="contract-box">
+  <div style="text-align:center;font-weight:bold;font-size:20px;">بسم الله الرحمن الرحيم</div>
+
+  <div class="info-row" style="margin-top:20px;">
     <div>
-      <p><strong>المملكة العربية السعودية</strong></p>
-      <p>سرعة تملك العقار والحلول التمويلية المتكاملة</p>
-      <p>الترخيص: 1100042624</p>
-      <p>الرياض</p>
+      <div>المملكة العربية السعودية</div>
+      <div>سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+      <div>ترخيص رقم: 1100042624</div>
+      <div>الرياض</div>
     </div>
-    <div style="text-align: left;">
-      <p id="contractNumber">رقم العقد: جاري التحميل...</p>
-      <p id="contractDate"></p>
+    <div style="text-align:left;">
+      <div id="contractNo">رقم العقد: 09876</div>
+      <div id="hijriDate">التاريخ الهجري: 07-01-1446</div>
+      <div id="timeNow">الوقت: 14:22:37</div>
     </div>
   </div>
 
-  <h2 style="text-align: center; margin-bottom: 30px;">عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h2>
+  <h3 style="text-align:center;margin-top:30px;">عقد اتفاقية إنهاء إجراءات تمويل عقاري من جهة تمويلية</h3>
 
-  <div class="section">
-    <p>تم إبرام هذا العقد بين:</p>
-    <p>الطرف الأول: شركة الوساطة العقارية والتسويق</p>
-    <p>الطرف الثاني: <span id="clientName">__________</span></p>
-    <p>رقم الهوية: <span id="idNumber">__________</span></p>
-    <p>تاريخ الميلاد: <span id="birthDate">__________</span></p>
-    <p>رقم الجوال: <span id="mobileNumber">__________</span></p>
-    <p>الموقع: <span id="location">__________</span></p>
-    <p>وقت التوقيع: <span id="signDate">__________</span></p>
+  <div style="margin-top:30px;">
+    <p><strong>اسم العميل:</strong> سعود عبدالله المطيري</p>
+    <p><strong>رقم الهوية:</strong> 1234567890</p>
+    <p><strong>تاريخ الميلاد:</strong> 1405/01/01</p>
+    <p><strong>رقم الجوال:</strong> 0501234567</p>
+    <p><strong>العنوان:</strong> لم يسمح بمشاركة موقعه وتم تسجيل الموقع يدويًا من قبله كما يلي: الرياض - حي لبن</p>
+    <p><strong>حالة العقد:</strong> ✅ تمت الموافقة</p>
+    <p><strong>الإجراء:</strong> تم الضغط على "موافق" بتاريخ 07-01-1446، الساعة 14:22:37</p>
   </div>
 
-  <div class="section">
-    <p>وقد وافق الطرف الثاني على جميع بنود الاتفاق السابق إلكترونيًا.</p>
-    <p>التوقيع الإلكتروني للطرف الأول: نايف المطيري</p>
-    <p>التوقيع الإلكتروني للطرف الثاني: <span id="clientName2">__________</span></p>
+  <hr>
+
+  <h4>تفاصيل العقد واختيارات العميل:</h4>
+  <ul>
+    <li>البند الأول: ✅ موافق</li>
+    <li>البند الثاني: ❌ غير موافق</li>
+    <li>البند الثالث: ✅ موافق</li>
+    <!-- أضف باقي البنود حسب ما أدخله العميل -->
+  </ul>
+
+  <p><strong>صفحة النهاية:</strong> ✅ تمت الموافقة بنجاح</p>
+
+  <div style="margin-top:40px;">
+    <p><strong>توقيع الطرف الأول:</strong> تم التوقيع آليًا من نايف المطيري</p>
+    <p><strong>توقيع الطرف الثاني:</strong> ✅ تمت الموافقة من العميل</p>
+  </div>
+
+  <div style="background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;margin-top:20px;font-size:14px;color:#856404;">
+    ⚠️ هذا العقد يُعد سندًا تنفيذيًا كما نصّت عليه المادة (9) من نظام التعاملات الإلكترونية
   </div>
 
   <div class="footer">
-    ⚠️ تم توثيق هذا العقد إلكترونيًا ويُعد سندًا تنفيذًا بموجب المادة (9) من نظام المعاملات الإلكترونية.<br>
-    جميع الحقوق محفوظة لشركة سرعة تملك العقار.
+    📅 التاريخ الهجري: 07-01-1446<br>
+    ⏰ الوقت: 14:22:37<br>
+    جميع الحقوق محفوظة لشركة سرعة تملك العقار
   </div>
+</div>
 
-  <script>
-    // توليد رقم العقد التسلسلي
-    let lastContractNumber = localStorage.getItem('lastContractNumber');
-    if (!lastContractNumber) {
-      lastContractNumber = 9876;
-    } else {
-      lastContractNumber = parseInt(lastContractNumber) + 1;
-    }
-    localStorage.setItem('lastContractNumber', lastContractNumber);
-    document.getElementById("contractNumber").textContent = "رقم العقد: " + lastContractNumber;
+<div style="text-align:center;">
+  <button class="btn-download" onclick="window.print()">🖨️ طباعة / تحميل</button>
+</div>
 
-    // عرض التاريخ الهجري الحالي
-    function getHijriDate() {
-      const date = new Date();
-      const options = {
-        year: 'numeric', month: 'long', day: 'numeric',
-        calendar: 'islamic-umalqura',
-        numberingSystem: 'arab'
-      };
-      return new Intl.DateTimeFormat('ar-SA-u-ca-islamic', options).format(date);
-    }
-    document.getElementById("contractDate").textContent = "تاريخ العقد (هجري): " + getHijriDate();
-
-    // تعبئة بيانات وهمية (بدّلها لاحقاً بالديناميكية حسب الردود الفعلية)
-    document.getElementById("clientName").textContent = "سعود عبدالله المطيري";
-    document.getElementById("clientName2").textContent = "سعود عبدالله المطيري";
-    document.getElementById("idNumber").textContent = "1000000000";
-    document.getElementById("birthDate").textContent = "1/5/1375";
-    document.getElementById("mobileNumber").textContent = "0500000000";
-    document.getElementById("location").textContent = "الرياض، حي النخيل";
-    document.getElementById("signDate").textContent = "15/07/2025 - 20:07 م";
-  </script>
 </body>
 </html>

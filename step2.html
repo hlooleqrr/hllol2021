@@ -17,13 +17,13 @@
     }
 
     .container {
-      max-width: 640px;
+      max-width: 620px;
       margin: 20px auto;
       padding: 30px 20px 0;
       background-color: #ffffff;
       border-radius: 12px;
-      border: 3px solid #004d40;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
+      border: 4px solid #003d3d;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
       flex-grow: 1;
     }
 
@@ -108,12 +108,13 @@
     }
 
     footer {
-      padding: 15px 20px;
+      padding: 20px;
       text-align: center;
       background-color: #f9f9f9;
       font-size: 15px;
-      color: #777;
+      color: #555;
       border-top: 1px solid #ccc;
+      line-height: 1.8;
     }
   </style>
 </head>
@@ -140,7 +141,9 @@
   </div>
 
   <footer>
-    <p id="footerInfo">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+    <div id="dateTime">الوقت: --:--:--</div>
+    <div id="locationInfo">الموقع لم يتم تحديده بعد</div>
+    <div>© جميع الحقوق محفوظة لشركة سرعة تملك العقار</div>
   </footer>
 
   <script>
@@ -155,8 +158,8 @@
     function successLocation(position) {
       const lat = position.coords.latitude.toFixed(5);
       const lng = position.coords.longitude.toFixed(5);
-      const locationText = `تم استخدام الموقع الحالي: خط العرض ${lat}، خط الطول ${lng}`;
-      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
+      const locationText = `الإحداثيات: خط العرض ${lat}، خط الطول ${lng}`;
+      document.getElementById("locationInfo").innerHTML = locationText;
       setTimeout(() => {
         window.location.href = "step3.html";
       }, 500);
@@ -179,11 +182,22 @@
 
     function submitManualAddress() {
       const address = document.getElementById("manualAddress").value.trim();
-      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>رفض مشاركة الموقع، والعنوان الذي كتبه هو: ${address}`;
+      const locationText = `رفض مشاركة الموقع، والعنوان الذي كتبه هو: ${address}`;
+      document.getElementById("locationInfo").innerHTML = locationText;
       setTimeout(() => {
         window.location.href = "step3.html";
       }, 500);
     }
+
+    function updateDateTime() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('ar-EG');
+      const date = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      document.getElementById("dateTime").innerHTML = `اليوم: ${date} - الوقت: ${time}`;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>

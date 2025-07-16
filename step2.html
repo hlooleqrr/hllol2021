@@ -15,33 +15,37 @@
       flex-direction: column;
       min-height: 100vh;
     }
+
     .container {
-      max-width: 700px;
+      max-width: 640px;
       margin: 20px auto;
       padding: 30px 20px 0;
       background-color: #ffffff;
       border-radius: 12px;
-      border: 2px solid #004d40;
-      box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      border: 3px solid #004d40;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.07);
       flex-grow: 1;
     }
+
     .company-name {
-      background-color: #e6f9ec;
-      padding: 15px;
+      background: linear-gradient(to left, #00695c, #004d40);
+      padding: 20px;
       text-align: center;
       font-size: 26px;
       font-weight: bold;
-      color: #006400;
-      border-bottom: 2px solid #004d40;
-      position: sticky;
-      top: 0;
-      z-index: 999;
+      color: #fff;
+      border-bottom: 2px solid #003830;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     }
+
     h2 {
       text-align: center;
       font-size: 22px;
       margin-top: 30px;
     }
+
     .button {
       display: block;
       width: 100%;
@@ -54,13 +58,16 @@
       cursor: pointer;
       margin-top: 20px;
     }
+
     .button:hover {
       background-color: #005f56;
     }
+
     .input-section {
       margin-top: 20px;
       display: none;
     }
+
     input[type="text"] {
       width: 100%;
       padding: 14px;
@@ -69,12 +76,14 @@
       border-radius: 8px;
       margin-top: 10px;
     }
+
     .warning {
       color: #b30000;
       font-size: 14px;
       margin-top: 10px;
       text-align: center;
     }
+
     .next-button {
       background-color: #004d40;
       color: white;
@@ -87,6 +96,7 @@
       margin-top: 20px;
       display: none;
     }
+
     .alert {
       background-color: #ffe5e5;
       border: 1px solid #ffcccc;
@@ -96,6 +106,7 @@
       color: #b30000;
       margin: 25px 20px 0;
     }
+
     footer {
       padding: 15px 20px;
       text-align: center;
@@ -107,6 +118,7 @@
   </style>
 </head>
 <body>
+
   <div class="container">
     <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 

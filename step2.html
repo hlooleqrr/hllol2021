@@ -2,75 +2,94 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>مشاركة الموقع</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختيار العنوان</title>
   <style>
     body {
-      font-family: 'Tajawal', sans-serif;
-      background-color: #f9f9f9;
-      color: #004d40;
       margin: 0;
       padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      background-color: #f3f3f3;
+      color: #004d40;
     }
     .container {
-      max-width: 650px;
-      margin: 40px auto;
-      background-color: #fff;
-      padding: 30px;
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 30px 20px;
+      background-color: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       border: 2px solid #004d40;
+      box-shadow: 0 0 15px rgba(0,0,0,0.05);
     }
     .company-name {
       background-color: #e6f9ec;
-      padding: 10px;
+      padding: 15px;
       text-align: center;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
       color: #006400;
-      margin-bottom: 20px;
+      border-bottom: 2px solid #004d40;
+      position: sticky;
+      top: 0;
+      z-index: 999;
     }
-    button, input {
+    h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-top: 30px;
+    }
+    .button {
+      display: block;
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      margin-top: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    button {
       background-color: #00796b;
       color: white;
+      padding: 14px;
+      font-size: 18px;
       border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #005f56;
-    }
-    .alert {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      padding: 15px;
       border-radius: 8px;
-      font-size: 16px;
-      color: #856404;
+      cursor: pointer;
       margin-top: 20px;
     }
-    footer {
-      margin-top: 30px;
-      padding-top: 10px;
-      border-top: 1px solid #ccc;
-      font-size: 14px;
-      text-align: center;
-      color: #777;
+    .button:hover {
+      background-color: #005f56;
     }
-    #manualInput {
+    .input-section {
+      margin-top: 20px;
       display: none;
     }
-    .note {
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .warning {
+      color: #b30000;
       font-size: 14px;
-      margin-top: 5px;
-      color: #a00;
+      margin-top: 10px;
       text-align: center;
+    }
+    .next-button {
+      background-color: #004d40;
+      color: white;
+      padding: 12px;
+      font-size: 17px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      display: none;
+    }
+    footer {
+      margin-top: 40px;
+      padding-top: 12px;
+      border-top: 1px solid #ccc;
+      font-size: 15px;
+      text-align: center;
+      color: #777;
     }
   </style>
 </head>
@@ -78,77 +97,64 @@
   <div class="container">
     <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-    <button onclick="getLocation()">مشاركة الموقع الحالي</button>
+    <h2>ما هو عنوانك؟</h2>
 
-    <div id="manualInput">
-      <label for="manualLocation">لم يتم قبول المشاركة، يرجى إدخال الموقع يدويًا:</label>
-      <input type="text" id="manualLocation" placeholder="مثال: الرياض، مدينة الرياض، حي لبن" oninput="checkInput()" />
-    </div>
+    <button class="button" onclick="useLocation()">📍 استخدام الموقع الحالي</button>
+    <button class="button" onclick="showManualInput()">✏️ كتابة العنوان يدويًا</button>
 
-    <button id="nextBtn" onclick="goNext()" disabled>اكمل</button>
-
-    <div id="locationStatus" class="note"></div>
-
-    <div class="alert">
-      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    <div class="input-section" id="manualSection">
+      <label for="manualAddress">أدخل عنوانك (مثال: الرياض، حي لبن، شارع الأمير ...):</label>
+      <input type="text" id="manualAddress" oninput="validateManualAddress()" placeholder="منطقة - مدينة - حي" />
+      <div class="warning">⚠️ يُعتبر هذا العنوان الرسمي لك</div>
+      <button id="manualNext" class="next-button" onclick="submitManualAddress()">أكمل</button>
     </div>
 
     <footer>
-      <p id="dateTime"></p>
-      <p id="locationFooter">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
+      <p id="footerInfo">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
     </footer>
   </div>
 
   <script>
-    let locationText = "";
-
-    function getLocation() {
+    function useLocation() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showManualInput);
+        navigator.geolocation.getCurrentPosition(successLocation, errorLocation);
       } else {
-        showManualInput();
+        errorLocation();
       }
     }
 
-    function showPosition(position) {
-      locationText = `الموقع الحالي: خط العرض ${position.coords.latitude.toFixed(5)}, خط الطول ${position.coords.longitude.toFixed(5)}`;
-      document.getElementById("locationStatus").textContent = locationText;
-      document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
-      document.getElementById("nextBtn").disabled = false;
+    function successLocation(position) {
+      const lat = position.coords.latitude.toFixed(5);
+      const lng = position.coords.longitude.toFixed(5);
+      const locationText = `تم استخدام الموقع الحالي: خط العرض ${lat}، خط الطول ${lng}`;
+      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
+      setTimeout(() => {
+        window.location.href = "step3.html";
+      }, 500);
+    }
+
+    function errorLocation() {
+      alert("تعذر تحديد الموقع، يرجى كتابة العنوان يدويًا.");
+      showManualInput();
     }
 
     function showManualInput() {
-      document.getElementById("manualInput").style.display = "block";
+      document.getElementById("manualSection").style.display = "block";
     }
 
-    function checkInput() {
-      const input = document.getElementById("manualLocation").value.trim();
-      if (input.length >= 8) {
-        document.getElementById("nextBtn").disabled = false;
-        document.getElementById("locationStatus").textContent = `تم رفض مشاركة الموقع، والموقع المعتمد هو: ${input}`;
-        document.getElementById("locationFooter").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>الموقع المعتمد: ${input}`;
-      } else {
-        document.getElementById("nextBtn").disabled = true;
-      }
+    function validateManualAddress() {
+      const value = document.getElementById("manualAddress").value.trim();
+      const wordCount = value.split(" ").filter(Boolean).length;
+      document.getElementById("manualNext").style.display = wordCount >= 3 ? "block" : "none";
     }
 
-    function goNext() {
-      window.location.href = "step3.html";
+    function submitManualAddress() {
+      const address = document.getElementById("manualAddress").value.trim();
+      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>رفض مشاركة الموقع، والعنوان الذي كتبه هو: ${address}`;
+      setTimeout(() => {
+        window.location.href = "step3.html";
+      }, 500);
     }
-
-    function updateDateTime() {
-      const now = new Date();
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const time = now.toLocaleTimeString('ar-EG');
-      const date = now.toLocaleDateString('ar-EG', options);
-      document.getElementById("dateTime").textContent = `التاريخ: ${date} - الوقت: ${time}`;
-    }
-
-    updateDateTime();
-    setInterval(updateDateTime, 1000);
   </script>
 </body>
 </html>
-
-عدل المطلوب 
-١/تكبير الشاشة دون تعديل شي والتنبيه بالاحمر الغامق والخلفية بالاحمر الخفيف

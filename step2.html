@@ -9,27 +9,31 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: 'Tajawal', sans-serif;
       background-color: #f3f3f3;
       color: #004d40;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .wrapper {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      overflow-x: hidden;
+      justify-content: flex-start;
     }
 
     .container {
       width: 95vw;
-      margin: 20px auto 10px;
+      margin: 20px auto 0;
       padding: 30px 20px 0;
       background-color: #ffffff;
       border-radius: 12px;
       border: 4px solid #003d3d;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      flex-grow: 1;
     }
 
     .company-name {
@@ -54,7 +58,7 @@
     .button {
       display: block;
       width: 100%;
-      background-color: #01579b; /* أزرق أنيق مختلف عن لون العنوان */
+      background-color: #00796b;
       color: white;
       padding: 14px;
       font-size: 17px;
@@ -66,7 +70,7 @@
     }
 
     .button:hover {
-      background-color: #003c72;
+      background-color: #005f56;
     }
 
     .input-section {
@@ -107,51 +111,54 @@
       background-color: #ffe5e5;
       border: 1px solid #ffcccc;
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 0 0 10px 10px;
       font-size: 15px;
       color: #b30000;
-      margin: 15px 10px 5px;
       text-align: center;
+      margin: 0 auto;
+      width: 95vw;
     }
 
     footer {
-      padding: 12px 10px 25px;
+      padding: 10px 10px 15px;
       text-align: center;
       background-color: #f9f9f9;
       font-size: 14px;
       color: #555;
       border-top: 1px solid #ccc;
-      line-height: 1.8;
+      width: 95vw;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
 
-  <div class="container">
-    <div class="company-name">سرعة تملك العقار والحلول التمويلية المتكاملة</div>
+      <h2>ما هو عنوانك؟</h2>
 
-    <h2>ما هو عنوانك؟</h2>
+      <button class="button" onclick="useLocation()">📍 استخدام الموقع الحالي</button>
+      <button class="button" onclick="showManualInput()">✏️ كتابة العنوان يدويًا</button>
 
-    <button class="button" onclick="useLocation()">📍 استخدام الموقع الحالي</button>
-    <button class="button" onclick="showManualInput()">✏️ كتابة العنوان يدويًا</button>
-
-    <div class="input-section" id="manualSection">
-      <label for="manualAddress">أدخل عنوانك (مثال: الرياض، حي لبن، شارع الأمير ...):</label>
-      <input type="text" id="manualAddress" oninput="validateManualAddress()" placeholder="منطقة - مدينة - حي" />
-      <div class="warning">⚠️ يُعتبر هذا العنوان الرسمي لك</div>
-      <button id="manualNext" class="next-button" onclick="submitManualAddress()">أكمل</button>
+      <div class="input-section" id="manualSection">
+        <label for="manualAddress">أدخل عنوانك (مثال: الرياض، حي لبن، شارع الأمير ...):</label>
+        <input type="text" id="manualAddress" oninput="validateManualAddress()" placeholder="منطقة - مدينة - حي" />
+        <div class="warning">⚠️ يُعتبر هذا العنوان الرسمي لك</div>
+        <button id="manualNext" class="next-button" onclick="submitManualAddress()">أكمل</button>
+      </div>
     </div>
-  </div>
 
-  <div class="alert">
-    ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
-  </div>
+    <div class="alert">
+      ⚠️ <strong>تنبيه:</strong> يتم حماية هذا العقد وتوثيقه بموجب <strong>المادة التاسعة من نظام المعاملات الإلكترونية</strong>، ويُعد سجلًا إلكترونيًا موثقًا وحجة نظامية معتبرة في الإثبات أمام الجهات الرسمية.
+    </div>
 
-  <footer>
-    <div id="dateTime">اليوم: --، -- التاريخ - الوقت: --:--:--</div>
-    <div id="locationInfo">الموقع لم يتم تحديده بعد</div>
-    <div>© جميع الحقوق محفوظة لشركة سرعة تملك العقار</div>
-  </footer>
+    <footer>
+      <div id="dateTime">اليوم: --، -- التاريخ - الوقت: --:--:--</div>
+      <div id="locationInfo">الموقع لم يتم تحديده بعد</div>
+      <div>© جميع الحقوق محفوظة لشركة سرعة تملك العقار</div>
+    </footer>
+  </div>
 
   <script>
     function useLocation() {

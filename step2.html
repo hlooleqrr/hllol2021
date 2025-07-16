@@ -11,15 +11,19 @@
       font-family: 'Tajawal', sans-serif;
       background-color: #f3f3f3;
       color: #004d40;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
     .container {
       max-width: 700px;
       margin: 20px auto;
-      padding: 30px 20px;
+      padding: 30px 20px 0;
       background-color: #ffffff;
       border-radius: 12px;
       border: 2px solid #004d40;
       box-shadow: 0 0 15px rgba(0,0,0,0.05);
+      flex-grow: 1;
     }
     .company-name {
       background-color: #e6f9ec;
@@ -83,13 +87,22 @@
       margin-top: 20px;
       display: none;
     }
+    .alert {
+      background-color: #ffe5e5;
+      border: 1px solid #ffcccc;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #b30000;
+      margin: 25px 20px 0;
+    }
     footer {
-      margin-top: 40px;
-      padding-top: 12px;
-      border-top: 1px solid #ccc;
-      font-size: 15px;
+      padding: 15px 20px;
       text-align: center;
+      background-color: #f9f9f9;
+      font-size: 15px;
       color: #777;
+      border-top: 1px solid #ccc;
     }
   </style>
 </head>
@@ -104,57 +117,4 @@
 
     <div class="input-section" id="manualSection">
       <label for="manualAddress">أدخل عنوانك (مثال: الرياض، حي لبن، شارع الأمير ...):</label>
-      <input type="text" id="manualAddress" oninput="validateManualAddress()" placeholder="منطقة - مدينة - حي" />
-      <div class="warning">⚠️ يُعتبر هذا العنوان الرسمي لك</div>
-      <button id="manualNext" class="next-button" onclick="submitManualAddress()">أكمل</button>
-    </div>
-
-    <footer>
-      <p id="footerInfo">جميع الحقوق محفوظة لشركة سرعة تملك العقار</p>
-    </footer>
-  </div>
-
-  <script>
-    function useLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(successLocation, errorLocation);
-      } else {
-        errorLocation();
-      }
-    }
-
-    function successLocation(position) {
-      const lat = position.coords.latitude.toFixed(5);
-      const lng = position.coords.longitude.toFixed(5);
-      const locationText = `تم استخدام الموقع الحالي: خط العرض ${lat}، خط الطول ${lng}`;
-      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>${locationText}`;
-      setTimeout(() => {
-        window.location.href = "step3.html";
-      }, 500);
-    }
-
-    function errorLocation() {
-      alert("تعذر تحديد الموقع، يرجى كتابة العنوان يدويًا.");
-      showManualInput();
-    }
-
-    function showManualInput() {
-      document.getElementById("manualSection").style.display = "block";
-    }
-
-    function validateManualAddress() {
-      const value = document.getElementById("manualAddress").value.trim();
-      const wordCount = value.split(" ").filter(Boolean).length;
-      document.getElementById("manualNext").style.display = wordCount >= 3 ? "block" : "none";
-    }
-
-    function submitManualAddress() {
-      const address = document.getElementById("manualAddress").value.trim();
-      document.getElementById("footerInfo").innerHTML = `جميع الحقوق محفوظة لشركة سرعة تملك العقار<br>رفض مشاركة الموقع، والعنوان الذي كتبه هو: ${address}`;
-      setTimeout(() => {
-        window.location.href = "step3.html";
-      }, 500);
-    }
-  </script>
-</body>
-</html>
+     

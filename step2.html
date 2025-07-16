@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>اختيار العنوان</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -14,10 +18,11 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .container {
-      max-width: 620px;
+      width: 95vw;
       margin: 20px auto;
       padding: 30px 20px 0;
       background-color: #ffffff;
@@ -31,7 +36,7 @@
       background: linear-gradient(to left, #00695c, #004d40);
       padding: 20px;
       text-align: center;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: bold;
       color: #fff;
       border-bottom: 2px solid #003830;
@@ -42,8 +47,8 @@
 
     h2 {
       text-align: center;
-      font-size: 22px;
-      margin-top: 30px;
+      font-size: 20px;
+      margin-top: 25px;
     }
 
     .button {
@@ -52,7 +57,7 @@
       background-color: #00796b;
       color: white;
       padding: 14px;
-      font-size: 18px;
+      font-size: 17px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -88,7 +93,7 @@
       background-color: #004d40;
       color: white;
       padding: 12px;
-      font-size: 17px;
+      font-size: 16px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -102,16 +107,17 @@
       border: 1px solid #ffcccc;
       padding: 15px;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       color: #b30000;
-      margin: 25px 20px 0;
+      margin: 20px 10px 0;
+      text-align: center;
     }
 
     footer {
-      padding: 20px;
+      padding: 20px 10px;
       text-align: center;
       background-color: #f9f9f9;
-      font-size: 15px;
+      font-size: 14px;
       color: #555;
       border-top: 1px solid #ccc;
       line-height: 1.8;
@@ -141,7 +147,7 @@
   </div>
 
   <footer>
-    <div id="dateTime">الوقت: --:--:--</div>
+    <div id="dateTime">اليوم: --، -- التاريخ - الوقت: --:--:--</div>
     <div id="locationInfo">الموقع لم يتم تحديده بعد</div>
     <div>© جميع الحقوق محفوظة لشركة سرعة تملك العقار</div>
   </footer>
@@ -162,7 +168,7 @@
       document.getElementById("locationInfo").innerHTML = locationText;
       setTimeout(() => {
         window.location.href = "step3.html";
-      }, 500);
+      }, 700);
     }
 
     function errorLocation() {
@@ -186,7 +192,7 @@
       document.getElementById("locationInfo").innerHTML = locationText;
       setTimeout(() => {
         window.location.href = "step3.html";
-      }, 500);
+      }, 700);
     }
 
     function updateDateTime() {
